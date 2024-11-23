@@ -39,6 +39,8 @@ const Project = ({
   techs,
   description,
   link,
+  gitLink,
+  liveDemo,
   imageSrc,
   imageAlt,
   isLeft,
@@ -58,17 +60,13 @@ const Project = ({
           height={300}
           priority
         />
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
-          <span className="text-white text-lg font-bold rounded-md bg-[#ffb400] p-4">
-            Click to visit
-          </span>
-        </div>
       </Link>
     )}
     <div className="w-full md:w-1/2">
       <h3 className="text-[#ffb400] font-bold text-2xl md:text-4xl">{title}</h3>
       <span className="text-[#ffb400] text-md md:text-lg">({date})</span>
       <p className="text-justify mt-4">{description}</p>
+
       <ul className="flex flex-wrap gap-3 mt-4">
         {techs.map((tag) => (
           <li
@@ -79,6 +77,29 @@ const Project = ({
           </li>
         ))}
       </ul>
+
+      <div className="flex gap-4 mt-6">
+        {liveDemo && (
+          <a
+            href={liveDemo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white bg-[#ffb400] px-4 py-2 rounded-md font-semibold hover:bg-[#e09e00] transition duration-300"
+          >
+            Live Demo
+          </a>
+        )}
+        {gitLink && (
+          <a
+            href={gitLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white bg-gray-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition duration-300"
+          >
+            GitHub
+          </a>
+        )}
+      </div>
     </div>
   </div>
 );
@@ -151,6 +172,8 @@ const LatestWorks = () => {
               date="Currently Working"
               techs={["#react.js", "#next.js", "#tailwind.css"]}
               description="Collaborating on the development of a bootcamp website as part of my internship at Lejhro Technology. Responsible for creating dynamic and responsive UI components."
+              liveDemo="https://www.bootcamp.lejhro.com/"
+              gitLink="https://github.com/Lejhro/lejhrobootcamp-5.0"
               link="https://www.bootcamp.lejhro.com/"
               imageSrc="/Frame-3.png"
               imageAlt="EazyGrad project screenshot"
@@ -163,6 +186,8 @@ const LatestWorks = () => {
               techs={["#react.js", "#tailwind.css", "#API"]}
               description="Developed a recipe browsing and management application with meal type filtering and dynamic API-based search. Currently implementing scrolling functionality on component load and adding a spring loader for a smoother user experience."
               link="https://arbazmurme-recipe.netlify.app/"
+              liveDemo="https://arbazmurme-recipe.netlify.app/"
+              gitLink="https://github.com/arbazmurme/Recipe_App"
               imageSrc="/project-1.png"
               imageAlt="EazyGrad project screenshot"
               isLeft={true}
@@ -174,6 +199,8 @@ const LatestWorks = () => {
               techs={["#bootstrap", "#javascript", "#css"]}
               description="Created a responsive and visually appealing landing page for Sajid Screens."
               link="https://sajidscreens.com/"
+              liveDemo="https://github.com/arbazmurme/sajidscreens"
+              gitLink="https://sajidscreens.com/"
               imageSrc="/project-2.png"
               imageAlt="EazyGrad project screenshot"
               isLeft={false}
