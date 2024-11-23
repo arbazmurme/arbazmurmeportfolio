@@ -75,7 +75,7 @@ const About = () => {
                       href={"arbazmurme@gamil.com"}
                       className="text-blue-600"
                     >
-                      arbazmurme@mail.com
+                      arbazmurme@gmail.com
                     </Link>
                   </li>
                   <li className="mb-4 flex items-center">
