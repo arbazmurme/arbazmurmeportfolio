@@ -169,7 +169,7 @@ const LatestWorks = () => {
           <div className="space-y-12 md:space-y-24">
             <Project
               title="Bootcamp Project at Lejhro"
-              date="Currently Working"
+              date="December 2024"
               techs={["#react.js", "#next.js", "#tailwind.css"]}
               description="Collaborating on the development of a bootcamp website as part of my internship at Lejhro Technology. Responsible for creating dynamic and responsive UI components."
               liveDemo="https://www.bootcamp.lejhro.com/"
@@ -181,6 +181,46 @@ const LatestWorks = () => {
             />
 
             <Project
+                title="AZ Shop - E-Commerce Platform"
+                date="Currently Working"
+                techs={["#react.js", "#next.js", "#tailwind.css", "#express.js", "#mongodb"]}
+                description="AZ Shop is a modern e-commerce platform built with the MERN stack. It offers a fully functional shopping experience, including user and admin dashboards, product management, and cart functionality. This project demonstrates server-side rendering for SEO optimization and a responsive design with Tailwind CSS."
+                liveDemo="https://e-commerce-frontend-topaz-delta.vercel.app/" 
+                gitLink="https://github.com/arbazmurme/E-Commerce-frontend"
+                link="https://e-commerce-frontend-topaz-delta.vercel.app"
+                imageSrc="/az-shop.png"
+                imageAlt="AZ Shop project screenshot"
+                isLeft={true}
+            />
+
+            <Project
+              title="E-Commerce API - AZ Shop Backend"
+              date="Currently Working"
+              techs={["#node.js", "#express.js", "#mongodb", "#jwt"]}
+              description="This is the backend API for the AZ Shop e-commerce platform. It is built with Node.js and Express.js, using MongoDB as the database. The API supports user authentication, product management, and shopping cart functionalities, providing a seamless integration with the frontend."
+              liveDemo={"http://e-commerce-api-ten-sable.vercel.app/api/products"}
+              gitLink="https://github.com/arbazmurme/E-Commerce-API"
+              link="https://e-commerce-api-ten-sable.vercel.app/api/products"
+              imageSrc="/API.png"
+              imageAlt="E-Commerce API project screenshot"
+              isLeft={false}
+            />
+
+              <Project
+                title="RentNow - Rental Home Platform"
+                date="Completed"
+                techs={["#node.js", "#express.js", "#ejs", "#tailwind.css"]}
+                description="RentNow is a platform to explore rental homes, connect with homeowners, and book your next stay with ease. It features detailed home listings with images, a user-friendly design, and an intuitive interface for seamless navigation. Built with Node.js and Express.js on the backend, EJS templates for the frontend, and Tailwind CSS for styling."
+                liveDemo={"https://rentnow-a40f.onrender.com/"} // Add if a live demo link is available
+                gitLink="https://github.com/arbazmurme/RentNow" // Replace with the GitHub repo link
+                link={"https://rentnow-a40f.onrender.com/"} // Add if a hosted version exists
+                imageSrc="/RentNow.png" // Replace with the image path
+                imageAlt="RentNow project screenshot"
+                isLeft={true}
+                />
+
+
+            <Project
               title="Recipe Web"
               date="March 2024"
               techs={["#react.js", "#tailwind.css", "#API"]}
@@ -190,7 +230,7 @@ const LatestWorks = () => {
               gitLink="https://github.com/arbazmurme/Recipe_App"
               imageSrc="/project-1.png"
               imageAlt="EazyGrad project screenshot"
-              isLeft={true}
+              isLeft={false}
             />
 
             <Project
@@ -203,7 +243,7 @@ const LatestWorks = () => {
               gitLink="https://sajidscreens.com/"
               imageSrc="/project-2.png"
               imageAlt="EazyGrad project screenshot"
-              isLeft={false}
+              isLeft={true}
             />
           </div>
         </div>
