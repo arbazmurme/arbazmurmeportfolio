@@ -98,7 +98,7 @@ export default function RootLayout({ children }) {
         />
         <meta
           name="twitter:image"
-          content="https://arbazmurme.vercel.app/home.png"
+          content="https://arbazmurme.vercel.app/arbazmurme.webp"
         />
       </Head>
 
