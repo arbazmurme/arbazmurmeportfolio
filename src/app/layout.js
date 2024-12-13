@@ -17,7 +17,7 @@ export const metadata = {
     url: "https://arbazmurme.vercel.app/",
     images: [
       {
-        url: "/home-bg.png",
+        url: "/arbazmurme.webp",
         width: 800,
         height: 600,
         alt: "Portfolio Image",
