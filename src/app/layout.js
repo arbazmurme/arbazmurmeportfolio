@@ -29,7 +29,7 @@ export const metadata = {
     title: "Arbaz Murme | Portfolio",
     description:
       "View the portfolio of Arbaz Murme, a talented React JS Developer, and explore his projects and designs.",
-    images: ["/home-bg.png"],
+    images: ["/arbazmurme.webp"],
   },
   url: "https://arbazmurme.vercel.app/",
 };
