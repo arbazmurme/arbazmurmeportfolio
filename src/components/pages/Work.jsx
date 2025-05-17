@@ -60,7 +60,7 @@ const Project = ({
             Live Demo
           </a>
         )}
-        {gitLink && (
+        {gitLink && ( 
           <a href={gitLink} target="_blank" rel="noopener noreferrer"
             className="bg-gray-800 text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-700 transition">
             GitHub
