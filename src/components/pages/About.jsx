@@ -13,7 +13,24 @@ import Link from "next/link";
 import "../../common/progress-bar.css";
 import SkillsOne from "../skills_2";
 import { PiMouseScroll } from "react-icons/pi";
+
 const About = () => {
+  // Skill data array – add or remove objects here and the UI will update automatically
+  const skills = [
+    { name: "React.js", value: 90 },
+    { name: "Next.js (SSR)", value: 92 },
+    { name: "Tailwind CSS", value: 95 },
+    { name: "Node.js & Express", value: 88 },
+    { name: "REST API Architecture", value: 90 },
+    { name: "MongoDB & Mongoose", value: 85 },
+    { name: "Redis Caching", value: 75 },
+    { name: "Firebase OTP Authentication", value: 80 },
+    { name: "JWT & Role-Based Access", value: 85 },
+    { name: "Advanced Search & Filtering", value: 88 },
+    { name: "Dynamic SEO & Metadata", value: 87 },
+    { name: "CI/CD & Deployment", value: 78 },
+    { name: "Nginx & Load Balancing", value: 72 },
+  ];
   return (
     <div className="max-w-7xl mx-auto px-4">
       <>
@@ -33,7 +50,7 @@ const About = () => {
                 width={500}
                 src="/about.png"
                 alt="ArbazMurme About"
-                className=" opacity-80"
+                className="opacity-80"
               />
             </div>
           </div>
@@ -128,131 +145,29 @@ const About = () => {
         <PiMouseScroll className="h-10 w-10 text-[#ffb400] m-auto" />
       </>
       <SkillsOne />
+
+      {/* Skills section – dynamically generated from array */}
       <div className="flex flex-wrap">
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className=" shadow-lg rounded-lg p-6 text-center">
-            <div
-              role="progressbar"
-              aria-valuenow="87"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 87 }}
-              className="m-auto rounded-full mb-4"
-            >
-              {/* Progress bar content */}
+        {skills.map((skill, index) => (
+          <div key={index} className="w-1/2 md:w-1/4 p-4">
+            <div className="shadow-lg rounded-lg p-6 text-center">
+              <div
+                role="progressbar"
+                aria-valuenow={skill.value}
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style={{ "--value": skill.value }}
+                className="m-auto rounded-full mb-4"
+              >
+                {/* Progress bar inner content handled by CSS */}
+              </div>
+              <h3 className="text-lg font-bold">{skill.name}</h3>
             </div>
-            <h3 className="text-lg font-bold">HTML 5</h3>
           </div>
-        </div>
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className="shadow-lg rounded-lg p-6 text-center">
-            <div
-              role="progressbar"
-              aria-valuenow="75"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 75 }}
-              className="m-auto rounded-full mb-4"
-            >
-              {/* Progress bar content */}
-            </div>
-            <h3 className="text-lg font-bold">CSS 3</h3>
-          </div>
-        </div>
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className="m-auto shadow-lg rounded-lg p-6 text-center">
-            <div
-              role="progressbar"
-              aria-valuenow="67"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 67 }}
-              className="m-auto rounded-full mb-4"
-            >
-              {/* Progress bar content */}
-            </div>
-            <h3 className="text-lg font-bold   ">Bootstrap 5</h3>
-          </div>
-        </div>
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className=" shadow-lg rounded-lg p-6">
-            <div
-              role="progressbar"
-              aria-valuenow="67"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 97 }}
-              className="rounded-full mb-4 m-auto"
-            >
-              {/* Progress bar content */}
-            </div>
-            <h3 className="text-lg font-bold text-center">Tailwind CSS</h3>
-          </div>
-        </div>
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className=" shadow-lg rounded-lg p-6 text-center">
-            <div
-              role="progressbar"
-              aria-valuenow="67"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 83 }}
-              className="m-auto rounded-full mb-4"
-            >
-              {/* Progress bar content */}
-            </div>
-            <h3 className="text-lg font-bold">React JSX</h3>
-          </div>
-        </div>
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className=" shadow-lg rounded-lg p-6 text-center">
-            <div
-              role="progressbar"
-              aria-valuenow="67"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 93 }}
-              className="m-auto rounded-full mb-4"
-            >
-              {/* Progress bar content */}
-            </div>
-            <h3 className="text-lg font-bold">Next JSX</h3>
-          </div>
-        </div>
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className=" shadow-lg rounded-lg p-6 text-center">
-            <div
-              role="progressbar"
-              aria-valuenow="67"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 87 }}
-              className="m-auto rounded-full mb-4"
-            >
-              {/* Progress bar content */}
-            </div>
-            <h3 className="text-lg font-bold">Node JS</h3>
-          </div>
-        </div>
-        <div className="w-1/2 md:w-1/4 p-4">
-          <div className=" shadow-lg rounded-lg p-6 text-center">
-            <div
-              role="progressbar"
-              aria-valuenow="67"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ "--value": 67 }}
-              className="m-auto rounded-full mb-4"
-            >
-              {/* Progress bar content */}
-            </div>
-            <h3 className="text-lg font-bold">MongoDB</h3>
-          </div>
-        </div>
+        ))}
       </div>
       <br />
       <br />
-
     </div>
   );
 };

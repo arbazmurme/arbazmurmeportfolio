@@ -12,7 +12,11 @@ import {
   FaSearch,
   FaGithubSquare,
   FaPython,
+  FaServer,
+  FaTools,
+  FaCloudflare,
 } from "react-icons/fa";
+import { RiNextjsFill } from "react-icons/ri";
 import {
   TbBrandJavascript,
   TbBrandNextjs,
@@ -22,7 +26,16 @@ import {
   TbBrandGoogleAnalytics,
 } from "react-icons/tb";
 import { TiHtml5 } from "react-icons/ti";
-import { SiMysql, SiAdobephotoshop, SiCanva, SiFirebase } from "react-icons/si";
+import {
+  SiMysql,
+  SiAdobephotoshop,
+  SiCanva,
+  SiFirebase,
+  SiSkillshare,
+  SiNotion,
+  SiPostman,
+  SiNativescript,
+} from "react-icons/si";
 const Skills = () => {
   return (
     <section className="py-12">
@@ -33,7 +46,9 @@ const Skills = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <p className=" text-6xl my-4">MY <span className="text-[#ffb400]">SKILLS</span></p>
+          <p className=" text-6xl my-4">
+            MY <span className="text-[#ffb400]">SKILLS</span>
+          </p>
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Frontend Technologies */}
@@ -73,8 +88,22 @@ const Skills = () => {
                 React.js
               </li>
               <li className="flex items-center">
-                <TbBrandNextjs className="w-5 h-5 text-[#ffb400] mr-2" />
+                <RiNextjsFill className="w-5 h-5 text-[#ffb400] mr-2" />
                 Next.js
+              </li>
+              <li className="flex items-center">
+                <SiNativescript className="w-5 h-5 text-[#ffb400] mr-2" />
+                React Native
+              </li>
+
+              <li className="flex items-center">
+                <FaReact className="w-5 h-5 text-[#ffb400] mr-2" />
+                Redux Toolkit
+              </li>
+
+              <li className="flex items-center">
+                <TbBrandNextjs className="w-5 h-5 text-[#ffb400] mr-2" />
+                Server Side Rendering (SSR)
               </li>
             </ul>
           </motion.div>
@@ -115,6 +144,88 @@ const Skills = () => {
                 <SiMysql className="w-5 h-5 text-[#ffb400] mr-2" />
                 Mysql
               </li>
+              <li className="flex items-center">
+                <SiFirebase className="w-5 h-5 text-[#ffb400] mr-2" />
+                Firebase OTP Authentication
+              </li>
+
+              <li className="flex items-center">
+                <FaNodeJs className="w-5 h-5 text-[#ffb400] mr-2" />
+                JWT Authentication
+              </li>
+
+              <li className="flex items-center">
+                <FaNodeJs className="w-5 h-5 text-[#ffb400] mr-2" />
+                Role-Based Access Control (RBAC)
+              </li>
+
+              <li className="flex items-center">
+                <FaNodeJs className="w-5 h-5 text-[#ffb400] mr-2" />
+                AI Search Optimization
+              </li>
+
+              <li className="flex items-center">
+                <FaNodeJs className="w-5 h-5 text-[#ffb400] mr-2" />
+                Advanced Filtering System
+              </li>
+
+              <li className="flex items-center">
+                <FaNodeJs className="w-5 h-5 text-[#ffb400] mr-2" />
+                Redis Caching
+              </li>
+            </ul>
+          </motion.div>
+
+          <motion.div
+            className="p-6 rounded-lg shadow-md border-2 border-[#ffb400]"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+          >
+            <h3 className="text-xl font-semibold mb-4 text-[#ffb400]">
+              DevOps & Deployment
+            </h3>
+            <ul className="space-y-2">
+              <li className="flex items-center">
+                <FaGithub className="w-5 h-5 text-[#ffb400] mr-2" />
+                Git Version Control
+              </li>
+
+              <li className="flex items-center">
+                <FaGithubSquare className="w-5 h-5 text-[#ffb400] mr-2" />
+                GitHub Actions (CI/CD)
+              </li>
+
+              <li className="flex items-center">
+                <FaServer className="w-5 h-5 text-[#ffb400] mr-2" />
+                Continuous Integration & Deployment
+              </li>
+
+              <li className="flex items-center">
+                <FaServer className="w-5 h-5 text-[#ffb400] mr-2" />
+                Automated Production Deployment
+              </li>
+              <li className="flex items-center">
+                <FaServer className="w-5 h-5 text-[#ffb400] mr-2" />
+                Nginx Load Balancer
+              </li>
+              <li className="flex items-center">
+                <FaServer className="w-5 h-5 text-[#ffb400] mr-2" />
+                PM2 Cluster Mode
+              </li>
+              <li className="flex items-center">
+                <FaNodeJs className="w-5 h-5 text-[#ffb400] mr-2" />
+                CDN Integration
+              </li>
+              <li className="flex items-center">
+                <FaServer className="w-5 h-5 text-[#ffb400] mr-2" />
+                Production Deployment
+              </li>
+              <li className="flex items-center">
+                <FaCloudflare className="w-5 h-5 text-[#ffb400] mr-2" />
+                Cloudflare
+              </li>
             </ul>
           </motion.div>
 
@@ -148,6 +259,15 @@ const Skills = () => {
                 <SiCanva className="w-5 h-5 text-[#ffb400] mr-2" />
                 Canva
               </li>
+              <li className="flex items-center">
+                <SiPostman className="w-5 h-5 text-[#ffb400] mr-2" />
+                Postman, Lighthouse, etc
+              </li>
+              <li className="flex items-center">
+                <FaTools  className="w-5 h-5 text-[#ffb400] mr-2" />
+                DevTools
+              </li>
+              
             </ul>
           </motion.div>
 
@@ -174,6 +294,41 @@ const Skills = () => {
               <li className="flex items-center">
                 <FaGithubSquare className="w-5 h-5 text-[#ffb400] mr-2" />
                 Git Version Control
+              </li>
+            </ul>
+          </motion.div>
+
+          {/* Business Logic & Architecture */}
+          <motion.div
+            className="p-6 rounded-lg shadow-md border-2 border-[#ffb400]"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 1 }}
+          >
+            <h3 className="text-xl font-semibold mb-4 text-[#ffb400]">
+              Architecture & Business Systems
+            </h3>
+            <ul className="space-y-2">
+              <li className="flex items-center">
+                <SiSkillshare className="w-5 h-5 text-[#ffb400] mr-2" />
+                Multi-Vendor Architecture
+              </li>
+              <li className="flex items-center">
+                <SiSkillshare className="w-5 h-5 text-[#ffb400] mr-2" />
+                Order Lifecycle Management
+              </li>
+              <li className="flex items-center">
+                <SiSkillshare className="w-5 h-5 text-[#ffb400] mr-2" />
+                Stock & Inventory Management
+              </li>
+              <li className="flex items-center">
+                <SiSkillshare className="w-5 h-5 text-[#ffb400] mr-2" />
+                Commission System
+              </li>
+              <li className="flex items-center">
+                <SiSkillshare className="w-5 h-5 text-[#ffb400] mr-2" />
+                Dynamic SEO Rendering
               </li>
             </ul>
           </motion.div>
