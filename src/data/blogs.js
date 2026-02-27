@@ -225,7 +225,7 @@ MERN stack is a future-proof technology stack. Mastering it in 2026 can open man
     category: "Frontend Development",
     readingTime: "10 min read",
     tags: ["Next.js", "SEO", "Routing", "React", "App Router"],
-    banner: "/images/nextjs-banner.jpg",
+    banner: "/images/nextjs-banner.png",
     content: `# Next.js Dynamic Routing SEO Guide 2026
 
 Dynamic routing in Next.js allows developers to create scalable applications easily. With the App Router, it's more powerful than ever.
