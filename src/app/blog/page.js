@@ -127,7 +127,7 @@ export default function BlogPage() {
           <div className="absolute top-0 left-0 w-72 h-72 bg-[#ffb400]/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
 
-          <div className="relative z-10">
+          <div className="relative z-1">
             <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4">
               Advanced <span className="text-[#ffb400] drop-shadow-lg">Blogs</span>
             </h1>

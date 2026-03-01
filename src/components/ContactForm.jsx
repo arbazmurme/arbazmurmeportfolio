@@ -96,7 +96,7 @@ const ContactForm = () => {
       className="max-w-2xl mx-auto"
     >
       <div className="mb-10 text-center">
-        <h2 className="text-4xl font-bold text-white mb-3">Get In Touch</h2>
+        <h2 className="text-4xl font-bold mb-3">Get In Touch</h2>
         <p className="text-gray-400">
           Have a project in mind? Let's discuss how we can work together.
         </p>
@@ -122,7 +122,7 @@ const ContactForm = () => {
               name="name"
               autoComplete="given-name"
               placeholder="John Doe"
-              className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
+              className="w-full px-4 py-3 border border-gray-700 rounded-lg focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
               value={formData.name}
               onChange={handleChange}
             />
@@ -146,7 +146,7 @@ const ContactForm = () => {
               name="email"
               autoComplete="email"
               placeholder="john@example.com"
-              className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
+              className="w-full px-4 py-3 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
               value={formData.email}
               onChange={handleChange}
             />
@@ -170,7 +170,7 @@ const ContactForm = () => {
             name="message"
             rows="5"
             placeholder="Tell me about your project or inquiry..."
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300 resize-none"
+            className="w-full px-4 py-3 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300 resize-none"
             value={formData.message}
             onChange={handleChange}
           />
@@ -244,17 +244,17 @@ const ContactForm = () => {
         className="mt-12 pt-8 border-t border-gray-800"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-          <div className="p-4 rounded-lg bg-gray-900/30">
+          <div className="p-4 rounded-lg bg-gray-900/10">
             <div className="text-2xl font-bold text-[#ffb400] mb-2">24-48h</div>
-            <div className="text-sm text-gray-400">Response Time</div>
+            <div className="text-sm ">Response Time</div>
           </div>
-          <div className="p-4 rounded-lg bg-gray-900/30">
+          <div className="p-4 rounded-lg bg-gray-900/10">
             <div className="text-2xl font-bold text-[#ffb400] mb-2">100%</div>
-            <div className="text-sm text-gray-400">Message Read</div>
+            <div className="text-sm ">Message Read</div>
           </div>
-          <div className="p-4 rounded-lg bg-gray-900/30">
+          <div className="p-4 rounded-lg bg-gray-900/10">
             <div className="text-2xl font-bold text-[#ffb400] mb-2">Secure</div>
-            <div className="text-sm text-gray-400">Data Protected</div>
+            <div className="text-sm ">Data Protected</div>
           </div>
         </div>
       </motion.div>

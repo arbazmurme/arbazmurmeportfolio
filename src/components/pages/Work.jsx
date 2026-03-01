@@ -52,7 +52,7 @@ const techIcons = {
   "#typescript": <SiTypescript />,
   "#jquery": <SiJquery />,
   "#redux": <SiRedux />,
-  
+
   // Backend
   "#node.js": <FaNodeJs />,
   "#express.js": <SiExpress />,
@@ -61,20 +61,20 @@ const techIcons = {
   "#rest-api": <TbApi />,
   "#API": <TbApi />,
   "#socket.io": <SiSocketdotio />,
-  
+
   // Database
   "#mongodb": <SiMongodb />,
   "#mongoose": <SiMongodb />,
   "#sql": <FaDatabase />,
   "#oracle": <SiOracle />,
   "#redis": <SiRedis />,
-  
+
   // Auth & Security
   "#firebase-auth": <SiFirebase />,
   "#jwt-auth": <MdOutlineSecurity />,
   "#otp-login": <MdOutlineSecurity />,
   "#role-based-access": <MdOutlineSecurity />,
-  
+
   // DevOps & Infrastructure
   "#nginx": <SiNginx />,
   "#pm2": <GrCloudComputer />,
@@ -83,25 +83,25 @@ const techIcons = {
   "#cdn": <GrCloudComputer />,
   "#cloudinary": <GrCloudComputer />,
   "#load-balancer": <GrCloudComputer />,
-  
+
   // Payments
   "#payment-integration": <MdPayment />,
   "#razorpay": <MdPayment />,
   "#payu": <MdPayment />,
   "#upi-intent": <MdPayment />,
   "#wallet-system": <MdPayment />,
-  
+
   // Maps & Location
   "#google-maps-api": <FaJsSquare />,
-  
+
   // UI/UX
   "#figma": <FaFigma />,
   "#swiper.js": <SiSwiper />,
   "#responsive-design": <FaCss3Alt />,
-  
+
   // Tools
   "#postman": <SiPostman />,
-  
+
   // Features
   "#ai-search-optimization": <BiSolidDashboard />,
   "#seo-optimization": <BiSolidDashboard />,
@@ -150,11 +150,14 @@ const projects = [
       "#cdn",
       "#cloudinary",
     ],
-    description: "Production-grade multi-vendor marketplace platform handling 3000+ active sellers and 80,000+ traffic. Designed with scalable load-balanced architecture using Nginx and PM2 cluster mode. Integrated Firebase OTP-based mobile authentication and role-based access control for Users, Sellers, Employees, and Admins. Built intelligent AI-driven search optimization with dynamic SEO rendering for every product page. Implemented advanced filtering engine, inventory management, order lifecycle tracking, employee analytics dashboard, Redis caching, and CDN-based asset optimization.",
+    description:
+      "Production-grade multi-vendor marketplace platform handling 3000+ active sellers and 80,000+ traffic. Designed with scalable load-balanced architecture using Nginx and PM2 cluster mode. Integrated Firebase OTP-based mobile authentication and role-based access control for Users, Sellers, Employees, and Admins. Built intelligent AI-driven search optimization with dynamic SEO rendering for every product page. Implemented advanced filtering engine, inventory management, order lifecycle tracking, employee analytics dashboard, Redis caching, and CDN-based asset optimization.",
     liveDemo: "https://ewshopping.com/",
     github: "",
     projectLink: "https://ewshopping.com/",
-    playStoreLinks: ["https://play.google.com/store/apps/details?id=com.ewsapp"],
+    playStoreLinks: [
+      "https://play.google.com/store/apps/details?id=com.ewsapp",
+    ],
     imageSrc: "/ewshoppingweb.png",
     imageAlt: "EWShopping AI Enterprise Marketplace",
   },
@@ -180,7 +183,8 @@ const projects = [
       "#nginx",
       "#pm2",
     ],
-    description: "Service marketplace platform for booking salon and pet care services online. Built with React Native mobile app (Partner App available on Play Store) and Next.js web platform. Features appointment scheduling, time slot management, multi-vendor architecture, service categorization, secure payments, and real-time booking status tracking. Includes Admin dashboard and service provider management system.",
+    description:
+      "Service marketplace platform for booking salon and pet care services online. Built with React Native mobile app (Partner App available on Play Store) and Next.js web platform. Features appointment scheduling, time slot management, multi-vendor architecture, service categorization, secure payments, and real-time booking status tracking. Includes Admin dashboard and service provider management system.",
     liveDemo: "https://salontreat.com/",
     github: "",
     projectLink: "https://salontreat.com/",
@@ -207,7 +211,8 @@ const projects = [
       "#nginx",
       "#pm2",
     ],
-    description: "Modern, responsive and SEO-optimized healthcare website built with Next.js. Designed for a dental clinic to showcase services, enable appointment contact, and improve search engine visibility. Includes performance enhancements, optimized assets with CDN, responsive design, structured metadata, and Google Maps integration for improved user experience.",
+    description:
+      "Modern, responsive and SEO-optimized healthcare website built with Next.js. Designed for a dental clinic to showcase services, enable appointment contact, and improve search engine visibility. Includes performance enhancements, optimized assets with CDN, responsive design, structured metadata, and Google Maps integration for improved user experience.",
     liveDemo: "https://primeradentalhub.com/",
     github: "",
     projectLink: "https://primeradentalhub.com/",
@@ -229,7 +234,8 @@ const projects = [
       "#nginx",
       "#pm2",
     ],
-    description: "Modern, user-friendly and SEO-optimized business website built using Next.js. Designed with clean UI/UX principles and optimized for performance, fast loading, and search engine visibility. Implemented SSR for better SEO ranking, structured metadata, responsive design, and optimized asset delivery using CDN.",
+    description:
+      "Modern, user-friendly and SEO-optimized business website built using Next.js. Designed with clean UI/UX principles and optimized for performance, fast loading, and search engine visibility. Implemented SSR for better SEO ranking, structured metadata, responsive design, and optimized asset delivery using CDN.",
     liveDemo: "https://coempt.in/",
     github: "",
     projectLink: "https://coempt.in/",
@@ -257,11 +263,14 @@ const projects = [
       "#nginx",
       "#pm2",
     ],
-    description: "Real estate property listing platform for buying and selling properties. Users can filter listings by city, price range, and property type with a smooth and user-friendly interface. Built with scalable RESTful API architecture and SEO-optimized Next.js frontend. Includes admin panel for property approval, image gallery management, and secure authentication system.",
+    description:
+      "Real estate property listing platform for buying and selling properties. Users can filter listings by city, price range, and property type with a smooth and user-friendly interface. Built with scalable RESTful API architecture and SEO-optimized Next.js frontend. Includes admin panel for property approval, image gallery management, and secure authentication system.",
     liveDemo: "https://mygoldenweb.com/",
     github: "",
     projectLink: "https://mygoldenweb.com/",
-    playStoreLinks: ["https://play.google.com/store/apps/details?id=com.mygoldenhomes.app"],
+    playStoreLinks: [
+      "https://play.google.com/store/apps/details?id=com.mygoldenhomes.app",
+    ],
     imageSrc: "/mygoldenweb.png",
     imageAlt: "MyGoldenWeb Real Estate Platform",
   },
@@ -287,11 +296,14 @@ const projects = [
       "#nginx",
       "#pm2",
     ],
-    description: "Full-stack multi-vendor e-commerce platform available on Web and Google Play Store. Supports multiple store management where different vendors can manage their own products, orders, and inventory. Built with scalable RESTful API architecture and mobile app using React Native. Includes multi-variant product system (size, weight, color), secure payment integration, wallet system, order tracking, and admin control panel for platform-wide management.",
+    description:
+      "Full-stack multi-vendor e-commerce platform available on Web and Google Play Store. Supports multiple store management where different vendors can manage their own products, orders, and inventory. Built with scalable RESTful API architecture and mobile app using React Native. Includes multi-variant product system (size, weight, color), secure payment integration, wallet system, order tracking, and admin control panel for platform-wide management.",
     liveDemo: "https://kiranaworld.in/",
     github: "",
     projectLink: "https://kiranaworld.in/",
-    playStoreLinks: ["https://play.google.com/store/apps/details?id=suprmarket.kiranaworld.app"],
+    playStoreLinks: [
+      "https://play.google.com/store/apps/details?id=suprmarket.kiranaworld.app",
+    ],
     imageSrc: "/kiranaworld.png",
     imageAlt: "KiranaWorld Multi Vendor E-Commerce Platform",
   },
@@ -323,11 +335,14 @@ const projects = [
       "#nginx",
       "#pm2",
     ],
-    description: "Full-stack ride booking and package transfer platform with mobile app and web panel. Users can book rides or send packages between locations with real-time tracking via Google Maps. Integrated multiple payment methods including UPI (Intent flow), PayU, Razorpay, Cards, and in-app Wallet system. Features cashback, referral bonuses, promo codes, and commission management for drivers. Built with scalable RESTful API architecture and real-time Socket.io tracking.",
+    description:
+      "Full-stack ride booking and package transfer platform with mobile app and web panel. Users can book rides or send packages between locations with real-time tracking via Google Maps. Integrated multiple payment methods including UPI (Intent flow), PayU, Razorpay, Cards, and in-app Wallet system. Features cashback, referral bonuses, promo codes, and commission management for drivers. Built with scalable RESTful API architecture and real-time Socket.io tracking.",
     liveDemo: "https://driveome.com/",
     github: "",
     projectLink: "https://driveome.com/",
-    playStoreLinks: ["https://play.google.com/store/apps/details?id=com.driveOme"],
+    playStoreLinks: [
+      "https://play.google.com/store/apps/details?id=com.driveOme",
+    ],
     imageSrc: "/driveomewebsite.png",
     imageAlt: "Driveome Ride and Package Transfer Platform",
   },
@@ -351,7 +366,8 @@ const projects = [
       "#role-based-access",
       "#employee-analytics",
     ],
-    description: "National multi-reporter news platform with User, Admin, and Reporter panels. Supports district, state, national, and international news publishing with role-based access control. Integrated Google Translate for multi-language support, CDN-based optimized image delivery, and comprehensive analytics dashboard.",
+    description:
+      "National multi-reporter news platform with User, Admin, and Reporter panels. Supports district, state, national, and international news publishing with role-based access control. Integrated Google Translate for multi-language support, CDN-based optimized image delivery, and comprehensive analytics dashboard.",
     liveDemo: "https://rajyabharat.com/",
     github: "",
     projectLink: "https://rajyabharat.com/",
@@ -362,7 +378,8 @@ const projects = [
     title: "Bootcamp Platform - Lejhro",
     date: "December 2024",
     techs: ["#react.js", "#next.js", "#tailwind.css", "#responsive-design"],
-    description: "Dynamic and responsive UI components for Lejhro Bootcamp platform with performance-focused frontend architecture. Implemented modern design patterns and optimized rendering for seamless user experience.",
+    description:
+      "Dynamic and responsive UI components for Lejhro Bootcamp platform with performance-focused frontend architecture. Implemented modern design patterns and optimized rendering for seamless user experience.",
     liveDemo: "https://www.bootcamp.lejhro.com/",
     github: "https://github.com/Lejhro/lejhrobootcamp-5.0",
     projectLink: "https://www.bootcamp.lejhro.com/",
@@ -385,7 +402,8 @@ const projects = [
       "#seo",
       "#ssr",
     ],
-    description: "Modern MERN-based e-commerce platform with user and admin dashboards, comprehensive product management, secure authentication, and SEO-optimized SSR architecture. Features include cart management, order processing, and responsive design.",
+    description:
+      "Modern MERN-based e-commerce platform with user and admin dashboards, comprehensive product management, secure authentication, and SEO-optimized SSR architecture. Features include cart management, order processing, and responsive design.",
     liveDemo: "https://e-commerce-frontend-topaz-delta.vercel.app/",
     github: "https://github.com/arbazmurme/E-Commerce-frontend",
     projectLink: "https://e-commerce-frontend-topaz-delta.vercel.app/",
@@ -404,7 +422,8 @@ const projects = [
       "#rest-api",
       "#postman",
     ],
-    description: "Scalable REST API built with Node.js and Express. Includes JWT authentication, cart system, product management, user authorization, and secure routing with comprehensive error handling and data validation.",
+    description:
+      "Scalable REST API built with Node.js and Express. Includes JWT authentication, cart system, product management, user authorization, and secure routing with comprehensive error handling and data validation.",
     liveDemo: "http://e-commerce-api-ten-sable.vercel.app/api/products",
     github: "https://github.com/arbazmurme/E-Commerce-API",
     projectLink: "http://e-commerce-api-ten-sable.vercel.app/api/products",
@@ -414,8 +433,18 @@ const projects = [
   {
     title: "RentNow - Rental Platform",
     date: "Completed",
-    techs: ["#node.js", "#express.js", "#mongodb", "#mongoose", "#jquery", "#tailwind.css", "#rest-api", "#jwt-auth"],
-    description: "Full-stack rental listing platform with booking system, image galleries, and server-rendered dynamic pages. Users can list items for rent, search by category, and manage bookings through an intuitive interface.",
+    techs: [
+      "#node.js",
+      "#express.js",
+      "#mongodb",
+      "#mongoose",
+      "#jquery",
+      "#tailwind.css",
+      "#rest-api",
+      "#jwt-auth",
+    ],
+    description:
+      "Full-stack rental listing platform with booking system, image galleries, and server-rendered dynamic pages. Users can list items for rent, search by category, and manage bookings through an intuitive interface.",
     liveDemo: "https://rentnow-a40f.onrender.com/",
     github: "https://github.com/arbazmurme/RentNow",
     projectLink: "https://rentnow-a40f.onrender.com/",
@@ -432,7 +461,8 @@ const projects = [
       "#rest-api",
       "#responsive-design",
     ],
-    description: "Recipe browsing platform with API-based dynamic search, filters, infinite scroll, and smooth UI animations. Users can search for recipes by ingredients, cuisine, or dietary preferences with real-time results.",
+    description:
+      "Recipe browsing platform with API-based dynamic search, filters, infinite scroll, and smooth UI animations. Users can search for recipes by ingredients, cuisine, or dietary preferences with real-time results.",
     liveDemo: "https://arbazmurme-recipe.netlify.app/",
     github: "https://github.com/arbazmurme/Recipe_App",
     projectLink: "https://arbazmurme-recipe.netlify.app/",
@@ -442,8 +472,15 @@ const projects = [
   {
     title: "Sajid Screens Landing Page",
     date: "Freelance Project",
-    techs: ["#bootstrap", "#javascript", "#css", "#responsive-design", "#jquery"],
-    description: "Responsive business landing page built with Bootstrap and custom JavaScript for enhanced UI interactions. Features smooth scrolling, animated elements, and cross-browser compatibility.",
+    techs: [
+      "#bootstrap",
+      "#javascript",
+      "#css",
+      "#responsive-design",
+      "#jquery",
+    ],
+    description:
+      "Responsive business landing page built with Bootstrap and custom JavaScript for enhanced UI interactions. Features smooth scrolling, animated elements, and cross-browser compatibility.",
     liveDemo: "https://sajidscreens.com/",
     github: "https://github.com/arbazmurme/sajidscreens",
     projectLink: "https://sajidscreens.com/",
@@ -459,7 +496,18 @@ const getTechIcon = (tag) => {
 };
 
 const ProjectCard = ({ project, index }) => {
-  const { title, date, techs, description, liveDemo, github, projectLink, playStoreLinks, imageSrc, imageAlt } = project;
+  const {
+    title,
+    date,
+    techs,
+    description,
+    liveDemo,
+    github,
+    projectLink,
+    playStoreLinks,
+    imageSrc,
+    imageAlt,
+  } = project;
   const isEven = index % 2 === 0;
 
   return (
@@ -489,13 +537,17 @@ const ProjectCard = ({ project, index }) => {
       {/* Content */}
       <div className="w-full lg:w-1/2 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <h3 className="text-2xl md:text-3xl font-bold text-[#ffb400]">{title}</h3>
-          <span className="text-sm text-gray-400 bg-gray-800/80 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-700">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#ffb400]">
+            {title}
+          </h3>
+          <span className="text-base text-[#ffb400] bg-gray-800/80 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-700">
             {date}
           </span>
         </div>
 
-        <p className="text-gray-300 leading-relaxed text-justify">{description}</p>
+        <p className="leading-relaxed text-justify">
+          {description}
+        </p>
 
         {/* Tech stack */}
         <div className="flex flex-wrap gap-2 pt-2">
@@ -532,7 +584,11 @@ const ProjectCard = ({ project, index }) => {
               className="flex items-center gap-2 bg-green-600 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-600/20 transform hover:-translate-y-0.5"
             >
               <FaGooglePlay className="text-lg" />
-              <span>{playStoreLinks.length > 1 ? `Play Store ${i + 1}` : "Play Store"}</span>
+              <span>
+                {playStoreLinks.length > 1
+                  ? `Play Store ${i + 1}`
+                  : "Play Store"}
+              </span>
             </a>
           ))}
           {github && (
@@ -564,7 +620,7 @@ const LatestWorks = () => {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
 
     const cards = document.querySelectorAll(".scroll-reveal");
@@ -577,13 +633,16 @@ const LatestWorks = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="mx-auto px-4 sm:px-6 py-20 md:py-24 lg:py-28 relative overflow-hidden bg-gradient-to-b from-gray-950 to-black">
+    <section
+      ref={sectionRef}
+      className="mx-auto px-4 sm:px-6 py-20 md:py-24 lg:py-28 relative overflow-hidden bg-gradient-to-b lg:max-w-7xl"
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-40 left-10 w-72 h-72 bg-[#ffb400]/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-40 right-10 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse animation-delay-2000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#ffb400]/5 to-pink-500/5 rounded-full blur-3xl"></div>
-        
+
         {/* Animated particles */}
         {[...Array(15)].map((_, i) => (
           <div
@@ -601,32 +660,40 @@ const LatestWorks = () => {
 
       {/* Header */}
       <div className="text-center mb-16 relative z-1">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white">
-          My <span className="text-[#ffb400] relative inline-block">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold">
+          My{" "}
+          <span className="text-[#ffb400] relative inline-block">
             Work
             <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#ffb400] to-pink-500 rounded-full"></span>
           </span>
         </h2>
         <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-          Showcasing my journey through innovative projects and scalable solutions
+          Showcasing my journey through innovative projects and scalable
+          solutions
         </p>
       </div>
 
       {/* Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20 relative z-1">
-        <div className="group bg-gray-900/50 backdrop-blur-sm p-6 rounded-2xl text-center border border-gray-800 hover:border-[#ffb400] transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-[#ffb400]/10">
-          <div className="text-5xl font-bold text-[#ffb400] mb-2 group-hover:scale-110 transition-transform duration-300">3+</div>
-          <p className="text-gray-300 text-lg">Years of Experience</p>
+        <div className="group bg-gray-900/10 backdrop-blur-sm p-6 rounded-2xl text-center border border-gray-800 hover:border-[#ffb400] transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-[#ffb400]/10">
+          <div className="text-5xl font-bold text-[#ffb400] mb-2 group-hover:scale-110 transition-transform duration-300">
+            3+
+          </div>
+          <p className=" text-lg">Years of Experience</p>
           <div className="w-12 h-1 bg-gradient-to-r from-[#ffb400] to-pink-500 mx-auto mt-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="group bg-gray-900/50 backdrop-blur-sm p-6 rounded-2xl text-center border border-gray-800 hover:border-[#ffb400] transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-[#ffb400]/10">
-          <div className="text-5xl font-bold text-[#ffb400] mb-2 group-hover:scale-110 transition-transform duration-300">24+</div>
-          <p className="text-gray-300 text-lg">Finished Projects</p>
+        <div className="group bg-gray-900/10 backdrop-blur-sm p-6 rounded-2xl text-center border border-gray-800 hover:border-[#ffb400] transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-[#ffb400]/10">
+          <div className="text-5xl font-bold text-[#ffb400] mb-2 group-hover:scale-110 transition-transform duration-300">
+            24+
+          </div>
+          <p className="text-lg">Finished Projects</p>
           <div className="w-12 h-1 bg-gradient-to-r from-[#ffb400] to-pink-500 mx-auto mt-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="group bg-gray-900/50 backdrop-blur-sm p-6 rounded-2xl text-center border border-gray-800 hover:border-[#ffb400] transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-[#ffb400]/10">
-          <div className="text-5xl font-bold text-[#ffb400] mb-2 group-hover:scale-110 transition-transform duration-300">19+</div>
-          <p className="text-gray-300 text-lg">Satisfied Clients</p>
+        <div className="group bg-gray-900/10 backdrop-blur-sm p-6 rounded-2xl text-center border border-gray-800 hover:border-[#ffb400] transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-[#ffb400]/10">
+          <div className="text-5xl font-bold text-[#ffb400] mb-2 group-hover:scale-110 transition-transform duration-300">
+            19+
+          </div>
+          <p className=" text-lg">Satisfied Clients</p>
           <div className="w-12 h-1 bg-gradient-to-r from-[#ffb400] to-pink-500 mx-auto mt-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
       </div>
@@ -640,7 +707,11 @@ const LatestWorks = () => {
         </div>
 
         {projects.map((project, idx) => (
-          <ProjectCard key={`${project.title}-${idx}`} project={project} index={idx} />
+          <ProjectCard
+            key={`${project.title}-${idx}`}
+            project={project}
+            index={idx}
+          />
         ))}
       </div>
 
@@ -655,7 +726,7 @@ const LatestWorks = () => {
             transform: translateY(0);
           }
         }
-        
+
         @keyframes float-particle {
           0% {
             transform: translateY(0) translateX(0);
@@ -672,18 +743,20 @@ const LatestWorks = () => {
             opacity: 0;
           }
         }
-        
+
         .scroll-reveal {
           opacity: 0;
           transform: translateY(30px);
-          transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+          transition:
+            opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .scroll-reveal.revealed {
           opacity: 1;
           transform: translateY(0);
         }
-        
+
         .animation-delay-2000 {
           animation-delay: 2s;
         }

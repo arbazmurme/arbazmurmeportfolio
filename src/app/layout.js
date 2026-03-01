@@ -32,6 +32,9 @@ export const metadata = {
     images: ["/arbazmurme.webp"],
   },
   url: "https://arbazmurme.vercel.app/",
+ verification: {
+    google: "cEwTHdp8IYoodDwoa8Ks5lVDRMssdeZMYN7KZJzaG8Y",
+  },
 };
 export default function RootLayout({ children }) {
   return (
