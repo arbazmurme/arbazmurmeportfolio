@@ -3,7 +3,7 @@ import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "../../context/ThemeContext";
 import TransitionLink from "../TransitionLink"; // Import TransitionLink
 
-const CustomIconePortfolio = ({ isActive, sendDataToParent }) => {
+const CustomIconeportfolio = ({ isActive, sendDataToParent }) => {
   const { theme } = useTheme();
   const handleClick = () => {
     sendDataToParent(3);
@@ -13,8 +13,8 @@ const CustomIconePortfolio = ({ isActive, sendDataToParent }) => {
     <div className="relative flex items-center group my-2 mr-8">
       {/* TransitionLink wrapping the icon and text */}
       <TransitionLink
-        href="/Portfolio"
-        label="Portfolio"
+        href="/portfolio"
+        label="portfolio"
         className={`rounded-full flex items-center bg-transparent transition-all duration-300 transform ${
           theme === "light" ? "hover:bg-gray-300" : "hover:bg-gray-800"
         }`}
@@ -50,4 +50,4 @@ const CustomIconePortfolio = ({ isActive, sendDataToParent }) => {
   );
 };
 
-export default CustomIconePortfolio;
+export default CustomIconeportfolio;

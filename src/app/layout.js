@@ -5,13 +5,13 @@ import Script from "next/script";
 import Head from "next/head";
 
 export const metadata = {
-  title: "Arbaz Murme | Portfolio",
+  title: "Arbaz Murme | portfolio",
   description:
     "Explore the portfolio of Arbaz Murme, a skilled React JS Developer, showcasing projects in web development, design, and more, arbazmurme, arbaj murme. arbaz murme, arbaz murame.",
   keywords:
-    "Arbaz Murme, arbaj murme, arbazmurme, React JS Developer, Portfolio, Web Development, JavaScript, HTML, CSS, Solapur it company vacancy, Companies in Solapur MIDC, Mnc company in Solapur, Avo Automation Solapur, Solapur IT company news, Solapur it company salary, Solapur it company list, Solapur it company vacancy,it park in solapur.",
+    "Arbaz Murme, arbaj murme, arbazmurme, React JS Developer, portfolio, Web Development, JavaScript, HTML, CSS, Solapur it company vacancy, Companies in Solapur MIDC, Mnc company in Solapur, Avo Automation Solapur, Solapur IT company news, Solapur it company salary, Solapur it company list, Solapur it company vacancy,it park in solapur.",
   openGraph: {
-    title: "Arbaz Murme | Portfolio",
+    title: "Arbaz Murme | portfolio",
     description:
       "Discover the creative and technical work of Arbaz Murme in this online portfolio, featuring web development projects and design work.",
     url: "https://arbazmurme.vercel.app/",
@@ -20,13 +20,13 @@ export const metadata = {
         url: "/arbazmurme.webp",
         width: 800,
         height: 600,
-        alt: "Portfolio Image",
+        alt: "portfolio Image",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arbaz Murme | Portfolio",
+    title: "Arbaz Murme | portfolio",
     description:
       "View the portfolio of Arbaz Murme, a talented React JS Developer, and explore his projects and designs.",
     images: ["/arbazmurme.webp"],
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <Head>
         {/* Meta Title */}
-        <title>My Portfolio | Arbaz Murme - React JS Developer</title>
+        <title>My portfolio | Arbaz Murme - React JS Developer</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="icon"
@@ -70,13 +70,13 @@ export default function RootLayout({ children }) {
         {/* Meta Keywords */}
         <meta
           name="keywords"
-          content="Arbaz Murme, React JS Developer, Web Development, Portfolio, JavaScript, HTML, CSS, Frontend Developer"
+          content="Arbaz Murme, React JS Developer, Web Development, portfolio, JavaScript, HTML, CSS, Frontend Developer"
         />
 
         {/* Open Graph (OG) Tags */}
         <meta
           property="og:title"
-          content="My Portfolio | Arbaz Murme - React JS Developer"
+          content="My portfolio | Arbaz Murme - React JS Developer"
         />
         <meta
           property="og:description"
@@ -93,7 +93,7 @@ export default function RootLayout({ children }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="My Portfolio | Arbaz Murme - React JS Developer"
+          content="My portfolio | Arbaz Murme - React JS Developer"
         />
         <meta
           name="twitter:description"

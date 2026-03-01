@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Arbaz Murme | Portfolio</title>
+        <title>Arbaz Murme | portfolio</title>
       </Head>
       <About />
     </>

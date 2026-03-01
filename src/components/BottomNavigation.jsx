@@ -35,7 +35,7 @@ const BottomNavigation = () => {
     { href: "/", icon: HomeIcon },
     { href: "/about", icon: UserIcon },
     { href: "/work", icon: CodeBracketSquareIcon },
-    { href: "/Portfolio", icon: BriefcaseIcon },
+    { href: "/portfolio", icon: BriefcaseIcon },
     { href: "/contact", icon: EnvelopeIcon },
   ];
 

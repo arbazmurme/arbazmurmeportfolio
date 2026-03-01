@@ -3,7 +3,7 @@ import { useState } from "react";
 import ThemeToggleButton from "./ThemeToggleButton";
 import CustomIconHome from "./MainSidebar/CustomIconHome";
 import CustomIconAbout from "./MainSidebar/CustomIconAbout";
-import CustomIconPortfolio from "./MainSidebar/CustomIconPortfolio";
+import CustomIconportfolio from "./MainSidebar/CustomIconportfolio";
 import CustomIconContact from "./MainSidebar/CustomIconContact";
 import CustomIconWork from "./MainSidebar/CustomIconWork";
 import BottomNavigation from "./BottomNavigation";
@@ -30,7 +30,7 @@ const Sidebar = () => {
             isActive={activeIndex === 1}
             sendDataToParent={handleItemClick}
           />
-          <CustomIconPortfolio
+          <CustomIconportfolio
             isActive={activeIndex === 3}
             sendDataToParent={handleItemClick}
           />

@@ -7,7 +7,7 @@ const TypingText = () => {
     <div className="text-3xl font-bold uppercase text-[#ffb400] pt-2">
       <TypeAnimation
         sequence={[
-          'Welcome to My Portfolio', // Types this out first
+          'Welcome to My portfolio', // Types this out first
           2000, // Waits 3 seconds
           'I am a Web Developer', // Deletes and types a new string
           2000, // Waits 3 seconds
