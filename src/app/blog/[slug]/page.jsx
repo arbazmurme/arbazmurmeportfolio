@@ -2,7 +2,13 @@ import advancedBlogs from "@/data/advancedBlogs";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarIcon, ClockIcon, TagIcon, ShareIcon } from "@heroicons/react/24/outline";
+import ShareButton from "./ShareButton";
+import {
+  CalendarIcon,
+  ClockIcon,
+  TagIcon,
+  ShareIcon,
+} from "@heroicons/react/24/outline";
 
 export async function generateStaticParams() {
   return advancedBlogs.map((blog) => ({
@@ -35,7 +41,8 @@ export default function BlogDetailPage({ params }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black py-16 px-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
+       <ShareButton title={post.title} description={post.shortDescription} />
         {/* Back link */}
         <Link
           href="/blog"
@@ -47,7 +54,12 @@ export default function BlogDetailPage({ params }) {
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           Back to all blogs
         </Link>
@@ -91,8 +103,7 @@ export default function BlogDetailPage({ params }) {
                 key={tag}
                 className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-sm flex items-center gap-1"
               >
-                <TagIcon className="w-4 h-4 text-[#ffb400]" />
-                #{tag}
+                <TagIcon className="w-4 h-4 text-[#ffb400]" />#{tag}
               </span>
             ))}
           </div>
@@ -124,16 +135,15 @@ export default function BlogDetailPage({ params }) {
             </div>
           </div>
 
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full text-white transition-colors">
-            <ShareIcon className="w-5 h-5" />
-            Share
-          </button>
+          <ShareButton title={post.title} description={post.shortDescription} />
         </div>
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
           <div className="mt-16">
-            <h3 className="text-2xl font-bold text-white mb-6">Related Articles</h3>
+            <h3 className="text-2xl font-bold text-white mb-6">
+              Related Articles
+            </h3>
             <div className="grid md:grid-cols-2 gap-6">
               {relatedPosts.map((related) => (
                 <Link
