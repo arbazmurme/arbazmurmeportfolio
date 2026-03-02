@@ -3,7 +3,7 @@ import { useState } from "react";
 import ThemeToggleButton from "./ThemeToggleButton";
 import CustomIconHome from "./MainSidebar/CustomIconHome";
 import CustomIconAbout from "./MainSidebar/CustomIconAbout";
-import CustomIconportfolio from "./MainSidebar/CustomIconportfolio";
+import CustomIconportfolio from "./MainSidebar/CustomIconPortfolio";
 import CustomIconContact from "./MainSidebar/CustomIconContact";
 import CustomIconWork from "./MainSidebar/CustomIconWork";
 import BottomNavigation from "./BottomNavigation";
