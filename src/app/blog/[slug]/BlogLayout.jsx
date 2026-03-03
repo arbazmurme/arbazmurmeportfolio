@@ -11,7 +11,7 @@ import { CalendarIcon, ClockIcon, TagIcon } from "@heroicons/react/24/outline";
 
 export default function BlogLayout({ post }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black py-16 px-6">
+    <div className="min-h-screen bg-gradient-to-br py-16 px-6">
       <div className="max-w-4xl mx-auto">
         {/* Back */}
         <Link
@@ -34,7 +34,7 @@ export default function BlogLayout({ post }) {
         </div>
 
         {/* Meta Info */}
-        <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400 mb-6">
+        <div className="flex flex-wrap items-center gap-6 text-sm  mb-6">
           <span className="flex items-center gap-1">
             <CalendarIcon className="w-4 h-4" />
             {new Date(post.createdAt).toDateString()}
@@ -51,7 +51,7 @@ export default function BlogLayout({ post }) {
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6">
+        <h1 className="text-4xl md:text-5xl font-extrabold  leading-tight mb-6">
           {post.title}
         </h1>
 
@@ -77,7 +77,7 @@ export default function BlogLayout({ post }) {
           {post.sections.map((section, index) => (
             <section key={index} className="space-y-6">
               {/* Section Title */}
-              <h2 className="text-3xl font-bold text-white border-l-4 border-[#ffb400] pl-4">
+              <h2 className="text-3xl font-bold text-[#ffb400] border-l-4 border-[#ffb400] pl-4">
                 {section.title}
               </h2>
 
