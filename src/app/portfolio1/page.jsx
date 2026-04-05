@@ -1,7 +1,7 @@
 import Profile from "@/components/pages/Profile";
 
 export const metadata = {
-  title: 'Arbaz Murme | My Journey',
+  title: 'Arbaz Murme | My Journey', 
   description: 'Discover the journey of Arbaz Murme, a React JS Developer. Explore his professional growth, achievements, and milestones in the field of web development.',
   openGraph: {
     title: 'Arbaz Murme | My Journey',
