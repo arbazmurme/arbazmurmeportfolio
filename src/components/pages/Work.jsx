@@ -526,6 +526,7 @@ const ProjectCard = ({ project, index }) => {
               alt={imageAlt}
               width={600}
               height={400}
+              sizes="(min-width: 1024px) 50vw, 100vw"
               className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -651,7 +652,7 @@ const LatestWorks = () => {
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              animation: `float-particle ${8 + Math.random() * 10}s linear infinite`,
+              animation: `floatParticle ${8 + Math.random() * 10}s linear infinite`,
               animationDelay: `${Math.random() * 5}s`,
             }}
           />
@@ -714,53 +715,6 @@ const LatestWorks = () => {
           />
         ))}
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes float-particle {
-          0% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-100vh) translateX(100px);
-            opacity: 0;
-          }
-        }
-
-        .scroll-reveal {
-          opacity: 0;
-          transform: translateY(30px);
-          transition:
-            opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .scroll-reveal.revealed {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-      `}</style>
     </section>
   );
 };

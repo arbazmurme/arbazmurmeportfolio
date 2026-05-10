@@ -50,6 +50,7 @@ const About = () => {
                 width={500}
                 src="/about.png"
                 alt="ArbazMurme About"
+                sizes="(min-width: 640px) 50vw, 100vw"
                 className="opacity-80"
               />
             </div>
@@ -89,7 +90,7 @@ const About = () => {
                     <IoMailUnread className="text-[#ffb400] mr-2" />
                     <strong>Email&nbsp;:&nbsp;</strong>
                     <Link
-                      href={"arbazmurme@gamil.com"}
+                      href="mailto:arbazmurme@gmail.com"
                       className="text-blue-600"
                     >
                       arbazmurme@gmail.com
@@ -98,7 +99,9 @@ const About = () => {
                   <li className="mb-4 flex items-center">
                     <FaMobileScreenButton className="text-[#ffb400] mr-2" />
                     <strong>Phone&nbsp;:&nbsp;</strong>
-                    <a className="text-blue-600">+91 90281 21976</a>
+                    <a className="text-blue-600" href="tel:+9190281221976">
+                      +91 90281 21976
+                    </a>
                   </li>
                   <li className="mb-4 flex items-center">
                     <IoLogoLinkedin className="text-[#ffb400] mr-2" />

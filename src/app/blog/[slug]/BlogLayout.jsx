@@ -27,6 +27,7 @@ export default function BlogLayout({ post }) {
             src={post.featuredImage.url}
             alt={post.featuredImage.alt}
             fill
+            sizes="(min-width: 1024px) 896px, 100vw"
             className="object-cover"
             priority
           />

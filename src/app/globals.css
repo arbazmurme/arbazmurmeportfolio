@@ -1,7 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* -------------------------------------------------------
+   Global animations (moved from styled-jsx blocks)
+   Avoids runtime style injection and reduces layout work.
+-------------------------------------------------------- */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-40px); }
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+}
+
+.animate-gradient { animation: gradientMove 12s ease infinite; }
+.animate-float { animation: float 10s linear infinite; }
+.animation-delay-2000 { animation-delay: 2s; }
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gradient,
+  .animate-float {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .scroll-reveal { transition: none; }
+}
 
 :root {
   --background-color-light: #FBF5F3; /* Light background */
@@ -12,7 +59,7 @@
 
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-roboto), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   background-color: var(--background-color-light);
   color: var(--text-color-light);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -24,11 +71,11 @@ body.dark-mode {
 }
 
 h1, h2, h3 {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-roboto), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   font-weight: 700; /* Bold */
 }
 
 p {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-roboto), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   font-weight: 400; /* Regular */
 }

@@ -19,17 +19,17 @@ export async function generateMetadata({ params }) {
   if (!post) return {};
 
   return {
-    title: post.title,
-    description: post.shortDescription,
+    title: post.metaTitle || post.title,
+    description: post.metaDescription || post.shortDescription,
     keywords: post.tags?.join(", "),
     authors: [{ name: "Arbaz Murme" }],
     alternates: {
-      canonical: `https://yourdomain.com/blog/${post.slug}`,
+      canonical: `https://arbazmurme.vercel.app/blog/${post.slug}`,
     },
     openGraph: {
-      title: post.title,
-      description: post.shortDescription,
-      url: `https://yourdomain.com/blog/${post.slug}`,
+      title: post.metaTitle || post.title,
+      description: post.metaDescription || post.shortDescription,
+      url: `https://arbazmurme.vercel.app/blog/${post.slug}`,
       type: "article",
       publishedTime: post.createdAt,
       images: [
@@ -43,8 +43,8 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.shortDescription,
+      title: post.metaTitle || post.title,
+      description: post.metaDescription || post.shortDescription,
       images: [post.featuredImage.url],
     },
   };

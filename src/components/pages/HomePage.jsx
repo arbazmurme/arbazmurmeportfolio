@@ -5,8 +5,18 @@ import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import TypingText from "../../context/TypingText";
+import { useMemo } from "react";
 
 const HomeDetails = () => {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 25 }, () => ({
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        animationDuration: `${5 + Math.random() * 10}s`,
+      })),
+    [],
+  );
   
   return (
     <>
@@ -16,14 +26,14 @@ const HomeDetails = () => {
 
         {/* Floating Particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(25)].map((_, i) => (
+          {particles.map((p, i) => (
             <span
               key={i}
               className="absolute w-2 h-2 bg-[#ffb400] rounded-full opacity-20 animate-float"
               style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animationDuration: `${5 + Math.random() * 10}s`,
+                top: p.top,
+                left: p.left,
+                animationDuration: p.animationDuration,
               }}
             />
           ))}
@@ -45,6 +55,7 @@ const HomeDetails = () => {
                 width={480}
                 height={600}
                 priority
+                sizes="(min-width: 1024px) 480px, 0px"
                 className="relative z-10 rounded-3xl shadow-2xl border border-white/20 hover:scale-105 transition duration-500"
               />
             </motion.div>
@@ -113,41 +124,6 @@ const HomeDetails = () => {
             ))}
           </motion.div>
         </div>
-
-        {/* Custom Animations */}
-        <style jsx>{`
-          .animate-gradient {
-            animation: gradientMove 12s ease infinite;
-          }
-
-          @keyframes gradientMove {
-            0% {
-              background-position: 0% 50%;
-            }
-            50% {
-              background-position: 100% 50%;
-            }
-            100% {
-              background-position: 0% 50%;
-            }
-          }
-
-          .animate-float {
-            animation: float 10s linear infinite;
-          }
-
-          @keyframes float {
-            0% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-40px);
-            }
-            100% {
-              transform: translateY(0px);
-            }
-          }
-        `}</style>
       </div>
     </>
   );

@@ -29,10 +29,13 @@ export default function Dashboard() {
     try {
       await remove(formRef);
       setContactForms(contactForms.filter((form) => form.id !== id));
-      alert('Form deleted successfully');
+      // Avoid blocking alerts; keep UI responsive and accessible.
+      const el = document.getElementById("dashboard-status");
+      if (el) el.textContent = "Form deleted successfully.";
     } catch (error) {
       console.error("Error deleting form:", error);
-      alert('Failed to delete form');
+      const el = document.getElementById("dashboard-status");
+      if (el) el.textContent = "Failed to delete form.";
     }
   };
 
@@ -42,6 +45,7 @@ export default function Dashboard() {
         <h1 className="text-3xl font-bold mb-4 text-center">Admin Dashboard</h1>
         <h2 className="text-xl font-semibold mb-4 text-center">Contact Forms</h2>
         <div className="p-6 rounded-lg shadow-lg">
+          <span id="dashboard-status" className="sr-only" aria-live="polite" />
           {contactForms.length === 0 ? (
             <p>No contact forms available.</p>
           ) : (

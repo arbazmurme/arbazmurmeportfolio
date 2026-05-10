@@ -2,19 +2,37 @@ import "./globals.css";
 import { ThemeProvider } from "../context/ThemeContext";
 import Sidebar from "../components/Sidebar";
 import Script from "next/script";
-import Head from "next/head";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { Roboto } from "next/font/google";
+
+const siteUrl = "https://arbazmurme.vercel.app";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
+  variable: "--font-roboto",
+  preload: true,
+});
 
 export const metadata = {
-  title: "Arbaz Murme | portfolio",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Arbaz Murme | portfolio",
+    template: "%s | Arbaz Murme",
+  },
   description:
     "Explore the portfolio of Arbaz Murme, a skilled React JS Developer, showcasing projects in web development, design, and more, arbazmurme, arbaj murme. arbaz murme, arbaz murame.",
   keywords:
     "Arbaz Murme, arbaj murme, arbazmurme, React JS Developer, portfolio, Web Development, JavaScript, HTML, CSS, Solapur it company vacancy, Companies in Solapur MIDC, Mnc company in Solapur, Avo Automation Solapur, Solapur IT company news, Solapur it company salary, Solapur it company list, Solapur it company vacancy,it park in solapur.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Arbaz Murme | portfolio",
     description:
       "Discover the creative and technical work of Arbaz Murme in this online portfolio, featuring web development projects and design work.",
-    url: "https://arbazmurme.vercel.app/",
+    url: siteUrl,
     images: [
       {
         url: "/arbazmurme.webp",
@@ -31,98 +49,57 @@ export const metadata = {
       "View the portfolio of Arbaz Murme, a talented React JS Developer, and explore his projects and designs.",
     images: ["/arbazmurme.webp"],
   },
-  url: "https://arbazmurme.vercel.app/",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
+  },
+  manifest: "/site.webmanifest",
  verification: {
     google: "cEwTHdp8IYoodDwoa8Ks5lVDRMssdeZMYN7KZJzaG8Y",
   },
 };
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ffb400",
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <Head>
-        {/* Meta Title */}
-        <title>My portfolio | Arbaz Murme - React JS Developer</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-
-        {/* Meta Description */}
-        <meta
-          name="description"
-          content="Explore the professional portfolio of Arbaz Murme, a skilled React JS Developer with expertise in web development, design, and more."
-        />
-
-        {/* Canonical Tag */}
-        <link rel="canonical" href="https://arbazmurme.vercel.app/" />
-
-        {/* Meta Keywords */}
-        <meta
-          name="keywords"
-          content="Arbaz Murme, React JS Developer, Web Development, portfolio, JavaScript, HTML, CSS, Frontend Developer"
-        />
-
-        {/* Open Graph (OG) Tags */}
-        <meta
-          property="og:title"
-          content="My portfolio | Arbaz Murme - React JS Developer"
-        />
-        <meta
-          property="og:description"
-          content="Discover the creative and technical work of Arbaz Murme in this online portfolio, featuring web development projects and design work."
-        />
-        <meta
-          property="og:image"
-          content="https://arbazmurme.vercel.app/arbazmurme.webp"
-        />
-        <meta property="og:url" content="https://arbazmurme.vercel.app/" />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter Card Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="My portfolio | Arbaz Murme - React JS Developer"
-        />
-        <meta
-          name="twitter:description"
-          content="View the portfolio of Arbaz Murme, a talented React JS Developer, and explore his projects and designs."
-        />
-        <meta
-          name="twitter:image"
-          content="https://arbazmurme.vercel.app/arbazmurme.webp"
-        />
-      </Head>
-
-      <body>
-        {/* Google Analytics */}
+    <html lang="en" suppressHydrationWarning>
+      <body className={roboto.variable}>
         <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-GJ855RZWML"
-        />
-        <Script
-          id="ga-setup"
-          strategy="afterInteractive"
+          id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-GJ855RZWML');
+              (function () {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
+                  document.documentElement.classList.add(theme);
+                } catch (e) {}
+              })();
             `,
           }}
         />
+        <GoogleAnalytics gaId="G-GJ855RZWML" />
         <ThemeProvider>
           <Sidebar />
           {children}
