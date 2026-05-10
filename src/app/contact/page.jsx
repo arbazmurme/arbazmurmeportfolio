@@ -3,6 +3,7 @@ export const metadata = {
   title: "Arbaz Murme | Contact Us",
   description:
     "Get in touch with Arbaz Murme for professional inquiries, project discussions, or general questions. Reach out through the contact form on this page.",
+  keywords: "Arbaz Murme, Arbaj Murme, React JS Developer, MERN Stack Developer, Next.js Developer, Frontend Web Developer, Full Stack Developer, JavaScript Developer, Hire Web Developer India, Freelance Web Developer Solapur, Web Developer in Solapur, Best Developer in Solapur, React Developer Maharashtra, Custom Website Development, UI/UX Developer, Arbaz Murme Portfolio",
   openGraph: {
     title: "Arbaz Murme | Contact Us",
     description:

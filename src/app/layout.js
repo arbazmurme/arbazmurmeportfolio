@@ -23,16 +23,16 @@ export const metadata = {
     template: "%s | Arbaz Murme",
   },
   description:
-    "Explore the portfolio of Arbaz Murme, a skilled React JS Developer, showcasing projects in web development, design, and more, arbazmurme, arbaj murme. arbaz murme, arbaz murame.",
+    "Explore the portfolio of Arbaz Murme, a skilled React JS & MERN Stack Developer. Showcasing modern web development projects, creative design, and frontend expertise.",
   keywords:
-    "Arbaz Murme, arbaj murme, arbazmurme, React JS Developer, portfolio, Web Development, JavaScript, HTML, CSS, Solapur it company vacancy, Companies in Solapur MIDC, Mnc company in Solapur, Avo Automation Solapur, Solapur IT company news, Solapur it company salary, Solapur it company list, Solapur it company vacancy,it park in solapur.",
+    "Arbaz Murme, Arbaj Murme, React JS Developer, MERN Stack Developer, Next.js Developer, Frontend Web Developer, Full Stack Developer, JavaScript Developer, Hire Web Developer India, Freelance Web Developer Solapur, Web Developer in Solapur, Best Developer in Solapur, React Developer Maharashtra, Custom Website Development, UI/UX Developer, Arbaz Murme Portfolio",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Arbaz Murme | portfolio",
     description:
-      "Discover the creative and technical work of Arbaz Murme in this online portfolio, featuring web development projects and design work.",
+      "Explore the portfolio of Arbaz Murme, a skilled React JS & MERN Stack Developer. Showcasing modern web development projects, creative design, and frontend expertise.",
     url: siteUrl,
     images: [
       {
@@ -47,7 +47,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Arbaz Murme | portfolio",
     description:
-      "View the portfolio of Arbaz Murme, a talented React JS Developer, and explore his projects and designs.",
+      "Explore the portfolio of Arbaz Murme, a skilled React JS & MERN Stack Developer. Showcasing modern web development projects, creative design, and frontend expertise.",
     images: ["/arbazmurme.webp"],
   },
   robots: {

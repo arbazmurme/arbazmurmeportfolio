@@ -4,6 +4,7 @@ export const metadata = {
   title: "About",
   description:
     "Learn more about Arbaz Murme, a passionate React JS Developer with a strong background in web development.",
+  keywords: "Arbaz Murme, Arbaj Murme, React JS Developer, MERN Stack Developer, Next.js Developer, Frontend Web Developer, Full Stack Developer, JavaScript Developer, Hire Web Developer India, Freelance Web Developer Solapur, Web Developer in Solapur, Best Developer in Solapur, React Developer Maharashtra, Custom Website Development, UI/UX Developer, Arbaz Murme Portfolio",
   openGraph: {
     title: "Arbaz Murme | About",
     description:
