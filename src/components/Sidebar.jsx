@@ -6,6 +6,7 @@ import CustomIconAbout from "./MainSidebar/CustomIconAbout";
 import CustomIconportfolio from "./MainSidebar/CustomIconPortfolio";
 import CustomIconContact from "./MainSidebar/CustomIconContact";
 import CustomIconWork from "./MainSidebar/CustomIconWork";
+import CustomIconBlog from "./MainSidebar/CustomIconBlog";
 import BottomNavigation from "./BottomNavigation";
 const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,6 +41,10 @@ const Sidebar = () => {
           />
           <CustomIconContact
             isActive={activeIndex === 4}
+            sendDataToParent={handleItemClick}
+          />
+          <CustomIconBlog
+            isActive={activeIndex === 5}
             sendDataToParent={handleItemClick}
           />
         </div>

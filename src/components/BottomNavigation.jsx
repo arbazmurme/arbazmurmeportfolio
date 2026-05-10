@@ -4,6 +4,7 @@ import {
   HomeIcon,
   BriefcaseIcon,
   CodeBracketSquareIcon,
+  BookOpenIcon,
   UserIcon,
   EnvelopeIcon,
 } from "@heroicons/react/20/solid";
@@ -37,13 +38,14 @@ const BottomNavigation = () => {
     { href: "/work", icon: CodeBracketSquareIcon },
     { href: "/portfolio", icon: BriefcaseIcon },
     { href: "/contact", icon: EnvelopeIcon },
+    { href: "/blog", icon: BookOpenIcon },
   ];
 
   return (
     <div
       className={`fixed bottom-0 left-0 z-50 w-full h-16 ${styles.background}`}
     >
-      <div className="grid h-full max-w-lg grid-cols-5 mx-auto items-center font-medium">
+      <div className="grid h-full max-w-xl grid-cols-6 mx-auto items-center font-medium">
         {navigationItems.map((item, index) => (
           <TransitionLink
             href={item.href}

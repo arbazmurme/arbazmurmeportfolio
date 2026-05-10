@@ -1,6 +1,7 @@
 import advancedBlogs from "@/data/advancedBlogs";
 import BlogLayout from "./BlogLayout";
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/JsonLd";
 
 /* ===============================
    STATIC PARAMS
@@ -57,5 +58,25 @@ export default function Page({ params }) {
   const post = advancedBlogs.find((blog) => blog.slug === params.slug);
   if (!post) return notFound();
 
-  return <BlogLayout post={post} />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.metaTitle || post.title,
+    description: post.metaDescription || post.shortDescription,
+    datePublished: post.createdAt,
+    dateModified: post.createdAt,
+    author: { "@type": "Person", name: "Arbaz Murme" },
+    image: [`https://arbazmurme.vercel.app${post.featuredImage?.url || ""}`],
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://arbazmurme.vercel.app/blog/${post.slug}`,
+    },
+  };
+
+  return (
+    <>
+      <JsonLd data={jsonLd} />
+      <BlogLayout post={post} />
+    </>
+  );
 }

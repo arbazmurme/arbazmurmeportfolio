@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Roboto } from "next/font/google";
+import JsonLd from "@/components/JsonLd";
 
 const siteUrl = "https://arbazmurme.vercel.app";
 
@@ -81,6 +82,26 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
+  const jsonLdWebsite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Arbaz Murme Portfolio",
+    url: siteUrl,
+    inLanguage: "en",
+  };
+
+  const jsonLdPerson = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Arbaz Murme",
+    url: siteUrl,
+    jobTitle: "MERN Stack Developer",
+    sameAs: [
+      "https://www.linkedin.com/in/arbaj-murme-4493031a3/",
+      "https://github.com/arbazmurme",
+    ],
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={roboto.variable}>
@@ -100,6 +121,8 @@ export default function RootLayout({ children }) {
           }}
         />
         <GoogleAnalytics gaId="G-GJ855RZWML" />
+        <JsonLd data={jsonLdWebsite} />
+        <JsonLd data={jsonLdPerson} />
         <ThemeProvider>
           <Sidebar />
           {children}
