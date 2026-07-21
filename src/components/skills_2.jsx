@@ -40,16 +40,6 @@ const Skills = () => {
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
-        <motion.h2
-          className="text-3xl font-bold text-center mb-8"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className=" text-6xl my-4">
-            MY <span className="text-[#ffb400]">SKILLS</span>
-          </p>
-        </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Frontend Technologies */}
           <motion.div

@@ -7,26 +7,62 @@
    Avoids runtime style injection and reduces layout work.
 -------------------------------------------------------- */
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-40px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-40px);
+  }
 }
 
 @keyframes floatParticle {
-  0% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100vh) translateX(100px);
+    opacity: 0;
+  }
 }
 
-.animate-gradient { animation: gradientMove 12s ease infinite; }
-.animate-float { animation: float 10s linear infinite; }
-.animation-delay-2000 { animation-delay: 2s; }
+.animate-gradient {
+  animation: gradientMove 12s ease infinite;
+}
+
+.animate-float {
+  animation: float 10s linear infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
 
 .scroll-reveal {
   opacity: 0;
@@ -42,19 +78,27 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .animate-gradient,
   .animate-float {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
-  .scroll-reveal { transition: none; }
+
+  .scroll-reveal {
+    transition: none;
+  }
 }
 
 :root {
-  --background-color-light: #FBF5F3; /* Light background */
-  --text-color-light: #000022; /* Dark text */
-  --background-color-dark: #000022; /* Dark background */
-  --text-color-dark: #FBF5F3; /* Light text */
+  --background-color-light: #FBF5F3;
+  /* Light background */
+  --text-color-light: #000022;
+  /* Dark text */
+  --background-color-dark: #000022;
+  /* Dark background */
+  --text-color-dark: #FBF5F3;
+  /* Light text */
 }
 
 
@@ -70,12 +114,16 @@ body.dark-mode {
   color: var(--text-color-dark);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-roboto), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight: 700; /* Bold */
+  font-weight: 700;
+  /* Bold */
 }
 
 p {
   font-family: var(--font-roboto), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  font-weight: 400; /* Regular */
+  font-weight: 400;
+  /* Regular */
 }
