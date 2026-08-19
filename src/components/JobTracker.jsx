@@ -17,8 +17,8 @@ import {
   BuildingOfficeIcon,
   UserGroupIcon,
   AcademicCapIcon,
-  LinkIcon,
-  ChatBubbleLeftRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 
 const initialFormState = {
@@ -42,7 +42,13 @@ export default function JobTracker() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
-  
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [limit, setLimit] = useState(10);
+
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -52,15 +58,34 @@ export default function JobTracker() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    fetchApplications();
-  }, []);
+    fetchApplications(currentPage, limit, searchQuery, statusFilter);
+  }, [currentPage, limit, statusFilter]);
 
-  const fetchApplications = async () => {
+  // Debounced Search trigger
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchApplications(1, limit, searchQuery, statusFilter);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const fetchApplications = async (page = 1, pageLimit = 10, search = "", status = "All") => {
     try {
       setLoading(true);
-      const response = await api.get("/api/v1/job-applications");
-      if (response.data && response.data.data) {
-        setApplications(response.data.data);
+      const response = await api.get("/api/v1/job-applications", {
+        params: {
+          page,
+          limit: pageLimit,
+          search,
+          status,
+        },
+      });
+
+      if (response.data) {
+        setApplications(response.data.data || []);
+        setTotalPages(response.data.totalPages || 1);
+        setTotalCount(response.data.totalCount || 0);
+        setCurrentPage(response.data.currentPage || 1);
       }
     } catch (error) {
       console.error("Error fetching job applications:", error);
@@ -87,12 +112,12 @@ export default function JobTracker() {
       platform: appItem.platform || "LinkedIn",
       dateApplied: appItem.dateApplied ? new Date(appItem.dateApplied).toISOString().split("T")[0] : "",
       status: appItem.status || "Applied",
-      companyContacts: appItem.companyContacts?.length ? appItem.companyContacts : [{ name: "", email: "", phone: "", designation: "" }],
-      interviewRounds: appItem.interviewRounds?.length ? appItem.interviewRounds : [{ roundName: "", roundDate: "", status: "Pending", interviewerName: "", questions: [""], whereIGotStuck: "", feedback: "" }],
-      responseFeedback: appItem.responseFeedback?.length ? appItem.responseFeedback : [{ date: "", responseType: "Email", status: "", notes: "" }],
-      whereIGotStuck: appItem.whereIGotStuck?.length ? appItem.whereIGotStuck : [{ topic: "", description: "" }],
-      actionItems: appItem.actionItems?.length ? appItem.actionItems : [{ task: "", isCompleted: false }],
-      usefulLinksNotes: appItem.usefulLinksNotes?.length ? appItem.usefulLinksNotes : [{ title: "", url: "", note: "" }],
+      companyContacts: appItem.companyContacts?.length ? appItem.companyContacts : [],
+      interviewRounds: appItem.interviewRounds?.length ? appItem.interviewRounds : [],
+      responseFeedback: appItem.responseFeedback?.length ? appItem.responseFeedback : [],
+      whereIGotStuck: appItem.whereIGotStuck?.length ? appItem.whereIGotStuck : [],
+      actionItems: appItem.actionItems?.length ? appItem.actionItems : [],
+      usefulLinksNotes: appItem.usefulLinksNotes?.length ? appItem.usefulLinksNotes : [],
     });
     setIsModalOpen(true);
   };
@@ -108,7 +133,7 @@ export default function JobTracker() {
     if (!window.confirm("Are you sure you want to delete this job application?")) return;
     try {
       await api.delete(`/api/v1/job-applications/${id}`);
-      setApplications(applications.filter((item) => item._id !== id));
+      fetchApplications(currentPage, limit, searchQuery, statusFilter);
     } catch (error) {
       console.error("Error deleting job application:", error);
       alert("Failed to delete application");
@@ -131,7 +156,7 @@ export default function JobTracker() {
         await api.post("/api/v1/job-applications", formData);
       }
       setIsModalOpen(false);
-      fetchApplications();
+      fetchApplications(currentPage, limit, searchQuery, statusFilter);
     } catch (error) {
       console.error("Error saving job application:", error);
       alert("Failed to save job application");
@@ -172,6 +197,7 @@ export default function JobTracker() {
 
   const handleAddQuestion = (roundIndex) => {
     const updatedRounds = [...formData.interviewRounds];
+    if (!updatedRounds[roundIndex].questions) updatedRounds[roundIndex].questions = [];
     updatedRounds[roundIndex].questions.push("");
     setFormData({ ...formData, interviewRounds: updatedRounds });
   };
@@ -182,18 +208,7 @@ export default function JobTracker() {
     setFormData({ ...formData, interviewRounds: updatedRounds });
   };
 
-  // Filtered Applications
-  const filteredApps = applications.filter((appItem) => {
-    const matchesSearch =
-      appItem.companyName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      appItem.rolePosition?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      appItem.platform?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === "All" || appItem.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
   // Metrics
-  const totalApps = applications.length;
   const interviewingApps = applications.filter((a) => a.status === "Interviewing").length;
   const offerApps = applications.filter((a) => a.status === "Offer").length;
   const rejectedApps = applications.filter((a) => a.status === "Rejected").length;
@@ -224,8 +239,8 @@ export default function JobTracker() {
             <BriefcaseIcon className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-sm text-gray-400 font-medium">Total Applied</p>
-            <h4 className="text-2xl font-bold text-white">{totalApps}</h4>
+            <p className="text-sm text-gray-400 font-medium">Total My Applications</p>
+            <h4 className="text-2xl font-bold text-white">{totalCount}</h4>
           </div>
         </div>
 
@@ -280,7 +295,10 @@ export default function JobTracker() {
             <FunnelIcon className="w-4 h-4 text-gray-400" />
             <select
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                setCurrentPage(1);
+              }}
               className="w-full sm:w-auto bg-gray-950 border border-gray-800 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#ffb400]"
             >
               <option value="All">All Statuses</option>
@@ -325,19 +343,21 @@ export default function JobTracker() {
               {loading ? (
                 <tr>
                   <td colSpan="8" className="text-center py-12 text-gray-500">
-                    Loading job applications...
+                    Loading your job applications...
                   </td>
                 </tr>
-              ) : filteredApps.length === 0 ? (
+              ) : applications.length === 0 ? (
                 <tr>
                   <td colSpan="8" className="text-center py-12 text-gray-500">
-                    No job applications found matching your criteria.
+                    No job applications found for your account.
                   </td>
                 </tr>
               ) : (
-                filteredApps.map((item, idx) => (
+                applications.map((item, idx) => (
                   <tr key={item._id} className="hover:bg-gray-800/40 transition-colors">
-                    <td className="px-6 py-4 font-semibold text-gray-400">{item.sNo || idx + 1}</td>
+                    <td className="px-6 py-4 font-semibold text-gray-400">
+                      {item.sNo || (currentPage - 1) * limit + idx + 1}
+                    </td>
                     <td className="px-6 py-4 font-semibold text-white">
                       {item.companyName}
                       {item.jobLocation && (
@@ -356,9 +376,6 @@ export default function JobTracker() {
                           <p className="text-gray-200 font-medium">{item.companyContacts[0].name}</p>
                           {item.companyContacts[0].email && (
                             <p className="text-gray-400">{item.companyContacts[0].email}</p>
-                          )}
-                          {item.companyContacts[0].phone && (
-                            <p className="text-gray-400">{item.companyContacts[0].phone}</p>
                           )}
                         </div>
                       ) : (
@@ -404,6 +421,49 @@ export default function JobTracker() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Footer */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 bg-gray-950 border-t border-gray-800 text-xs text-gray-400">
+          <div className="flex items-center gap-2">
+            <span>Show</span>
+            <select
+              value={limit}
+              onChange={(e) => {
+                setLimit(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+              className="bg-gray-900 border border-gray-800 rounded px-2 py-1 text-white focus:outline-none focus:border-[#ffb400]"
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+            </select>
+            <span>entries per page (Total {totalCount} applications)</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="p-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ChevronLeftIcon className="w-4 h-4" />
+            </button>
+
+            <span className="font-semibold text-white px-2">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <button
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages || totalPages === 0}
+              className="p-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ChevronRightIcon className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -534,15 +594,13 @@ export default function JobTracker() {
 
                 {formData.companyContacts.map((contact, idx) => (
                   <div key={idx} className="p-3 bg-gray-950 border border-gray-800 rounded-xl relative space-y-3">
-                    {formData.companyContacts.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveArrayItem("companyContacts", idx)}
-                        className="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs"
-                      >
-                        Remove
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveArrayItem("companyContacts", idx)}
+                      className="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs"
+                    >
+                      Remove
+                    </button>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                       <input
                         type="text"
@@ -604,15 +662,13 @@ export default function JobTracker() {
 
                 {formData.interviewRounds.map((round, rIdx) => (
                   <div key={rIdx} className="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-3 relative">
-                    {formData.interviewRounds.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveArrayItem("interviewRounds", rIdx)}
-                        className="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs"
-                      >
-                        Remove Round
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveArrayItem("interviewRounds", rIdx)}
+                      className="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs"
+                    >
+                      Remove Round
+                    </button>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       <input
                         type="text"
@@ -652,7 +708,7 @@ export default function JobTracker() {
                           + Add Question
                         </button>
                       </div>
-                      {round.questions.map((q, qIdx) => (
+                      {round.questions?.map((q, qIdx) => (
                         <div key={qIdx} className="flex items-center gap-2">
                           <input
                             type="text"
@@ -661,15 +717,13 @@ export default function JobTracker() {
                             onChange={(e) => handleQuestionChange(rIdx, qIdx, e.target.value)}
                             className="w-full bg-gray-900 border border-gray-800 rounded-lg px-2.5 py-1 text-xs text-white"
                           />
-                          {round.questions.length > 1 && (
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveQuestion(rIdx, qIdx)}
-                              className="text-red-400 text-xs px-1"
-                            >
-                              ✕
-                            </button>
-                          )}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveQuestion(rIdx, qIdx)}
+                            className="text-red-400 text-xs px-1"
+                          >
+                            ✕
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -712,15 +766,13 @@ export default function JobTracker() {
                   </div>
                   {formData.whereIGotStuck.map((item, idx) => (
                     <div key={idx} className="p-2.5 bg-gray-950 border border-gray-800 rounded-lg space-y-2 relative">
-                      {formData.whereIGotStuck.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveArrayItem("whereIGotStuck", idx)}
-                          className="absolute top-1 right-2 text-red-400 text-[11px]"
-                        >
-                          ✕
-                        </button>
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveArrayItem("whereIGotStuck", idx)}
+                        className="absolute top-1 right-2 text-red-400 text-[11px]"
+                      >
+                        ✕
+                      </button>
                       <input
                         type="text"
                         placeholder="Topic (e.g. System Design)"
@@ -768,15 +820,13 @@ export default function JobTracker() {
                         onChange={(e) => handleArrayChange("actionItems", idx, "task", e.target.value)}
                         className="w-full bg-gray-900 border border-gray-800 rounded px-2 py-1 text-xs text-white"
                       />
-                      {formData.actionItems.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveArrayItem("actionItems", idx)}
-                          className="text-red-400 text-xs px-1"
-                        >
-                          ✕
-                        </button>
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveArrayItem("actionItems", idx)}
+                        className="text-red-400 text-xs px-1"
+                      >
+                        ✕
+                      </button>
                     </div>
                   ))}
                 </div>

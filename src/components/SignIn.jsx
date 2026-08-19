@@ -143,23 +143,6 @@ export default function LoginPage() {
             )}
           </button>
         </form>
-
-        {/* Toggle Register / Login */}
-        <div className="text-center pt-2 border-t border-gray-800">
-          <button
-            type="button"
-            onClick={() => {
-              setIsRegister(!isRegister);
-              setError("");
-            }}
-            className="text-xs text-gray-400 hover:text-[#ffb400] underline transition-colors"
-          >
-            {isRegister
-              ? "Already have an admin account? Log In"
-              : "Need to create an admin account? Register"}
-          </button>
-        </div>
-
       </div>
     </div>
   );
