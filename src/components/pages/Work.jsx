@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -121,11 +121,21 @@ const techIcons = {
   "#google-translate-api": <FaJsSquare />,
 };
 
+// Project categories
+const CATEGORIES = [
+  { key: "All", label: "All Projects" },
+  { key: "Web", label: "Web" },
+  { key: "App", label: "App" },
+  { key: "Dashboard", label: "Dashboard" },
+  { key: "API", label: "API / Backend" },
+];
+
 // Projects data – one source of truth
 const projects = [
   {
     title: "EWShopping - AI Powered Enterprise Multi-Vendor Marketplace",
     date: "Completed",
+    category: ["Web", "App", "Dashboard"],
     techs: [
       "#next.js",
       "#react.js",
@@ -164,6 +174,7 @@ const projects = [
   {
     title: "SalonTreat - Salon & Pet Care Booking Platform",
     date: "Completed",
+    category: ["Web", "App", "Dashboard"],
     techs: [
       "#react-native",
       "#next.js",
@@ -198,6 +209,7 @@ const projects = [
   {
     title: "Primera Dental Hub – Dental Clinic Website",
     date: "Completed",
+    category: ["Web"],
     techs: [
       "#next.js",
       "#react.js",
@@ -222,6 +234,7 @@ const projects = [
   {
     title: "Coempt - SEO Optimized Business Website",
     date: "Completed",
+    category: ["Web"],
     techs: [
       "#next.js",
       "#react.js",
@@ -245,6 +258,7 @@ const projects = [
   {
     title: "MyGoldenWeb - Real Estate Property Platform",
     date: "Completed",
+    category: ["Web", "App"],
     techs: [
       "#next.js",
       "#react.js",
@@ -277,6 +291,7 @@ const projects = [
   {
     title: "KiranaWorld - Multi-Vendor E-Commerce Platform",
     date: "Completed",
+    category: ["Web", "App", "Dashboard"],
     techs: [
       "#react-native",
       "#next.js",
@@ -310,6 +325,7 @@ const projects = [
   {
     title: "Driveome - Ride & Package Transfer Platform",
     date: "Completed",
+    category: ["Web", "App", "Dashboard"],
     techs: [
       "#react-native",
       "#next.js",
@@ -349,6 +365,7 @@ const projects = [
   {
     title: "Rajyabharat News Website",
     date: "January 2025 - February 2025",
+    category: ["Web", "Dashboard"],
     techs: [
       "#react.js",
       "#next.js",
@@ -377,6 +394,7 @@ const projects = [
   {
     title: "Bootcamp Platform - Lejhro",
     date: "December 2024",
+    category: ["Web"],
     techs: ["#react.js", "#next.js", "#tailwind.css", "#responsive-design"],
     description:
       "Dynamic and responsive UI components for Lejhro Bootcamp platform with performance-focused frontend architecture. Implemented modern design patterns and optimized rendering for seamless user experience.",
@@ -389,6 +407,7 @@ const projects = [
   {
     title: "AZ Shop - E-Commerce Platform",
     date: "Completed",
+    category: ["Web", "Dashboard"],
     techs: [
       "#react.js",
       "#next.js",
@@ -413,6 +432,7 @@ const projects = [
   {
     title: "AZ Shop - Backend API",
     date: "Completed",
+    category: ["API"],
     techs: [
       "#node.js",
       "#express.js",
@@ -433,6 +453,7 @@ const projects = [
   {
     title: "RentNow - Rental Platform",
     date: "Completed",
+    category: ["Web"],
     techs: [
       "#node.js",
       "#express.js",
@@ -454,6 +475,7 @@ const projects = [
   {
     title: "Recipe Web App",
     date: "March 2024",
+    category: ["Web"],
     techs: [
       "#react.js",
       "#tailwind.css",
@@ -472,6 +494,7 @@ const projects = [
   {
     title: "Sajid Screens Landing Page",
     date: "Freelance Project",
+    category: ["Web"],
     techs: [
       "#bootstrap",
       "#javascript",
@@ -602,6 +625,7 @@ const ProjectCard = ({ project, index }) => {
 
 const LatestWorks = () => {
   const sectionRef = useRef(null);
+  const [activeTab, setActiveTab] = useState("All");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -690,15 +714,45 @@ const LatestWorks = () => {
         </div>
       </div>
 
-      {/* 3-Column Grid Projects */}
+      {/* Category Filter Tabs */}
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-10 relative z-1">
+        {CATEGORIES.map((cat) => {
+          const count = cat.key === "All"
+            ? projects.length
+            : projects.filter((p) => p.category?.includes(cat.key)).length;
+          return (
+            <button
+              key={cat.key}
+              onClick={() => setActiveTab(cat.key)}
+              className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 border ${
+                activeTab === cat.key
+                  ? "bg-[#ffb400] text-black border-[#ffb400] shadow-lg shadow-[#ffb400]/30"
+                  : "bg-gray-900/60 text-gray-400 border-gray-700 hover:border-[#ffb400]/50 hover:text-[#ffb400]"
+              }`}
+            >
+              {cat.label}
+              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                activeTab === cat.key ? "bg-black/20 text-black" : "bg-gray-800 text-gray-400"
+              }`}>
+                {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* 3-Column Grid Projects (filtered) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-1">
-        {projects.map((project, idx) => (
-          <ProjectCard
-            key={`${project.title}-${idx}`}
-            project={project}
-            index={idx}
-          />
-        ))}
+        {projects
+          .filter((p) => activeTab === "All" || p.category?.includes(activeTab))
+          .map((project, idx) => (
+            <ProjectCard
+              key={`${project.title}-${idx}`}
+              project={project}
+              index={idx}
+            />
+          ))
+        }
       </div>
     </section>
   );
