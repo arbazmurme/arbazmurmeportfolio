@@ -122,7 +122,7 @@ const ContactForm = () => {
               name="name"
               autoComplete="given-name"
               placeholder="John Doe"
-              className="w-full px-4 py-3 border border-gray-700 rounded-lg focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
+              className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
               value={formData.name}
               onChange={handleChange}
             />
@@ -146,7 +146,7 @@ const ContactForm = () => {
               name="email"
               autoComplete="email"
               placeholder="john@example.com"
-              className="w-full px-4 py-3 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
+              className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300"
               value={formData.email}
               onChange={handleChange}
             />
@@ -170,7 +170,7 @@ const ContactForm = () => {
             name="message"
             rows="5"
             placeholder="Tell me about your project or inquiry..."
-            className="w-full px-4 py-3 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300 resize-none"
+            className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:border-[#ffb400] focus:ring-1 focus:ring-[#ffb400] transition-all duration-300 resize-none"
             value={formData.message}
             onChange={handleChange}
           />
