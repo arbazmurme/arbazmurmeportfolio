@@ -1,7 +1,10 @@
 import LoginPage from "@/components/SignIn";
 
-export default function Home() {
-  return (
-    <LoginPage/>
-  );
+export const metadata = {
+  title: "Admin Login | Arbaz Murme",
+  description: "Admin login portal for Arbaz Murme portfolio",
+};
+
+export default function AdminLoginPage() {
+  return <LoginPage />;
 }
