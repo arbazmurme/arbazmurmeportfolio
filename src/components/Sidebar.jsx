@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import ThemeToggleButton from "./ThemeToggleButton";
 import CustomIconHome from "./MainSidebar/CustomIconHome";
 import CustomIconAbout from "./MainSidebar/CustomIconAbout";
@@ -8,8 +9,15 @@ import CustomIconContact from "./MainSidebar/CustomIconContact";
 import CustomIconWork from "./MainSidebar/CustomIconWork";
 import CustomIconBlog from "./MainSidebar/CustomIconBlog";
 import BottomNavigation from "./BottomNavigation";
+
 const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const pathname = usePathname();
+
+  // Hide sidebar navigation on all admin routes
+  if (pathname && pathname.startsWith("/admin")) {
+    return null;
+  }
 
   const handleItemClick = (index) => {
     setActiveIndex(index);
