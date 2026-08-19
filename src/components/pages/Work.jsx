@@ -508,72 +508,67 @@ const ProjectCard = ({ project, index }) => {
     imageSrc,
     imageAlt,
   } = project;
-  const isEven = index % 2 === 0;
 
   return (
     <div
-      className={`relative flex flex-col lg:flex-row items-center gap-8 lg:gap-16 mb-24 scroll-reveal ${
-        isEven ? "" : "lg:flex-row-reverse"
-      }`}
-      style={{ animationDelay: `${index * 0.15}s` }}
+      className="group relative flex flex-col bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden hover:border-[#ffb400]/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#ffb400]/10 scroll-reveal"
+      style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Image */}
-      <div className="w-full lg:w-1/2 relative group">
-        <Link href={projectLink} target="_blank" rel="noopener noreferrer">
-          <div className="relative overflow-hidden rounded-2xl shadow-2xl border border-gray-800">
-            <Image
-              src={imageSrc}
-              alt={imageAlt}
-              width={600}
-              height={400}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl"></div>
-          </div>
-        </Link>
-      </div>
+      <Link href={projectLink} target="_blank" rel="noopener noreferrer" className="relative overflow-hidden block">
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          width={600}
+          height={360}
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="w-full h-52 object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <span className="absolute top-3 right-3 text-xs text-[#ffb400] bg-gray-900/80 backdrop-blur-sm px-2.5 py-1 rounded-full border border-[#ffb400]/30">
+          {date}
+        </span>
+      </Link>
 
       {/* Content */}
-      <div className="w-full lg:w-1/2 space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <h3 className="text-2xl md:text-3xl font-bold text-[#ffb400]">
-            {title}
-          </h3>
-          <span className="text-base text-[#ffb400] bg-gray-800/80 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-700">
-            {date}
-          </span>
-        </div>
+      <div className="flex flex-col flex-1 p-5 space-y-3">
+        <h3 className="text-base font-bold text-[#ffb400] leading-snug line-clamp-2">
+          {title}
+        </h3>
 
-        <p className="leading-relaxed text-justify">
+        <p className="text-xs text-gray-400 leading-relaxed line-clamp-3">
           {description}
         </p>
 
         {/* Tech stack */}
-        <div className="flex flex-wrap gap-2 pt-2">
-          {techs.map((tag) => (
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          {techs.slice(0, 6).map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 px-3 py-1 text-xs md:text-sm bg-gray-800/80 text-gray-200 rounded-full border border-gray-700 hover:border-[#ffb400] hover:text-[#ffb400] hover:bg-gray-800 transition-all duration-300"
+              className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] bg-gray-800/80 text-gray-300 rounded-full border border-gray-700 hover:border-[#ffb400] hover:text-[#ffb400] transition-all duration-200"
             >
-              <span className="text-[#ffb400] text-sm">{getTechIcon(tag)}</span>
+              <span className="text-[#ffb400] text-[10px]">{getTechIcon(tag)}</span>
               {tag.replace("#", "")}
             </span>
           ))}
+          {techs.length > 6 && (
+            <span className="px-2 py-0.5 text-[10px] bg-gray-800/60 text-gray-500 rounded-full border border-gray-700">
+              +{techs.length - 6} more
+            </span>
+          )}
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-wrap gap-3 pt-4">
+        <div className="flex flex-wrap gap-2 pt-2 mt-auto">
           {liveDemo && (
             <a
               href={liveDemo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#ffb400] text-black font-semibold px-5 py-2.5 rounded-lg hover:bg-[#e09e00] transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#ffb400]/20 transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-1.5 text-xs bg-[#ffb400] text-black font-semibold px-3 py-1.5 rounded-lg hover:bg-[#e09e00] transition-all duration-300 hover:-translate-y-0.5"
             >
-              <FaExternalLinkAlt className="text-sm" />
-              <span>Live Demo</span>
+              <FaExternalLinkAlt className="text-[10px]" />
+              Live Demo
             </a>
           )}
           {playStoreLinks?.map((link, i) => (
@@ -582,14 +577,10 @@ const ProjectCard = ({ project, index }) => {
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-green-600 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-600/20 transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-1.5 text-xs bg-green-600 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-green-700 transition-all duration-300 hover:-translate-y-0.5"
             >
-              <FaGooglePlay className="text-lg" />
-              <span>
-                {playStoreLinks.length > 1
-                  ? `Play Store ${i + 1}`
-                  : "Play Store"}
-              </span>
+              <FaGooglePlay className="text-[10px]" />
+              {playStoreLinks.length > 1 ? `Play Store ${i + 1}` : "Play Store"}
             </a>
           ))}
           {github && (
@@ -597,10 +588,10 @@ const ProjectCard = ({ project, index }) => {
               href={github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-gray-700 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-gray-600/20 transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-1.5 text-xs bg-gray-700 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-gray-600 transition-all duration-300 hover:-translate-y-0.5"
             >
-              <FaGithub className="text-lg" />
-              <span>GitHub</span>
+              <FaGithub className="text-[10px]" />
+              GitHub
             </a>
           )}
         </div>
@@ -699,14 +690,8 @@ const LatestWorks = () => {
         </div>
       </div>
 
-      {/* Timeline projects */}
-      <div className="relative z-1">
-        {/* Central line (visible on large screens) with glow effect */}
-        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#ffb400]/0 via-[#ffb400] to-[#ffb400]/0"></div>
-          <div className="absolute inset-0 bg-[#ffb400] blur-sm opacity-50 animate-pulse"></div>
-        </div>
-
+      {/* 3-Column Grid Projects */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-1">
         {projects.map((project, idx) => (
           <ProjectCard
             key={`${project.title}-${idx}`}
