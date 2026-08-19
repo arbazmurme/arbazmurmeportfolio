@@ -162,6 +162,82 @@ const projects = [
     imageAlt: "EWShopping AI Enterprise Marketplace",
   },
   {
+    title: "DOMIN8 Fitness Club - Premium Gym & Fitness Website",
+    date: "Completed",
+    category: ["Web"],
+    techs: [
+      "#next.js",
+      "#react.js",
+      "#tailwind.css",
+      "#responsive-design",
+      "#seo-optimization",
+      "#modern-ui-ux",
+      "#performance-optimization",
+      "#contact-form",
+    ],
+    description:
+      "Modern and responsive fitness club website developed for DOMIN8 Fitness Club, Solapur. The website showcases gym facilities, professional trainers, fitness programs, membership plans, special offers, member transformations, testimonials, FAQs, and contact information. Designed with a bold fitness-focused UI, responsive layouts, clear call-to-actions, and optimized user experience across desktop and mobile devices.",
+    liveDemo: "https://domin8-fitness.vercel.app/",
+    github: "",
+    projectLink: "https://domin8-fitness.vercel.app/",
+    imageSrc: "/domin8-fitness.png",
+    imageAlt: "DOMIN8 Fitness Club Solapur",
+  },
+  {
+    title: "THE FOTO MILL - Premium Photography & Cinematography Studio",
+    date: "Completed",
+    category: ["Web"],
+    techs: [
+      "#next.js",
+      "#react.js",
+      "#tailwind.css",
+      "#responsive-design",
+      "#modern-ui-ux",
+      "#seo-optimization",
+      "#performance-optimization",
+      "#image-optimization",
+      "#whatsapp-integration",
+      "#booking-system",
+      "#package-calculator",
+      "#availability-calendar",
+    ],
+    description:
+      "Premium photography and cinematography studio website built for THE FOTO MILL. The platform showcases wedding photography, pre-wedding shoots, birthday and corporate events, baby photography, outdoor shoots, cinematic videos, drone coverage, and product photography. Includes portfolio gallery, cinematic video showcase, photography packages, interactive custom package calculator, booking availability calendar, WhatsApp booking integration, FAQ section, and contact inquiry system with a modern cinematic UI.",
+    liveDemo: "https://thefotomill.vercel.app/",
+    github: "",
+    projectLink: "https://thefotomill.vercel.app/",
+    imageSrc: "/thefotomill.png",
+    imageAlt: "THE FOTO MILL Premium Photography and Cinematography Studio",
+  },
+  {
+    title: "FoodSide - Highway Food Delivery & Ordering Platform",
+    date: "Completed",
+    category: ["Web", "App"],
+    techs: [
+      "#next.js",
+      "#react.js",
+      "#tailwind.css",
+      "#responsive-design",
+      "#food-delivery",
+      "#online-ordering",
+      "#route-planning",
+      "#location-services",
+      "#cart-management",
+      "#authentication",
+      "#order-management",
+      "#payment-integration",
+    ],
+    description:
+      "Full-stack highway food delivery and online ordering platform designed to help travelers discover and order quality meals along their journey. Features route-based food discovery with From and To locations, travel date and time selection, restaurant menu browsing, cart management, user authentication, order tracking, profile management, and a responsive mobile-first experience. The platform also includes restaurant information, food quality highlights, customer statistics, promotional subscriptions, and dedicated dining and ordering workflows.",
+    liveDemo: "https://foodside.co.in/",
+    playStoreLinks: ["https://play.google.com/store/apps/details?id=com.foodsiderider", "https://play.google.com/store/apps/details?id=com.foodsidedelivery", "https://play.google.com/store/apps/details?id=com.foodside"],
+    github: "",
+    projectLink: "https://foodside.co.in/",
+    imageSrc: "/foodside.png",
+    imageAlt: "FoodSide Highway Food Delivery Platform",
+  },
+
+  {
     title: "SalonTreat - Salon & Pet Care Booking Platform",
     date: "Completed",
     techs: [
@@ -522,7 +598,7 @@ const ProjectCard = ({ project, index }) => {
           width={600}
           height={360}
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="w-full h-52 object-cover transition-transform duration-700 group-hover:scale-105"
+          className="w-full h-52 object-contain transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <span className="absolute top-3 right-3 text-xs text-[#ffb400] bg-gray-900/80 backdrop-blur-sm px-2.5 py-1 rounded-full border border-[#ffb400]/30">
