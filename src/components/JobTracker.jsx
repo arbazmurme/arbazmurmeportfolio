@@ -29,22 +29,12 @@ const initialFormState = {
   platform: "LinkedIn",
   dateApplied: new Date().toISOString().split("T")[0],
   status: "Applied",
-  companyContacts: [{ name: "", email: "", phone: "", designation: "" }],
-  interviewRounds: [
-    {
-      roundName: "Round 1 - Technical",
-      roundDate: "",
-      status: "Pending",
-      interviewerName: "",
-      questions: [""],
-      whereIGotStuck: "",
-      feedback: "",
-    },
-  ],
-  responseFeedback: [{ date: new Date().toISOString().split("T")[0], responseType: "Email", status: "", notes: "" }],
-  whereIGotStuck: [{ topic: "", description: "" }],
-  actionItems: [{ task: "", isCompleted: false }],
-  usefulLinksNotes: [{ title: "", url: "", note: "" }],
+  companyContacts: [],
+  interviewRounds: [],
+  responseFeedback: [],
+  whereIGotStuck: [],
+  actionItems: [],
+  usefulLinksNotes: [],
 };
 
 export default function JobTracker() {
