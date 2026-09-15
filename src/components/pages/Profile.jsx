@@ -119,11 +119,11 @@ const ExperienceEducation = () => {
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-pink-500/10 rounded-full blur-3xl" />
       </div>
 
-      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white mb-10 relative z-10">
+      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white mb-10 relative z-1">
         My <span className="text-[#ffb400]">Journey</span>
       </h2>
 
-      <div className="relative z-10">
+      <div className="relative z-1">
         <div className="absolute top-0 left-6 md:left-1/2 md:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-[#ffb400] via-[#ffb400]/40 to-[#ffb400]" />
 
         <div className="space-y-6">
@@ -137,7 +137,7 @@ const ExperienceEducation = () => {
                   }`}
               >
                 {/* Icon node */}
-                <div className="shrink-0 relative z-10 md:absolute md:left-1/2 md:-translate-x-1/2">
+                <div className="shrink-0 relative z-1 md:absolute md:left-1/2 md:-translate-x-1/2">
                   <div className="w-11 h-11 rounded-full flex items-center justify-center bg-[#1e1e1e] border-2 border-[#ffb400] shadow-[0_0_12px_rgba(255,180,0,0.35)] group-hover:shadow-[0_0_20px_rgba(255,180,0,0.6)] group-hover:scale-110 transition-all duration-300">
                     <Icon className="text-[#ffb400] text-base" />
                   </div>
