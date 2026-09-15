@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import TypingText from "../../context/TypingText";
 import { useMemo } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { PORTFOLIO_STATS, SOCIAL_LINKS } from "@/data/portfolioData";
 
 // ── Social icons (inline SVG so no extra dep needed) ──────────────────────────
 const GithubIcon = () => (
@@ -40,17 +41,17 @@ const StarIcon = () => (
 );
 
 const stats = [
-  { value: "2+", label: "Years Exp." },
-  { value: "20+", label: "Projects" },
-  { value: "10+", label: "Clients" },
+  { value: PORTFOLIO_STATS.yearsExperience, label: "Years Exp." },
+  { value: PORTFOLIO_STATS.projectsCount, label: "Projects" },
+  { value: PORTFOLIO_STATS.clientsCount, label: "Clients" },
 ];
 
 const techStack = ["MongoDB", "Express", "React", "Node.js", "Next.js", "TypeScript"];
 
 const socials = [
-  { href: "https://github.com/", icon: <GithubIcon />, label: "GitHub" },
-  { href: "https://linkedin.com/", icon: <LinkedinIcon />, label: "LinkedIn" },
-  { href: "https://twitter.com/", icon: <TwitterIcon />, label: "Twitter" },
+  { href: SOCIAL_LINKS.github, icon: <GithubIcon />, label: "GitHub" },
+  { href: SOCIAL_LINKS.linkedin, icon: <LinkedinIcon />, label: "LinkedIn" },
+  { href: SOCIAL_LINKS.twitter, icon: <TwitterIcon />, label: "Twitter" },
 ];
 
 // ── Animation variants ─────────────────────────────────────────────────────────

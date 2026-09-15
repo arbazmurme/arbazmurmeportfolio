@@ -1,4 +1,5 @@
 import ContactForm from "../ContactForm";
+import { PERSONAL_INFO } from "@/data/portfolioData";
 
 const Contact = () => {
   return (
@@ -51,9 +52,8 @@ const Contact = () => {
                       Our Address
                     </h3>
                     <p>
-                      Solapur, Maharashtra 413005
+                      {PERSONAL_INFO.address}
                     </p>
-                    <p>India</p>
                   </div>
                 </li>
                 <li className="flex">
@@ -80,10 +80,22 @@ const Contact = () => {
                       Contact
                     </h3>
                     <p className="">
-                      Mobile: +91 9028121976
+                      Mobile:{" "}
+                      <a
+                        href={PERSONAL_INFO.phoneHref}
+                        className="hover:text-[#ffb400] transition-colors"
+                      >
+                        {PERSONAL_INFO.phone}
+                      </a>
                     </p>
                     <p className="">
-                      Mail: arbazmurme@gmail.com
+                      Mail:{" "}
+                      <a
+                        href={PERSONAL_INFO.emailHref}
+                        className="hover:text-[#ffb400] transition-colors"
+                      >
+                        {PERSONAL_INFO.email}
+                      </a>
                     </p>
                   </div>
                 </li>

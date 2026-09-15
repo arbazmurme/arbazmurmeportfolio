@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import SkillsOne from "../skills_2";
+import { PORTFOLIO_STATS, PERSONAL_INFO, SOCIAL_LINKS } from "@/data/portfolioData";
 
 // ─── Icons (inline SVG — no extra deps) ────────────────────────────────────────
 const LocationIcon   = () => <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 shrink-0"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>;
@@ -18,13 +19,13 @@ const LangIcon       = () => <svg viewBox="0 0 24 24" fill="currentColor" classN
 
 // ─── Personal info rows ────────────────────────────────────────────────────────
 const personalInfo = [
-  { icon: <LocationIcon />, label: "Location",    value: "Maharashtra, Solapur" },
-  { icon: <FlagIcon />,     label: "Nationality",  value: "Indian" },
-  { icon: <LangIcon />,     label: "Languages",    value: "English, Hindi, Marathi" },
-  { icon: <MailIcon />,     label: "Email",        value: "arbazmurme@gmail.com",        href: "mailto:arbazmurme@gmail.com" },
-  { icon: <PhoneIcon />,    label: "Phone",        value: "+91 90281 21976",              href: "tel:+919028121976" },
-  { icon: <LinkedinIcon />, label: "LinkedIn",     value: "arbaj-murme-4493031a3",       href: "https://www.linkedin.com/in/arbaj-murme-4493031a3/" },
-  { icon: <GithubIcon />,   label: "GitHub",       value: "arbazmurme",                  href: "https://github.com/arbazmurme" },
+  { icon: <LocationIcon />, label: "Location",    value: PERSONAL_INFO.location },
+  { icon: <FlagIcon />,     label: "Nationality",  value: PERSONAL_INFO.nationality },
+  { icon: <LangIcon />,     label: "Languages",    value: PERSONAL_INFO.languages },
+  { icon: <MailIcon />,     label: "Email",        value: PERSONAL_INFO.email,        href: PERSONAL_INFO.emailHref },
+  { icon: <PhoneIcon />,    label: "Phone",        value: PERSONAL_INFO.phone,        href: PERSONAL_INFO.phoneHref },
+  { icon: <LinkedinIcon />, label: "LinkedIn",     value: "arbaj-murme-4493031a3",       href: SOCIAL_LINKS.linkedin },
+  { icon: <GithubIcon />,   label: "GitHub",       value: "arbazmurme",                  href: SOCIAL_LINKS.github },
 ];
 
 // ─── Skill bars ───────────────────────────────────────────────────────────────
@@ -45,10 +46,10 @@ const skills = [
 
 // ─── Stat cards ───────────────────────────────────────────────────────────────
 const stats = [
-  { value: "2+",  label: "Years Experience" },
-  { value: "20+", label: "Projects Built"   },
-  { value: "10+", label: "Happy Clients"    },
-  { value: "∞",   label: "Lines of Code"   },
+  { value: PORTFOLIO_STATS.yearsExperience, label: "Years Experience" },
+  { value: PORTFOLIO_STATS.projectsCount,   label: "Projects Built"   },
+  { value: PORTFOLIO_STATS.clientsCount,    label: "Happy Clients"    },
+  { value: PORTFOLIO_STATS.linesOfCode,     label: "Lines of Code"    },
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
