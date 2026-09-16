@@ -1,34 +1,73 @@
 import Work from "@/components/pages/Work";
+import JsonLd from "@/components/JsonLd";
 
 export const metadata = {
-  title: "Arbaz Murme | Work",
+  title: "Work & Experience",
   description:
-    "Explore the professional projects and work experience of Arbaz Murme, showcasing his skills in web development and design.",
-  keywords: "Arbaz Murme, Arbaj Murme, React JS Developer, MERN Stack Developer, Next.js Developer, Frontend Web Developer, Full Stack Developer, JavaScript Developer, Hire Web Developer India, Freelance Web Developer Solapur, Web Developer in Solapur, Best Developer in Solapur, React Developer Maharashtra, Custom Website Development, UI/UX Developer, Arbaz Murme Portfolio",
+    "Explore the professional projects, work experience, and tech stacks built by Arbaz Murme, a MERN Stack Developer.",
+  keywords:
+    "Arbaz Murme, Arbaj Murme, React JS Developer, MERN Stack Developer, Next.js Developer, Frontend Web Developer, Full Stack Developer, JavaScript Developer, Hire Web Developer India, Freelance Web Developer Solapur, Web Developer in Solapur, Best Developer in Solapur, React Developer Maharashtra, Custom Website Development, UI/UX Developer, Arbaz Murme Portfolio",
+  alternates: {
+    canonical: "https://arbazmurme.vercel.app/work",
+  },
   openGraph: {
-    title: "Arbaz Murme | Work",
+    title: "Arbaz Murme | Work & Experience",
     description:
-      "Discover the projects and professional experience of Arbaz Murme, including web development, design, and more.",
+      "Discover the projects and professional experience of Arbaz Murme, including web development, architecture, and UI/UX design.",
     url: "https://arbazmurme.vercel.app/work",
+    type: "website",
     images: [
       {
-        url: "/project-1.png", // Example image from your public folder
+        url: "/arbaz_murme.png",
         width: 800,
         height: 600,
-        alt: "Work Project Image",
+        alt: "Work Projects of Arbaz Murme",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arbaz Murme | Work",
+    title: "Arbaz Murme | Work & Experience",
     description:
-      "View the professional work and projects of Arbaz Murme, a skilled React JS Developer with a focus on web development.",
-    images: ["/project-1.png"], // Same image for Twitter
+      "View the professional work and projects of Arbaz Murme, a skilled MERN Stack & React JS Developer.",
+    images: ["/arbaz_murme.png"],
   },
 };
 
-// app/page.jsx
-export default function Home() {
-  return <Work />;
+export default function WorkPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://arbazmurme.vercel.app",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Work",
+            item: "https://arbazmurme.vercel.app/work",
+          },
+        ],
+      },
+      {
+        "@type": "CollectionPage",
+        name: "Arbaz Murme - Work & Projects",
+        url: "https://arbazmurme.vercel.app/work",
+      },
+    ],
+  };
+
+  return (
+    <>
+      <JsonLd data={jsonLd} />
+      <Work />
+    </>
+  );
 }
+
