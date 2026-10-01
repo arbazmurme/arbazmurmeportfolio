@@ -229,56 +229,71 @@ const HomeDetails = () => {
             style={getStepStyle(scrollProgress, 0.0, 0.0, 0.22, 0.32)}
             className="absolute inset-0 flex flex-col justify-center select-none"
           >
-            <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
-              {/* Tag line */}
-              <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
-                <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
-                Welcome to my Portfolio
+            {/* Speech bubble wrapper — tail visible only on mobile */}
+            <div className="relative">
+              <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl rounded-bl-sm lg:rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
+                {/* Tag line */}
+                <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
+                  <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
+                  Welcome to my Portfolio
+                </div>
+
+                {/* Heading */}
+                <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black uppercase leading-[1.05] tracking-tight drop-shadow-lg">
+                  <span className="text-white">Hi, I'm </span>
+                  <br />
+                  <span
+                    className="relative inline-block drop-shadow-[0_0_30px_rgba(255,180,0,0.6)]"
+                    style={{
+                      background: "linear-gradient(135deg, #ffc837 0%, #ff8008 50%, #ffc837 100%)",
+                      backgroundSize: "200% 200%",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      animation: "gradientMove 4s ease infinite",
+                    }}
+                  >
+                    Arbaz Murme
+                  </span>
+                </h1>
+
+                {/* Typing animation */}
+                <div className="mt-4 font-bold text-lg sm:text-xl text-yellow-400">
+                  <TypingText />
+                </div>
+
+                {/* Description */}
+                <p className="mt-5 text-base sm:text-lg font-medium leading-relaxed text-gray-100 max-w-lg drop-shadow-md">
+                  MERN Stack Developer crafting{" "}
+                  <span className="font-extrabold text-[#ffb400] underline decoration-[#ffb400]/40 underline-offset-4">
+                    modern, scalable
+                  </span>
+                  , and{" "}
+                  <span className="font-extrabold text-[#ffb400] underline decoration-[#ffb400]/40 underline-offset-4">
+                    high-performance
+                  </span>{" "}
+                  web applications. Passionate about smooth UI & powerful backend systems.
+                </p>
+
+                {/* Scroll Indicator Invitation */}
+                <div className="mt-7 flex items-center gap-2.5 text-xs font-bold tracking-wider text-[#ffb400]">
+                  <span className="uppercase tracking-widest text-[11px] bg-[#ffb400]/20 px-3 py-1.5 rounded-full border border-[#ffb400]/30">
+                    Scroll down to explore ↓
+                  </span>
+                </div>
               </div>
-
-              {/* Heading */}
-              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black uppercase leading-[1.05] tracking-tight drop-shadow-lg">
-                <span className="text-white">Hi, I'm </span>
-                <br />
-                <span
-                  className="relative inline-block drop-shadow-[0_0_30px_rgba(255,180,0,0.6)]"
-                  style={{
-                    background: "linear-gradient(135deg, #ffc837 0%, #ff8008 50%, #ffc837 100%)",
-                    backgroundSize: "200% 200%",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    animation: "gradientMove 4s ease infinite",
-                  }}
-                >
-                  Arbaz Murme
-                </span>
-              </h1>
-
-              {/* Typing animation */}
-              <div className="mt-4 font-bold text-lg sm:text-xl text-yellow-400">
-                <TypingText />
-              </div>
-
-              {/* Description */}
-              <p className="mt-5 text-base sm:text-lg font-medium leading-relaxed text-gray-100 max-w-lg drop-shadow-md">
-                MERN Stack Developer crafting{" "}
-                <span className="font-extrabold text-[#ffb400] underline decoration-[#ffb400]/40 underline-offset-4">
-                  modern, scalable
-                </span>
-                , and{" "}
-                <span className="font-extrabold text-[#ffb400] underline decoration-[#ffb400]/40 underline-offset-4">
-                  high-performance
-                </span>{" "}
-                web applications. Passionate about smooth UI & powerful backend systems.
-              </p>
-
-              {/* Scroll Indicator Invitation */}
-              <div className="mt-7 flex items-center gap-2.5 text-xs font-bold tracking-wider text-[#ffb400]">
-                <span className="uppercase tracking-widest text-[11px] bg-[#ffb400]/20 px-3 py-1.5 rounded-full border border-[#ffb400]/30">
-                  Scroll down to explore ↓
-                </span>
-              </div>
+              {/* Bubble tail — mobile only */}
+              <span
+                className="block lg:hidden absolute -bottom-3 left-5"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: "14px solid transparent",
+                  borderRight: "6px solid transparent",
+                  borderTop: "14px solid rgba(255,180,0,0.55)",
+                  filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.5))",
+                }}
+              />
             </div>
           </div>
 
@@ -287,63 +302,77 @@ const HomeDetails = () => {
             style={getStepStyle(scrollProgress, 0.28, 0.38, 0.62, 0.72)}
             className="absolute inset-0 flex flex-col justify-center"
           >
-            <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
-              {/* Tag line */}
-              <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
-                <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
-                Core Expertise & Craftsmanship
-              </div>
+            <div className="relative">
+              <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl rounded-bl-sm lg:rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
+                {/* Tag line */}
+                <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
+                  <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
+                  Core Expertise & Craftsmanship
+                </div>
 
-              {/* Heading */}
-              <h2 className="text-3xl sm:text-4xl xl:text-5xl font-black uppercase leading-[1.05] tracking-tight drop-shadow-lg">
-                <span className="text-white">Scalable Systems</span>
-                <br />
-                <span
-                  className="relative inline-block drop-shadow-[0_0_30px_rgba(255,180,0,0.6)]"
-                  style={{
-                    background: "linear-gradient(135deg, #ffc837 0%, #ff8008 50%, #ffc837 100%)",
-                    backgroundSize: "200% 200%",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  & Seamless UI
-                </span>
-              </h2>
-
-              {/* Description */}
-              <p className="mt-4 text-base sm:text-lg font-medium leading-relaxed text-gray-100 max-w-lg drop-shadow-md">
-                Architecting fast, reactive frontend interfaces backed by robust REST APIs, modern state management, and optimized database pipelines.
-              </p>
-
-              {/* Tech stack pills */}
-              <div className="mt-6 flex flex-wrap gap-2">
-                {techStack.map((tech) => (
+                {/* Heading */}
+                <h2 className="text-3xl sm:text-4xl xl:text-5xl font-black uppercase leading-[1.05] tracking-tight drop-shadow-lg">
+                  <span className="text-white">Scalable Systems</span>
+                  <br />
                   <span
-                    key={tech}
-                    className="flex items-center gap-1.5 rounded-full border border-[#ffb400]/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-black/70 backdrop-blur-md shadow-lg hover:border-[#ffb400] hover:scale-105 transition-all"
+                    className="relative inline-block drop-shadow-[0_0_30px_rgba(255,180,0,0.6)]"
+                    style={{
+                      background: "linear-gradient(135deg, #ffc837 0%, #ff8008 50%, #ffc837 100%)",
+                      backgroundSize: "200% 200%",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
                   >
-                    <CodeIcon className="w-3.5 h-3.5 text-[#ffb400]" />
-                    {tech}
+                    & Seamless UI
                   </span>
-                ))}
-              </div>
+                </h2>
 
-              {/* Stats Highlight Pills */}
-              <div className="mt-6 flex flex-wrap gap-3">
-                {stats.map((s, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2.5 rounded-xl px-4 py-2.5 backdrop-blur-md border border-[#ffb400]/30 bg-black/70 shadow-lg"
-                  >
-                    <span className="text-2xl font-black text-[#ffb400] leading-none">{s.value}</span>
-                    <span className="text-[11px] uppercase tracking-wider text-gray-200 font-bold">
-                      {s.label}
+                {/* Description */}
+                <p className="mt-4 text-base sm:text-lg font-medium leading-relaxed text-gray-100 max-w-lg drop-shadow-md">
+                  Architecting fast, reactive frontend interfaces backed by robust REST APIs, modern state management, and optimized database pipelines.
+                </p>
+
+                {/* Tech stack pills */}
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="flex items-center gap-1.5 rounded-full border border-[#ffb400]/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-black/70 backdrop-blur-md shadow-lg hover:border-[#ffb400] hover:scale-105 transition-all"
+                    >
+                      <CodeIcon className="w-3.5 h-3.5 text-[#ffb400]" />
+                      {tech}
                     </span>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                {/* Stats Highlight Pills */}
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {stats.map((s, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-2.5 rounded-xl px-4 py-2.5 backdrop-blur-md border border-[#ffb400]/30 bg-black/70 shadow-lg"
+                    >
+                      <span className="text-2xl font-black text-[#ffb400] leading-none">{s.value}</span>
+                      <span className="text-[11px] uppercase tracking-wider text-gray-200 font-bold">
+                        {s.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
+              {/* Bubble tail — mobile only */}
+              <span
+                className="block lg:hidden absolute -bottom-3 left-5"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: "14px solid transparent",
+                  borderRight: "6px solid transparent",
+                  borderTop: "14px solid rgba(255,180,0,0.55)",
+                  filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.5))",
+                }}
+              />
             </div>
           </div>
 
@@ -352,7 +381,8 @@ const HomeDetails = () => {
             style={getStepStyle(scrollProgress, 0.68, 0.78, 1.0, 1.0)}
             className="absolute inset-0 flex flex-col justify-center"
           >
-            <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
+            <div className="relative">
+            <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl rounded-bl-sm lg:rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
               {/* Tag line */}
               <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
                 <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
@@ -444,6 +474,19 @@ const HomeDetails = () => {
                   </a>
                 ))}
               </div>
+            </div>
+              {/* Bubble tail — mobile only */}
+              <span
+                className="block lg:hidden absolute -bottom-3 left-5"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: "14px solid transparent",
+                  borderRight: "6px solid transparent",
+                  borderTop: "14px solid rgba(255,180,0,0.55)",
+                  filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.5))",
+                }}
+              />
             </div>
           </div>
 
