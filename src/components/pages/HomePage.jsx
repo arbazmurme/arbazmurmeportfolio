@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import TypingText from "../../context/TypingText";
-import { useMemo } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { PORTFOLIO_STATS, SOCIAL_LINKS } from "@/data/portfolioData";
+import ScrollImageSequence from "../ScrollImageSequence";
 
 // ── Social icons (inline SVG so no extra dep needed) ──────────────────────────
 const GithubIcon = () => (
@@ -67,10 +67,76 @@ const fadeIn = (delay = 0) => ({
   transition: { duration: 0.7, delay },
 });
 
+// ── Smooth Scroll-Linked Step Style ──────────────────────────────────────────
+const getStepStyle = (progress, startIn, fullIn, startOut, fullOut) => {
+  let opacity = 0;
+  let translateY = 30;
+
+  if (progress < startIn) {
+    opacity = 0;
+    translateY = 30;
+  } else if (progress >= startIn && progress < fullIn) {
+    const t = (progress - startIn) / Math.max(fullIn - startIn, 0.001);
+    opacity = t;
+    translateY = 30 * (1 - t);
+  } else if (progress >= fullIn && progress <= startOut) {
+    opacity = 1;
+    translateY = 0;
+  } else if (progress > startOut && progress <= fullOut) {
+    const t = (progress - startOut) / Math.max(fullOut - startOut, 0.001);
+    opacity = 1 - t;
+    translateY = -30 * t;
+  } else {
+    opacity = 0;
+    translateY = -30;
+  }
+
+  const isInteractive = opacity > 0.45;
+
+  return {
+    opacity,
+    transform: `translate3d(0, ${translateY.toFixed(1)}px, 0)`,
+    pointerEvents: isInteractive ? "auto" : "none",
+    visibility: opacity > 0.01 ? "visible" : "hidden",
+    transition: "opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+  };
+};
+
 // ── Component ──────────────────────────────────────────────────────────────────
 const HomeDetails = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const containerRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const maxScroll = rect.height - window.innerHeight;
+            if (maxScroll > 0) {
+              const p = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
+              setScrollProgress(p);
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
 
   const particles = useMemo(
     () =>
@@ -100,45 +166,15 @@ const HomeDetails = () => {
   };
 
   return (
-    <div
-      className="relative flex flex-col lg:flex-row min-h-screen items-center overflow-hidden transition-colors duration-500"
-      style={{ backgroundColor: colors.bg }}
-    >
-
-      {/* ── Background: grid texture ── */}
+    <div ref={containerRef} className="relative h-[400vh] w-full">
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: colors.grid,
-          backgroundSize: "60px 60px",
-        }}
-      />
+        className="sticky top-0 h-screen w-full flex flex-col lg:flex-row items-center overflow-hidden transition-colors duration-500"
+        style={{ backgroundColor: colors.bg }}
+      >
+        {/* ── Cinematic Scroll-Linked Image Sequence Canvas ── */}
+        <ScrollImageSequence containerRef={containerRef} isDark={isDark} />
 
-      {/* ── Background: radial glow top-left ── */}
-      <div
-        className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full pointer-events-none"
-        style={{ background: colors.glow }}
-      />
-
-      {/* ── Background: radial glow bottom-right ── */}
-      <div
-        className="absolute -bottom-40 -right-20 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: colors.glow }}
-      />
-
-      {/* ── Animated horizontal scan line ── */}
-      <motion.div
-        animate={{ top: ["0%", "100%", "0%"] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        className="absolute left-0 right-0 h-px pointer-events-none"
-        style={{
-          background: isDark
-            ? "linear-gradient(90deg, transparent, rgba(255,180,0,0.25), transparent)"
-            : "linear-gradient(90deg, transparent, rgba(255,180,0,0.15), transparent)"
-        }}
-      />
-
-      {/* ── Floating particles ── */}
+        {/* ── Floating particles ── */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {particles.map((p, i) => (
           <span
@@ -156,309 +192,303 @@ const HomeDetails = () => {
         ))}
       </div>
 
-      {/* ════════════════════════════════════════
-          LEFT — PHOTO PANEL (FULL HEIGHT & WIDTH)
-      ════════════════════════════════════════ */}
-      <div className="hidden lg:flex lg:w-1/2 fixed left-0 top-0 h-screen items-center justify-center z-1 px-8">
-        <motion.div
-          initial={{ opacity: 0, x: -80, scale: 0.92 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full h-full flex items-center justify-center"
-        >
-          {/* Glow ring behind photo */}
-          <div
-            className="absolute inset-0 rounded-full blur-3xl opacity-30"
-            style={{
-              background: isDark
-                ? "radial-gradient(circle, #ffb400 0%, transparent 70%)"
-                : "radial-gradient(circle, #ffb400 0%, transparent 70%)",
-              transform: "scale(1.3)"
-            }}
-          />
-
-          {/* Rotating dashed border */}
+      {/* ── Stats cards floating at bottom-left ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.0, duration: 0.8 }}
+        className="hidden lg:flex absolute bottom-8 left-8 sm:left-12 z-20 gap-3.5"
+      >
+        {stats.map((s, i) => (
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute -inset-4 rounded-full border border-dashed border-[#ffb400]/20"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            className="absolute -inset-8 rounded-full border border-dashed border-[#ffb400]/10"
-          />
-
-          {/* Floating badge — Available */}
-         
-
-          {/* Photo - FULL HEIGHT & WIDTH */}
-          <div
-            className="relative w-full h-full max-w-[90%] max-h-[90%] rounded-2xl overflow-hidden flex items-center justify-center"
-            style={{
-              boxShadow: isDark
-                ? "0 0 0 1px rgba(255,180,0,0.15), 0 40px 100px rgba(0,0,0,0.7), 0 0 80px rgba(255,180,0,0.12)"
-                : "0 0 0 1px rgba(255,180,0,0.20), 0 40px 80px rgba(0,0,0,0.10), 0 0 60px rgba(255,180,0,0.08)",
-            }}
+            key={i}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.2 + i * 0.15 }}
+            whileHover={{ scale: 1.08, y: -4 }}
+            className="flex flex-col items-center rounded-2xl px-5 py-3.5 backdrop-blur-xl border border-[#ffb400]/35 bg-black/65 shadow-[0_15px_35px_rgba(0,0,0,0.6)] cursor-default transition-all"
           >
-            <Image
-              src="/arbaz_murme.png"
-              alt="Arbaz Murme — MERN Stack Developer"
-              fill
-              priority
-              className="relative z-10 object-contain"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-            {/* Gradient overlay at bottom */}
-            <div
-              className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-20"
-              style={{
-                background: isDark
-                  ? "linear-gradient(to top, #04060f, transparent)"
-                  : "linear-gradient(to top, #f8f9fa, transparent)"
-              }}
-            />
+            <span className="text-3xl font-black text-[#ffb400] leading-none drop-shadow-[0_0_15px_rgba(255,180,0,0.5)]">
+              {s.value}
+            </span>
+            <span className="text-[11px] font-bold uppercase tracking-widest text-gray-200 mt-1.5">
+              {s.label}
+            </span>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* ════════════════════════════════════════
+          RIGHT — TEXT PANEL (SCROLL-LINKED PHASES)
+      ════════════════════════════════════════ */}
+      <div className="relative w-full lg:w-1/2 lg:ml-auto px-4 sm:px-8 lg:px-12 pb-16 lg:py-0 min-h-screen flex flex-col justify-center z-10">
+        <div className="relative w-full min-h-[500px] sm:min-h-[520px] flex items-center">
+
+          {/* ── PHASE 1: Introduction (Scroll 0% -> ~28%) ── */}
+          <div
+            style={getStepStyle(scrollProgress, 0.0, 0.0, 0.22, 0.32)}
+            className="absolute inset-0 flex flex-col justify-center select-none"
+          >
+            <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
+              {/* Tag line */}
+              <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
+                <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
+                Welcome to my Portfolio
+              </div>
+
+              {/* Heading */}
+              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black uppercase leading-[1.05] tracking-tight drop-shadow-lg">
+                <span className="text-white">Hi, I'm </span>
+                <br />
+                <span
+                  className="relative inline-block drop-shadow-[0_0_30px_rgba(255,180,0,0.6)]"
+                  style={{
+                    background: "linear-gradient(135deg, #ffc837 0%, #ff8008 50%, #ffc837 100%)",
+                    backgroundSize: "200% 200%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    animation: "gradientMove 4s ease infinite",
+                  }}
+                >
+                  Arbaz Murme
+                </span>
+              </h1>
+
+              {/* Typing animation */}
+              <div className="mt-4 font-bold text-lg sm:text-xl text-yellow-400">
+                <TypingText />
+              </div>
+
+              {/* Description */}
+              <p className="mt-5 text-base sm:text-lg font-medium leading-relaxed text-gray-100 max-w-lg drop-shadow-md">
+                MERN Stack Developer crafting{" "}
+                <span className="font-extrabold text-[#ffb400] underline decoration-[#ffb400]/40 underline-offset-4">
+                  modern, scalable
+                </span>
+                , and{" "}
+                <span className="font-extrabold text-[#ffb400] underline decoration-[#ffb400]/40 underline-offset-4">
+                  high-performance
+                </span>{" "}
+                web applications. Passionate about smooth UI & powerful backend systems.
+              </p>
+
+              {/* Scroll Indicator Invitation */}
+              <div className="mt-7 flex items-center gap-2.5 text-xs font-bold tracking-wider text-[#ffb400]">
+                <span className="uppercase tracking-widest text-[11px] bg-[#ffb400]/20 px-3 py-1.5 rounded-full border border-[#ffb400]/30">
+                  Scroll down to explore ↓
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Stats cards floating below photo */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.8 }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 w-max z-30"
-          >
-            {stats.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2 + i * 0.15 }}
-                whileHover={{ scale: 1.08, y: -4 }}
-                className="flex flex-col items-center rounded-xl px-5 py-3 backdrop-blur-md border border-[#ffb400]/15 cursor-default"
-                style={{
-                  background: isDark
-                    ? "rgba(255,180,0,0.06)"
-                    : "rgba(255,255,255,0.7)"
-                }}
-              >
-                <span className="text-2xl font-black text-[#ffb400] leading-none">{s.value}</span>
-                <span className="text-[10px] uppercase tracking-widest text-gray-400 mt-1">{s.label}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Mobile image — shown at TOP on small screens */}
-      <div className="lg:hidden flex justify-center w-full pt-4 md:-40 pb-4 px-0 md:px-6">
-        <div
-          className="relative w-64 h-80 rounded-2xl overflow-hidden"
-          style={{
-            boxShadow: isDark
-              ? "0 0 0 1px rgba(255,180,0,0.2), 0 20px 50px rgba(0,0,0,0.5)"
-              : "0 0 0 1px rgba(255,180,0,0.3), 0 20px 50px rgba(0,0,0,0.1)"
-          }}
-        >
-          <Image
-            src="/arbaz_murme.png"
-            alt="Arbaz Murme"
-            fill
-            className="object-cover object-top"
-            priority
-          />
+          {/* ── PHASE 2: Architecture & Tech Stack (Scroll ~35% -> ~65%) ── */}
           <div
-            className="absolute bottom-0 left-0 right-0 h-20"
-            style={{
-              background: isDark
-                ? "linear-gradient(to top, #04060f, transparent)"
-                : "linear-gradient(to top, #f8f9fa, transparent)"
-            }}
-          />
+            style={getStepStyle(scrollProgress, 0.28, 0.38, 0.62, 0.72)}
+            className="absolute inset-0 flex flex-col justify-center"
+          >
+            <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
+              {/* Tag line */}
+              <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
+                <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
+                Core Expertise & Craftsmanship
+              </div>
+
+              {/* Heading */}
+              <h2 className="text-3xl sm:text-4xl xl:text-5xl font-black uppercase leading-[1.05] tracking-tight drop-shadow-lg">
+                <span className="text-white">Scalable Systems</span>
+                <br />
+                <span
+                  className="relative inline-block drop-shadow-[0_0_30px_rgba(255,180,0,0.6)]"
+                  style={{
+                    background: "linear-gradient(135deg, #ffc837 0%, #ff8008 50%, #ffc837 100%)",
+                    backgroundSize: "200% 200%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  & Seamless UI
+                </span>
+              </h2>
+
+              {/* Description */}
+              <p className="mt-4 text-base sm:text-lg font-medium leading-relaxed text-gray-100 max-w-lg drop-shadow-md">
+                Architecting fast, reactive frontend interfaces backed by robust REST APIs, modern state management, and optimized database pipelines.
+              </p>
+
+              {/* Tech stack pills */}
+              <div className="mt-6 flex flex-wrap gap-2">
+                {techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="flex items-center gap-1.5 rounded-full border border-[#ffb400]/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-black/70 backdrop-blur-md shadow-lg hover:border-[#ffb400] hover:scale-105 transition-all"
+                  >
+                    <CodeIcon className="w-3.5 h-3.5 text-[#ffb400]" />
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              {/* Stats Highlight Pills */}
+              <div className="mt-6 flex flex-wrap gap-3">
+                {stats.map((s, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2.5 rounded-xl px-4 py-2.5 backdrop-blur-md border border-[#ffb400]/30 bg-black/70 shadow-lg"
+                  >
+                    <span className="text-2xl font-black text-[#ffb400] leading-none">{s.value}</span>
+                    <span className="text-[11px] uppercase tracking-wider text-gray-200 font-bold">
+                      {s.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* ── PHASE 3: Call to Action & Collaboration (Scroll ~70% -> 100%) ── */}
+          <div
+            style={getStepStyle(scrollProgress, 0.68, 0.78, 1.0, 1.0)}
+            className="absolute inset-0 flex flex-col justify-center"
+          >
+            <div className="bg-black/55 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-l-4 border-l-[#ffb400]">
+              {/* Tag line */}
+              <div className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1 bg-[#ffb400]/15 border border-[#ffb400]/40 text-[#ffb400] text-xs font-bold uppercase tracking-[0.25em] mb-5 w-fit">
+                <span className="w-2 h-2 rounded-full bg-[#ffb400] animate-pulse" />
+                Let's Collaborate
+              </div>
+
+              {/* Heading */}
+              <h2 className="text-3xl sm:text-4xl xl:text-5xl font-black uppercase leading-[1.05] tracking-tight drop-shadow-lg">
+                <span className="text-white">Ready To Build</span>
+                <br />
+                <span
+                  className="relative inline-block drop-shadow-[0_0_30px_rgba(255,180,0,0.6)]"
+                  style={{
+                    background: "linear-gradient(135deg, #ffc837 0%, #ff8008 50%, #ffc837 100%)",
+                    backgroundSize: "200% 200%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  Something Great?
+                </span>
+              </h2>
+
+              {/* Description */}
+              <p className="mt-4 text-base sm:text-lg font-medium leading-relaxed text-gray-100 max-w-lg drop-shadow-md">
+                Available for high-impact frontend and full-stack engineering roles, freelance builds, and ambitious web products.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-4">
+                <Link
+                  href="/about"
+                  className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full px-8 py-4 font-black uppercase tracking-wider text-sm transition-all duration-300 shadow-[0_0_20px_rgba(255,180,0,0.4)]"
+                  style={{
+                    background: "linear-gradient(135deg, #ffb400, #ff8c00)",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 45px rgba(255,180,0,0.7) !important")}
+                  onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 20px rgba(255,180,0,0.4)")}
+                >
+                  <span className="relative z-10 text-black font-extrabold">More About Me</span>
+                  <motion.svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="black"
+                    strokeWidth="3"
+                    className="relative z-10 w-5 h-5"
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                  </motion.svg>
+                  <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12" />
+                </Link>
+
+                <Link
+                  href="/blog"
+                  className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border-2 border-[#ffb400]/70 bg-black/70 backdrop-blur-md px-8 py-4 font-black uppercase tracking-wider text-sm text-white transition-all duration-300 hover:border-[#ffb400] hover:bg-[#ffb400]/20 shadow-lg"
+                >
+                  <StarIcon className="text-[#ffb400] w-4 h-4" />
+                  <span>Blog</span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+              </div>
+
+              {/* Social links */}
+              <div className="mt-7 flex items-center gap-3">
+                <span className="text-xs tracking-widest uppercase text-gray-300 font-bold mr-2">
+                  Follow me
+                </span>
+                {socials.map((s, i) => (
+                  <a
+                    key={i}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="flex items-center justify-center w-11 h-11 rounded-full border border-[#ffb400]/40 bg-black/70 text-gray-200 transition-all duration-200 hover:scale-110 hover:text-[#ffb400] hover:border-[#ffb400] shadow-md"
+                  >
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {/* ════════════════════════════════════════
-          RIGHT — TEXT PANEL
-      ════════════════════════════════════════ */}
-      <div className="relative w-full lg:w-1/2 lg:ml-auto px-6 sm:px-10 lg:px-16 pb-16 lg:py-0 min-h-screen flex flex-col justify-center">
-
-        {/* Tag line */}
-        <motion.div {...fadeUp(0.1)} className="flex items-center gap-3 mb-6">
-          <div className="h-px w-10 bg-[#ffb400]" />
-          <span className="text-xs tracking-[0.35em] uppercase font-semibold text-[#ffb400]">
-            Welcome to my Portfolio
-          </span>
-        </motion.div>
-
-        {/* Heading */}
-        <motion.h1
-          {...fadeUp(0.25)}
-          className="text-5xl sm:text-6xl xl:text-7xl font-black uppercase leading-[1] tracking-tight"
-        >
-          <span style={{ color: colors.text }}>Hi, I'm </span>
-          <br />
-          <span
-            className="relative inline-block"
-            style={{
-              background: "linear-gradient(135deg, #ffb400 0%, #ff8c00 50%, #ffb400 100%)",
-              backgroundSize: "200% 200%",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              animation: "gradientMove 4s ease infinite",
-            }}
-          >
-            Arbaz Murme
-          </span>
-        </motion.h1>
-
-        {/* Typing animation */}
-        <motion.div {...fadeIn(0.5)} className="mt-5">
-          <TypingText />
-        </motion.div>
-
-        {/* Description */}
-        <motion.p
-          {...fadeUp(0.65)}
-          className="mt-6 text-base sm:text-lg leading-relaxed max-w-lg"
-          style={{ color: colors.textSecondary }}
-        >
-          MERN Stack Developer crafting{" "}
-          <span className="font-semibold" style={{ color: colors.text }}>modern, scalable</span>, and{" "}
-          <span className="font-semibold" style={{ color: colors.text }}>high-performance</span> web applications.
-          Passionate about smooth UI & powerful backend systems.
-        </motion.p>
-
-        {/* Tech stack pills */}
-        <motion.div {...fadeUp(0.75)} className="mt-8 flex flex-wrap gap-2">
-          {techStack.map((tech, i) => (
-            <motion.span
-              key={tech}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 + i * 0.08 }}
-              whileHover={{ scale: 1.1, borderColor: "#ffb400" }}
-              className="flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-wider cursor-default transition-colors duration-200"
-              style={{
-                borderColor: isDark ? "rgba(255,180,0,0.20)" : "rgba(255,180,0,0.30)",
-                color: colors.textSecondary,
-                background: isDark ? "rgba(255,180,0,0.05)" : "rgba(255,180,0,0.08)",
-              }}
-            >
-              <CodeIcon className="w-3 h-3 text-[#ffb400]" />
-              {tech}
-            </motion.span>
-          ))}
-        </motion.div>
-
-        {/* CTA Buttons */}
-        <motion.div
-          {...fadeUp(0.85)}
-          className="mt-10 flex flex-col sm:flex-row flex-wrap gap-4"
-        >
-          {/* Primary button */}
-          <Link
-            href="/about"
-            className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full px-8 py-4 font-bold uppercase tracking-wider text-sm transition-all duration-300"
-            style={{
-              background: "linear-gradient(135deg, #ffb400, #ff8c00)",
-              boxShadow: "0 0 0 rgba(255,180,0,0)",
-            }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = "0 0 40px rgba(255,180,0,0.45)"}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = "0 0 0 rgba(255,180,0,0)"}
-          >
-            <span className="relative z-10 text-black">More About Me</span>
-            <motion.svg
-              viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5"
-              className="relative z-10 w-5 h-5"
-              animate={{ x: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-            </motion.svg>
-            {/* shine sweep */}
-            <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
-          </Link>
-
-          {/* Secondary button */}
-          <Link
-            href="/blog"
-            className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border px-8 py-4 font-bold uppercase tracking-wider text-sm transition-all duration-300"
-            style={{
-              borderColor: isDark ? "rgba(255,180,0,0.40)" : "rgba(255,180,0,0.50)",
-              color: colors.text,
-              background: isDark ? "rgba(255,180,0,0.04)" : "rgba(255,180,0,0.06)",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = isDark ? "rgba(255,180,0,0.10)" : "rgba(255,180,0,0.15)";
-              e.currentTarget.style.boxShadow = "0 0 25px rgba(255,180,0,0.15)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = isDark ? "rgba(255,180,0,0.04)" : "rgba(255,180,0,0.06)";
-              e.currentTarget.style.boxShadow = "none";
-            }}
-          >
-            <StarIcon className="text-[#ffb400] w-4 h-4" />
-            <span>Blog</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 group-hover:translate-x-1 transition-transform">
-              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </motion.div>
-
-        {/* Social links */}
-        <motion.div {...fadeUp(1.0)} className="mt-10 flex items-center gap-3">
-          <span className="text-xs tracking-widest uppercase text-gray-500 mr-2">Follow me</span>
-          {socials.map((s, i) => (
-            <motion.a
-              key={i}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.label}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.1 + i * 0.1 }}
-              whileHover={{ scale: 1.2, y: -3 }}
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center justify-center w-10 h-10 rounded-full border transition-colors duration-200"
-              style={{
-                borderColor: isDark ? "rgba(255,180,0,0.20)" : "rgba(255,180,0,0.30)",
-                color: isDark ? "#9ca3af" : "#4b5563",
-                background: isDark ? "rgba(255,180,0,0.05)" : "rgba(255,180,0,0.08)",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = "#ffb400";
-                e.currentTarget.style.borderColor = "rgba(255,180,0,0.60)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = isDark ? "#9ca3af" : "#4b5563";
-                e.currentTarget.style.borderColor = isDark ? "rgba(255,180,0,0.20)" : "rgba(255,180,0,0.30)";
-              }}
-            >
-              {s.icon}
-            </motion.a>
-          ))}
-
-          {/* Divider + scroll hint */}
-          <div className="ml-auto hidden sm:flex items-center gap-2 text-gray-500 text-xs">
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-                <path d="M12 5v14M5 12l7 7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </motion.div>
-            <span className="tracking-widest uppercase">Scroll</span>
-          </div>
-        </motion.div>
-
+      {/* ── Apple-style Vertical Scroll Timeline Indicator ── */}
+      <div className="hidden lg:flex fixed right-6 xl:right-10 top-1/2 -translate-y-1/2 flex-col items-center gap-3 z-30 pointer-events-none select-none">
+        <span className="text-[11px] font-mono tracking-widest text-[#ffb400] font-bold">
+          0{scrollProgress < 0.33 ? 1 : scrollProgress < 0.67 ? 2 : 3}
+        </span>
+        <div className="w-[3px] h-32 bg-white/10 rounded-full overflow-hidden relative shadow-inner">
+          <div
+            className="w-full bg-gradient-to-b from-[#ffb400] to-[#ff8c00] rounded-full transition-all duration-75 shadow-[0_0_10px_rgba(255,180,0,0.8)]"
+            style={{ height: `${Math.max(8, Math.round(scrollProgress * 100))}%` }}
+          />
+        </div>
+        <span className="text-[11px] font-mono tracking-widest text-gray-500 font-bold">03</span>
       </div>
 
-
+      {/* ── Bottom Bar: Live Scroll Percentage ── */}
+      <div className="absolute bottom-6 right-8 sm:right-14 z-20 hidden sm:flex items-center gap-3 select-none pointer-events-none">
+        <motion.div
+          animate={{ y: [0, 4, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="text-[#ffb400]"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
+            <path d="M12 5v14M5 12l7 7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </motion.div>
+        <span className="text-[11px] tracking-widest uppercase text-gray-400 font-medium">Scroll</span>
+        <div className="w-20 h-1 bg-white/10 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-[#ffb400] to-[#ff8c00] transition-all duration-75"
+            style={{ width: `${Math.round(scrollProgress * 100)}%` }}
+          />
+        </div>
+        <span className="font-mono text-xs text-[#ffb400] font-semibold min-w-[34px]">
+          {Math.round(scrollProgress * 100)}%
+        </span>
+      </div>
 
     </div>
+  </div>
   );
 };
 
