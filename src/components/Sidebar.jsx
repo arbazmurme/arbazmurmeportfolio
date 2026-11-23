@@ -25,12 +25,14 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="fixed top-0 right-0 h-screen p-6 z-10">
+      {/* Theme Toggle Button (Top Right) */}
+      <div className="fixed top-0 right-0 p-6 z-[100] pointer-events-auto">
         <ThemeToggleButton />
       </div>
-      {/* SidebarNavigation */}
-      <div className="hidden md:flex ">
-        <div className="fixed right-0 top-1/2 transform -translate-y-1/2 flex flex-col items-center space-y-4 z-10">
+
+      {/* Sidebar Navigation for Desktop */}
+      <div className="hidden md:flex">
+        <div className="fixed right-0 top-1/2 transform -translate-y-1/2 flex flex-col items-center space-y-4 z-[100] pointer-events-auto pr-3 sm:pr-4">
           <CustomIconHome
             isActive={activeIndex === 0}
             sendDataToParent={handleItemClick}
@@ -57,8 +59,9 @@ const Sidebar = () => {
           />
         </div>
       </div>
-      {/* BottomNavigation for mobile screens */}
-      <div className="fixed bottom-0 left-0 z-50 w-full md:hidden">
+
+      {/* Bottom Navigation for Mobile */}
+      <div className="fixed bottom-0 left-0 z-[100] w-full md:hidden pointer-events-auto">
         <BottomNavigation />
       </div>
     </>
