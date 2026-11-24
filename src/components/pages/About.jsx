@@ -5,20 +5,17 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
-import SkillsOne from "../skills_2";
 import { PORTFOLIO_STATS, PERSONAL_INFO, SOCIAL_LINKS } from "@/data/portfolioData";
 
 // Dynamically import 3D Three.js components to prevent SSR issues
-const TechGalaxy3D = dynamic(() => import("@/components/3d/TechGalaxy3D"), {
+const Hero3DViewer = dynamic(() => import("@/components/3d/Hero3DViewer"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[450px] sm:h-[520px] rounded-3xl border border-[#ff9900]/30 bg-black/40 flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-10 h-10 border-4 border-[#ff9900] border-t-transparent rounded-full animate-spin" />
-        <span className="text-xs uppercase font-bold tracking-widest text-[#ff9900]">
-          Initializing 3D Tech Cosmos...
-        </span>
-      </div>
+    <div className="w-full max-w-[440px] aspect-[4/5] min-h-[460px] rounded-3xl border border-[#ff9900]/30 bg-black/50 flex flex-col items-center justify-center gap-3">
+      <div className="w-10 h-10 border-4 border-[#ff9900] border-t-transparent rounded-full animate-spin" />
+      <span className="text-xs uppercase font-bold tracking-widest text-[#ff9900]">
+        Loading 3D Model Stage...
+      </span>
     </div>
   ),
 });
@@ -27,8 +24,13 @@ const AboutBackground3D = dynamic(() => import("@/components/3d/AboutBackground3
   ssr: false,
 });
 
-const HoloCard3D = dynamic(() => import("@/components/3d/HoloCard3D"), {
+const Tools3DSection = dynamic(() => import("@/components/3d/Tools3DSection"), {
   ssr: false,
+  loading: () => (
+    <div className="w-full h-40 rounded-3xl border border-[#ff9900]/30 bg-black/40 flex items-center justify-center">
+      <div className="w-8 h-8 border-3 border-[#ff9900] border-t-transparent rounded-full animate-spin" />
+    </div>
+  ),
 });
 
 // ─── Inline SVG Icons ────────────────────────────────────────────────────────
@@ -157,9 +159,9 @@ export default function About() {
           <div className="mt-3.5 mx-auto w-24 h-1.5 rounded-full bg-gradient-to-r from-[#ff9900] via-[#ff7700] to-[#ff4500] shadow-[0_0_15px_#ff9900]" />
         </motion.div>
 
-        {/* ── Dual-Column Hero: 3D Holographic Photo + Personal Bio ── */}
+        {/* ── Dual-Column Hero: 3D Model Stage + Personal Bio ── */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-14">
-          {/* Left: 3D Tilting Holographic Photo Card */}
+          {/* Left: Interactive Realtime 3D Model Stage */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -167,7 +169,7 @@ export default function About() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 flex justify-center"
           >
-            <HoloCard3D />
+            <Hero3DViewer />
           </motion.div>
 
           {/* Right: Bio & Personal Information Matrix */}
@@ -278,29 +280,6 @@ export default function About() {
           ))}
         </motion.div>
 
-        {/* ══════════════════════════════════════════════════════════════════
-            ── SHOWCASE 3D: INTERACTIVE 3D TECH GALAXY (THREE.JS) ──
-        ══════════════════════════════════════════════════════════════════ */}
-        <motion.div {...fadeUp(0.1)} className="mb-16">
-          <div className="text-center mb-6">
-            <span className="text-xs tracking-[0.35em] uppercase font-bold text-[#ff9900] block mb-1">
-              ✦ Realtime 3D WebGL Visualization
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
-              Interactive 3D{" "}
-              <span className="bg-gradient-to-r from-[#FFD200] via-[#FF8500] to-[#FF4500] bg-clip-text text-transparent">
-                Tech Cosmos
-              </span>
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm max-w-xl mx-auto" style={{ color: mutedColor }}>
-              A live 3D galaxy demonstrating my core stack. Rotate with mouse drag, inspect orbital satellites, and view architectural specializations.
-            </p>
-          </div>
-
-          {/* 3D Tech Galaxy Viewport */}
-          <TechGalaxy3D />
-        </motion.div>
-
         {/* ── Technical Proficiencies (Skill Bars) ── */}
         <motion.div {...fadeUp(0)} className="mb-16">
           <div className="text-center mb-8">
@@ -315,7 +294,8 @@ export default function About() {
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-x-12 gap-y-5 p-6 sm:p-8 rounded-3xl border backdrop-blur-2xl"
+          <div
+            className="grid sm:grid-cols-2 gap-x-12 gap-y-5 p-6 sm:p-8 rounded-3xl border backdrop-blur-2xl"
             style={{ backgroundColor: cardBg, borderColor: borderColor }}
           >
             {skills.map((skill, i) => (
@@ -355,21 +335,11 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* ── Categorized Tech Stack (SkillsOne) ── */}
+        {/* ══════════════════════════════════════════════════════════════════
+            ── SHOWCASE 3D: TOOLS & TECHNOLOGIES (3D TECH ARSENAL) ──
+        ══════════════════════════════════════════════════════════════════ */}
         <motion.div {...fadeUp(0)}>
-          <div className="text-center mb-8">
-            <span className="text-xs tracking-[0.35em] uppercase font-bold text-[#ff9900] block mb-1">
-              Comprehensive Toolkit
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
-              Tools &{" "}
-              <span className="bg-gradient-to-r from-[#FFD200] via-[#FF8500] to-[#FF4500] bg-clip-text text-transparent">
-                Technologies
-              </span>
-            </h2>
-          </div>
-
-          <SkillsOne />
+          <Tools3DSection />
         </motion.div>
 
       </div>
