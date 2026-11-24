@@ -40,11 +40,6 @@ import {
   SiGraphql,
 } from "react-icons/si";
 
-// Dynamic import for the 3D Tech Galaxy Viewport
-const TechGalaxy3D = dynamic(() => import("@/components/3d/TechGalaxy3D"), {
-  ssr: false,
-});
-
 // Full categorized tech stack with brand colors, 3D accents and tags
 const TECH_DATABASE = [
   // Frontend
@@ -405,20 +400,8 @@ export default function Tools3DSection() {
           </span>
         </h2>
         <p className={`mt-2.5 text-xs sm:text-sm max-w-2xl mx-auto ${isDark ? "text-gray-300" : "text-gray-600"}`}>
-          Interact with my full technical stack in 3D. Explore the live WebGL Tech Cosmos above, and filter specialized frameworks and microservices below.
+          Explore my full technical stack, core frameworks, databases, and engineering tools with interactive 3D perspective cards.
         </p>
-      </div>
-
-      {/* ── 3D Viewport: Realtime WebGL Tech Cosmos ── */}
-      <div className="mb-10">
-        <TechGalaxy3D
-          activeFilter={activeFilter}
-          onSelectTech={(tech) => {
-            if (tech.category) {
-              setActiveFilter(tech.category);
-            }
-          }}
-        />
       </div>
 
       {/* ── Interactive Category Filters ── */}
