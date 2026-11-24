@@ -411,7 +411,14 @@ export default function Tools3DSection() {
 
       {/* ── 3D Viewport: Realtime WebGL Tech Cosmos ── */}
       <div className="mb-10">
-        <TechGalaxy3D />
+        <TechGalaxy3D
+          activeFilter={activeFilter}
+          onSelectTech={(tech) => {
+            if (tech.category) {
+              setActiveFilter(tech.category);
+            }
+          }}
+        />
       </div>
 
       {/* ── Interactive Category Filters ── */}

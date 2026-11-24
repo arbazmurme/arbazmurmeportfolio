@@ -1,163 +1,221 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { useTheme } from "@/context/ThemeContext";
 
-// Tech stack data for 3D orbital nodes
+// Tech nodes data distributed across 3D spherical space
 const TECH_NODES = [
   {
+    id: "react",
     name: "React.js",
-    category: "Frontend Core",
-    level: "95%",
+    category: "frontend",
     color: "#61dafb",
-    accent: "#00b4d8",
-    radius: 5.6,
-    speed: 0.55,
-    phase: 0.0,
-    inclination: 0.25,
-    desc: "Component architecture, Custom Hooks, Performance optimization",
-  },
-  {
-    name: "Next.js 14",
-    category: "Fullstack / SSR",
-    level: "92%",
-    color: "#ffffff",
-    accent: "#ff9900",
-    radius: 6.8,
-    speed: -0.42,
-    phase: 1.1,
-    inclination: -0.35,
-    desc: "App Router, Server Actions, Dynamic SEO, Hybrid rendering",
-  },
-  {
-    name: "Node.js",
-    category: "Backend Engine",
-    level: "90%",
-    color: "#68a063",
-    accent: "#3e8239",
-    radius: 6.0,
-    speed: 0.48,
-    phase: 2.2,
-    inclination: 0.45,
-    desc: "Asynchronous I/O, Event-driven microservices, Stream processing",
-  },
-  {
-    name: "MongoDB",
-    category: "Database Architecture",
-    level: "88%",
-    color: "#00ed64",
-    accent: "#13aa52",
-    radius: 7.4,
-    speed: -0.36,
-    phase: 3.3,
-    inclination: 0.15,
-    desc: "Schema design, Aggregation pipelines, Indexing & Scaling",
-  },
-  {
-    name: "TypeScript",
-    category: "Type Safety",
-    level: "90%",
-    color: "#3178c6",
-    accent: "#235a97",
-    radius: 5.2,
-    speed: 0.62,
-    phase: 4.4,
-    inclination: -0.5,
-    desc: "Generics, Strict type validation, Interface modeling",
-  },
-  {
-    name: "Tailwind CSS",
-    category: "Design System",
+    symbol: "⚛",
     level: "95%",
-    color: "#38bdf8",
-    accent: "#0284c7",
-    radius: 6.4,
-    speed: -0.5,
-    phase: 5.2,
-    inclination: 0.3,
-    desc: "Responsive design, JIT compiler, Micro-animations",
+    desc: "Single Page Apps, Custom Hooks, Redux, Performance Tuning",
   },
   {
-    name: "Three.js",
-    category: "3D & WebGL",
-    level: "85%",
-    color: "#ff9900",
-    accent: "#ff5500",
-    radius: 7.9,
-    speed: 0.38,
-    phase: 0.8,
-    inclination: -0.2,
-    desc: "Procedural geometry, Custom shaders, Interactive 3D viewports",
+    id: "nextjs",
+    name: "Next.js 14",
+    category: "frontend",
+    color: "#ffffff",
+    symbol: "▲",
+    level: "92%",
+    desc: "App Router, SSR/SSG, Server Actions, Dynamic SEO",
   },
   {
-    name: "Express.js",
-    category: "REST API",
+    id: "typescript",
+    name: "TypeScript",
+    category: "frontend",
+    color: "#3178c6",
+    symbol: "TS",
     level: "90%",
+    desc: "Generics, Strict Type Safety, Interfaces, Enterprise Architecture",
+  },
+  {
+    id: "tailwind",
+    name: "Tailwind CSS",
+    category: "frontend",
+    color: "#38bdf8",
+    symbol: "🌊",
+    level: "95%",
+    desc: "Utility-first CSS, Responsive Systems, Micro-interactions",
+  },
+  {
+    id: "threejs",
+    name: "Three.js 3D",
+    category: "frontend",
+    color: "#ff9900",
+    symbol: "💎",
+    level: "88%",
+    desc: "3D WebGL, Procedural Shaders, Interactive Viewports, Physics",
+  },
+  {
+    id: "nodejs",
+    name: "Node.js",
+    category: "backend",
+    color: "#68a063",
+    symbol: "⚡",
+    level: "90%",
+    desc: "Event-driven Microservices, Async I/O, High-throughput APIs",
+  },
+  {
+    id: "express",
+    name: "Express.js",
+    category: "backend",
     color: "#e2e8f0",
-    accent: "#94a3b8",
-    radius: 5.8,
-    speed: -0.45,
-    phase: 2.8,
-    inclination: 0.4,
-    desc: "RESTful architecture, JWT security, Middleware pipelines",
+    symbol: "🚂",
+    level: "92%",
+    desc: "RESTful architecture, Custom Middlewares, JWT Security",
+  },
+  {
+    id: "mongodb",
+    name: "MongoDB",
+    category: "backend",
+    color: "#00ed64",
+    symbol: "🍃",
+    level: "88%",
+    desc: "Aggregation Pipelines, Document Modeling, Atlas Scaling",
+  },
+  {
+    id: "mysql",
+    name: "MySQL",
+    category: "backend",
+    color: "#00758f",
+    symbol: "🐬",
+    level: "82%",
+    desc: "Relational queries, ACID transactions, Normalized indexing",
+  },
+  {
+    id: "redis",
+    name: "Redis Cache",
+    category: "backend",
+    color: "#dc382d",
+    symbol: "🔴",
+    level: "80%",
+    desc: "In-memory caching, Distributed locks, Session store",
+  },
+  {
+    id: "firebase",
+    name: "Firebase",
+    category: "backend",
+    color: "#ffca28",
+    symbol: "🔥",
+    level: "85%",
+    desc: "Auth (OTP/Google), Realtime Firestore, Cloud Storage",
+  },
+  {
+    id: "git",
+    name: "Git & GitHub",
+    category: "tools",
+    color: "#f05032",
+    symbol: "🐙",
+    level: "94%",
+    desc: "Version Control, Pull Requests, CI/CD GitHub Actions",
+  },
+  {
+    id: "postman",
+    name: "Postman API",
+    category: "tools",
+    color: "#ff6c37",
+    symbol: "🚀",
+    level: "92%",
+    desc: "API automated testing, Environment mocking, Contract tests",
+  },
+  {
+    id: "cloudflare",
+    name: "Cloudflare",
+    category: "tools",
+    color: "#f38020",
+    symbol: "☁️",
+    level: "88%",
+    desc: "DNS orchestration, Edge caching, DDoS protection",
+  },
+  {
+    id: "seo",
+    name: "Dynamic SEO",
+    category: "architecture",
+    color: "#e37400",
+    symbol: "📈",
+    level: "90%",
+    desc: "Schema JSON-LD, OpenGraph, Web Vitals, Search Indexing",
+  },
+  {
+    id: "rest",
+    name: "REST Architecture",
+    category: "architecture",
+    color: "#a855f7",
+    symbol: "⚡",
+    level: "92%",
+    desc: "Clean code structure, Stateless tokens, Rate limiting",
   },
 ];
 
-// Helper to create crisp high-DPI canvas sprite textures
-function createNodeTexture(name, color, isDark) {
+// Helper to create sleek, high-DPI horizontal capsule billboard badges
+function createPillTexture(item, isDark) {
   const canvas = document.createElement("canvas");
-  canvas.width = 256;
-  canvas.height = 256;
+  canvas.width = 320;
+  canvas.height = 96;
   const ctx = canvas.getContext("2d");
-
   if (!ctx) return null;
 
-  // Background circle with glow
-  const cx = 128;
-  const cy = 128;
-  const r = 100;
+  const w = 320;
+  const h = 96;
+  const r = h / 2;
 
-  // Outer ambient glow
-  const grad = ctx.createRadialGradient(cx, cy, 40, cx, cy, 120);
-  grad.addColorStop(0, color + (isDark ? "bb" : "dd"));
-  grad.addColorStop(0.7, color + "44");
-  grad.addColorStop(1, "transparent");
-  ctx.fillStyle = grad;
+  // Background Capsule
   ctx.beginPath();
-  ctx.arc(cx, cy, 120, 0, Math.PI * 2);
+  ctx.moveTo(r, 6);
+  ctx.lineTo(w - r, 6);
+  ctx.arc(w - r, h / 2, r - 6, -Math.PI / 2, Math.PI / 2);
+  ctx.lineTo(r, h - 6);
+  ctx.arc(r, h / 2, r - 6, Math.PI / 2, -Math.PI / 2);
+  ctx.closePath();
+
+  // Glass background
+  ctx.fillStyle = isDark ? "rgba(10, 14, 28, 0.92)" : "rgba(255, 255, 255, 0.94)";
   ctx.fill();
 
-  // Glass disc background
-  ctx.fillStyle = isDark ? "rgba(12, 16, 29, 0.88)" : "rgba(255, 255, 255, 0.92)";
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Neon glowing border ring
-  ctx.lineWidth = 6;
-  ctx.strokeStyle = color;
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 18;
+  // Neon Glowing Border
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = item.color;
+  ctx.shadowColor = item.color;
+  ctx.shadowBlur = 12;
   ctx.stroke();
 
-  // Text label
+  // Reset shadow for text
   ctx.shadowBlur = 0;
+
+  // Left Circular Indicator
+  const circleX = 42;
+  const circleY = h / 2;
+  ctx.beginPath();
+  ctx.arc(circleX, circleY, 20, 0, Math.PI * 2);
+  ctx.fillStyle = item.color + "28";
+  ctx.fill();
+  ctx.lineWidth = 2.5;
+  ctx.strokeStyle = item.color;
+  ctx.stroke();
+
+  // Symbol inside circle
+  ctx.fillStyle = item.color;
+  ctx.font = "bold 20px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
+  ctx.fillText(item.symbol, circleX, circleY + 1);
 
-  // Initials / Short symbol in center
-  const words = name.split(" ");
-  const symbol = words.length > 1 ? words[0].slice(0, 2) : name.slice(0, 3);
-
-  ctx.fillStyle = color;
-  ctx.font = "900 52px system-ui, -apple-system, sans-serif";
-  ctx.fillText(symbol.toUpperCase(), cx, cy - 14);
-
-  // Small full name label underneath
+  // Main Tech Name
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
   ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-  ctx.font = "bold 20px system-ui, -apple-system, sans-serif";
-  ctx.fillText(name, cx, cy + 38);
+  ctx.font = "bold 24px system-ui, -apple-system, sans-serif";
+  ctx.fillText(item.name, 76, circleY - 10);
+
+  // Proficiency percentage badge
+  ctx.fillStyle = item.color;
+  ctx.font = "bold 16px system-ui, -apple-system, sans-serif";
+  ctx.fillText(`${item.level} Mastery`, 76, circleY + 16);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.minFilter = THREE.LinearFilter;
@@ -165,27 +223,37 @@ function createNodeTexture(name, color, isDark) {
   return texture;
 }
 
-export default function TechGalaxy3D() {
+export default function TechGalaxy3D({ activeFilter = "all", onSelectTech }) {
   const containerRef = useRef(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
   const [activeNode, setActiveNode] = useState(null);
-  const [isHovered, setIsHovered] = useState(false);
   const [isRotating, setIsRotating] = useState(true);
+
+  // Stable reference for animation loop
+  const runtimeRef = useRef({
+    isDragging: false,
+    prevMouse: { x: 0, y: 0 },
+    targetRot: { x: 0.1, y: 0 },
+    currentRot: { x: 0.1, y: 0 },
+    nodeObjects: [],
+  });
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    let width = container.clientWidth || 600;
-    let height = container.clientHeight || 500;
+    let width = container.clientWidth || 700;
+    let height = container.clientHeight || 460;
 
     // ── 1. Scene, Camera, Renderer ──
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 4.5, 16);
+    // Centered camera looking directly at origin (0, 0, 0)
+    camera.position.set(0, 0, 13.5);
+    camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -195,61 +263,63 @@ export default function TechGalaxy3D() {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.3;
     container.appendChild(renderer.domElement);
 
-    // ── 2. Lights ──
-    const ambientLight = new THREE.AmbientLight(isDark ? 0xffffff : 0x444444, isDark ? 0.9 : 1.3);
+    // ── 2. Studio Lighting ──
+    const ambientLight = new THREE.AmbientLight(
+      isDark ? 0xffffff : 0x555555,
+      isDark ? 1.2 : 1.6
+    );
     scene.add(ambientLight);
 
-    const pointLightGold = new THREE.PointLight(0xff9900, 3.5, 30);
-    pointLightGold.position.set(0, 0, 0);
-    scene.add(pointLightGold);
+    const pointLightCore = new THREE.PointLight(0xff9900, 4.0, 25);
+    pointLightCore.position.set(0, 0, 0);
+    scene.add(pointLightCore);
 
-    const dirLightPurple = new THREE.DirectionalLight(0x8b5cf6, 1.8);
-    dirLightPurple.position.set(10, 10, 10);
+    const dirLightPurple = new THREE.DirectionalLight(0x8b5cf6, 2.0);
+    dirLightPurple.position.set(8, 8, 8);
     scene.add(dirLightPurple);
 
-    const dirLightCyan = new THREE.DirectionalLight(0x06b6d4, 1.2);
-    dirLightCyan.position.set(-10, -10, -10);
+    const dirLightCyan = new THREE.DirectionalLight(0x06b6d4, 1.5);
+    dirLightCyan.position.set(-8, -8, 8);
     scene.add(dirLightCyan);
 
-    // ── 3. Central Quantum Core (Geodesic Pulsing Orb + Rings) ──
+    // ── 3. Central Quantum Core (Centered at 0, 0, 0) ──
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    // Inner Glowing Core Sphere
-    const coreGeo = new THREE.IcosahedronGeometry(1.6, 3);
+    // Geodesic Wireframe Sphere
+    const coreGeo = new THREE.IcosahedronGeometry(1.4, 2);
     const coreMat = new THREE.MeshStandardMaterial({
       color: 0xffaa00,
       emissive: 0xff6600,
-      emissiveIntensity: 0.8,
-      roughness: 0.15,
-      metalness: 0.85,
+      emissiveIntensity: 0.9,
       wireframe: true,
+      roughness: 0.2,
+      metalness: 0.8,
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     coreGroup.add(coreMesh);
 
-    // Solid inner plasma core
-    const plasmaGeo = new THREE.SphereGeometry(1.1, 32, 32);
+    // Glowing Inner Plasma Sphere
+    const plasmaGeo = new THREE.SphereGeometry(1.0, 32, 32);
     const plasmaMat = new THREE.MeshBasicMaterial({
-      color: isDark ? 0xff7700 : 0xff9900,
+      color: 0xff8800,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.85,
     });
     const plasmaMesh = new THREE.Mesh(plasmaGeo, plasmaMat);
     coreGroup.add(plasmaMesh);
 
-    // Quantum Gyroscope Rings (Astrolabe)
+    // Concentric Gyro Rings
     const ringMatGold = new THREE.MeshStandardMaterial({
       color: 0xffaa00,
-      emissive: 0xff8800,
-      emissiveIntensity: 0.6,
+      emissive: 0xff7700,
+      emissiveIntensity: 0.5,
       roughness: 0.2,
       metalness: 0.9,
     });
-
     const ringMatCyan = new THREE.MeshStandardMaterial({
       color: 0x38bdf8,
       emissive: 0x0284c7,
@@ -257,7 +327,6 @@ export default function TechGalaxy3D() {
       roughness: 0.2,
       metalness: 0.9,
     });
-
     const ringMatPurple = new THREE.MeshStandardMaterial({
       color: 0xa855f7,
       emissive: 0x7e22ce,
@@ -266,9 +335,9 @@ export default function TechGalaxy3D() {
       metalness: 0.9,
     });
 
-    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.6, 0.035, 16, 100), ringMatGold);
-    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.2, 0.03, 16, 100), ringMatCyan);
-    const ring3 = new THREE.Mesh(new THREE.TorusGeometry(3.8, 0.025, 16, 100), ringMatPurple);
+    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.03, 16, 64), ringMatGold);
+    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.6, 0.025, 16, 64), ringMatCyan);
+    const ring3 = new THREE.Mesh(new THREE.TorusGeometry(3.1, 0.02, 16, 64), ringMatPurple);
 
     ring1.rotation.x = Math.PI / 4;
     ring2.rotation.y = Math.PI / 3;
@@ -278,56 +347,52 @@ export default function TechGalaxy3D() {
     coreGroup.add(ring2);
     coreGroup.add(ring3);
 
-    // ── 4. Ambient Stardust Particles ──
-    const particleCount = 450;
-    const particleGeo = new THREE.BufferGeometry();
-    const particlePos = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
-
-    const colGold = new THREE.Color(0xffb400);
-    const colPurple = new THREE.Color(0x9333ea);
-    const colCyan = new THREE.Color(0x38bdf8);
-
-    for (let i = 0; i < particleCount; i++) {
-      const radius = 3 + Math.random() * 11;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-
-      particlePos[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      particlePos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      particlePos[i * 3 + 2] = radius * Math.cos(phi);
-
-      const chosenColor = Math.random() > 0.5 ? colGold : Math.random() > 0.5 ? colCyan : colPurple;
-      particleColors[i * 3] = chosenColor.r;
-      particleColors[i * 3 + 1] = chosenColor.g;
-      particleColors[i * 3 + 2] = chosenColor.b;
+    // ── 4. Ambient Sparkles ──
+    const sparkCount = 240;
+    const sparkGeo = new THREE.BufferGeometry();
+    const sparkPos = new Float32Array(sparkCount * 3);
+    for (let i = 0; i < sparkCount; i++) {
+      const rad = 3.5 + Math.random() * 8.5;
+      const th = Math.random() * Math.PI * 2;
+      const ph = Math.acos(2 * Math.random() - 1);
+      sparkPos[i * 3] = rad * Math.sin(ph) * Math.cos(th);
+      sparkPos[i * 3 + 1] = rad * Math.sin(ph) * Math.sin(th);
+      sparkPos[i * 3 + 2] = rad * Math.cos(ph);
     }
-
-    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePos, 3));
-    particleGeo.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
-
-    const particleMat = new THREE.PointsMaterial({
-      size: 0.09,
-      vertexColors: true,
+    sparkGeo.setAttribute("position", new THREE.BufferAttribute(sparkPos, 3));
+    const sparkMat = new THREE.PointsMaterial({
+      size: 0.08,
+      color: 0xffaa00,
       transparent: true,
-      opacity: isDark ? 0.8 : 0.65,
+      opacity: isDark ? 0.65 : 0.45,
       blending: THREE.AdditiveBlending,
     });
+    const sparkles = new THREE.Points(sparkGeo, sparkMat);
+    scene.add(sparkles);
 
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-
-    // ── 5. Orbiting Tech Nodes ──
+    // ── 5. Spherical Constellation of Tech Nodes (Fibonacci Sphere) ──
     const nodesGroup = new THREE.Group();
     scene.add(nodesGroup);
 
     const nodeObjects = [];
+    const sphereRadius = 4.6;
+    const totalNodes = TECH_NODES.length;
+    const goldenRatio = (1 + Math.sqrt(5)) / 2;
 
-    TECH_NODES.forEach((tech, index) => {
-      const nodeSubGroup = new THREE.Group();
+    TECH_NODES.forEach((tech, i) => {
+      // Fibonacci sphere distribution: perfectly uniform on 3D sphere!
+      const theta = 2 * Math.PI * i / goldenRatio;
+      const phi = Math.acos(1 - 2 * (i + 0.5) / totalNodes);
 
-      // 3D Glowing Sphere Anchor
-      const sphereGeo = new THREE.SphereGeometry(0.38, 24, 24);
+      const x = sphereRadius * Math.sin(phi) * Math.cos(theta);
+      const y = sphereRadius * Math.cos(phi);
+      const z = sphereRadius * Math.sin(phi) * Math.sin(theta);
+
+      const nodeGroup = new THREE.Group();
+      nodeGroup.position.set(x, y, z);
+
+      // Glowing Sphere Anchor
+      const sphereGeo = new THREE.SphereGeometry(0.24, 20, 20);
       const sphereMat = new THREE.MeshStandardMaterial({
         color: tech.color,
         emissive: tech.color,
@@ -336,100 +401,109 @@ export default function TechGalaxy3D() {
         metalness: 0.8,
       });
       const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
-      nodeSubGroup.add(sphereMesh);
+      nodeGroup.add(sphereMesh);
 
       // Outer Halo Ring
-      const haloGeo = new THREE.TorusGeometry(0.55, 0.02, 16, 40);
+      const haloGeo = new THREE.TorusGeometry(0.34, 0.015, 16, 32);
       const haloMat = new THREE.MeshBasicMaterial({
         color: tech.color,
         transparent: true,
-        opacity: 0.7,
+        opacity: 0.75,
       });
       const haloMesh = new THREE.Mesh(haloGeo, haloMat);
-      haloMesh.rotation.x = Math.PI / 2;
-      nodeSubGroup.add(haloMesh);
+      nodeGroup.add(haloMesh);
 
-      // Billboard Sprite with crisp custom canvas texture
-      const texture = createNodeTexture(tech.name, tech.color, isDark);
+      // Sleek Pill Texture Billboard Sprite
+      const texture = createPillTexture(tech, isDark);
       const spriteMat = new THREE.SpriteMaterial({
         map: texture,
         transparent: true,
         depthWrite: false,
       });
       const sprite = new THREE.Sprite(spriteMat);
-      sprite.scale.set(1.5, 1.5, 1);
-      sprite.position.y = 0.85;
-      nodeSubGroup.add(sprite);
+      sprite.scale.set(1.85, 0.55, 1);
+      sprite.position.y = 0.5;
+      nodeGroup.add(sprite);
 
-      // Connecting Laser Tether Line (to Core)
+      // Connecting Laser Tether Line (to Core center)
       const lineGeo = new THREE.BufferGeometry().setFromPoints([
         new THREE.Vector3(0, 0, 0),
-        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(x, y, z),
       ]);
       const lineMat = new THREE.LineBasicMaterial({
         color: tech.color,
         transparent: true,
-        opacity: isDark ? 0.35 : 0.25,
-        linewidth: 1,
+        opacity: isDark ? 0.35 : 0.22,
       });
-      const tetherLine = new THREE.Line(lineGeo, lineMat);
-      scene.add(tetherLine);
+      const tether = new THREE.Line(lineGeo, lineMat);
+      scene.add(tether);
 
-      nodesGroup.add(nodeSubGroup);
+      nodesGroup.add(nodeGroup);
 
       nodeObjects.push({
-        group: nodeSubGroup,
+        group: nodeGroup,
         sphere: sphereMesh,
         halo: haloMesh,
         sprite: sprite,
-        tether: tetherLine,
+        tether: tether,
         data: tech,
-        angle: tech.phase,
+        basePos: new THREE.Vector3(x, y, z),
       });
     });
 
-    // ── 6. Mouse Interaction & Raycasting ──
+    runtimeRef.current.nodeObjects = nodeObjects;
+
+    // ── 6. Interactive Raycasting & Mouse Rotation ──
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2(-999, -999);
-    const targetRotation = new THREE.Vector2(0, 0);
-    const currentRotation = new THREE.Vector2(0, 0);
 
-    let isDragging = false;
-    let prevMousePos = { x: 0, y: 0 };
-
-    const handlePointerDown = (e) => {
-      isDragging = true;
-      prevMousePos = { x: e.clientX, y: e.clientY };
+    const onPointerDown = (e) => {
+      runtimeRef.current.isDragging = true;
+      runtimeRef.current.prevMouse = { x: e.clientX, y: e.clientY };
     };
 
-    const handlePointerMove = (e) => {
+    const onPointerMove = (e) => {
       const rect = container.getBoundingClientRect();
-      const clientX = e.clientX - rect.left;
-      const clientY = e.clientY - rect.top;
+      const cx = e.clientX - rect.left;
+      const cy = e.clientY - rect.top;
 
-      mouse.x = (clientX / width) * 2 - 1;
-      mouse.y = -(clientY / height) * 2 + 1;
+      mouse.x = (cx / width) * 2 - 1;
+      mouse.y = -(cy / height) * 2 + 1;
 
-      if (isDragging) {
-        const deltaX = e.clientX - prevMousePos.x;
-        const deltaY = e.clientY - prevMousePos.y;
-        targetRotation.y += deltaX * 0.008;
-        targetRotation.x += deltaY * 0.008;
-        prevMousePos = { x: e.clientX, y: e.clientY };
+      const state = runtimeRef.current;
+      if (state.isDragging) {
+        const dx = e.clientX - state.prevMouse.x;
+        const dy = e.clientY - state.prevMouse.y;
+        state.targetRot.y += dx * 0.007;
+        state.targetRot.x = Math.max(-0.6, Math.min(0.6, state.targetRot.x + dy * 0.007));
+        state.prevMouse = { x: e.clientX, y: e.clientY };
       } else {
-        // Parallax tilt
-        targetRotation.y = mouse.x * 0.35;
-        targetRotation.x = -mouse.y * 0.3;
+        // Gentle parallax tilt
+        state.targetRot.y = mouse.x * 0.3;
+        state.targetRot.x = -mouse.y * 0.25;
       }
     };
 
-    const handlePointerUp = () => {
-      isDragging = false;
+    const onPointerUp = () => {
+      runtimeRef.current.isDragging = false;
     };
 
-    container.addEventListener("pointerdown", handlePointerDown);
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", handlePointerUp);
+    const onClick = () => {
+      raycaster.setFromCamera(mouse, camera);
+      const spheres = nodeObjects.map((n) => n.sphere);
+      const intersects = raycaster.intersectObjects(spheres);
+      if (intersects.length > 0) {
+        const hit = nodeObjects.find((n) => n.sphere === intersects[0].object);
+        if (hit && onSelectTech) {
+          onSelectTech(hit.data);
+        }
+      }
+    };
+
+    container.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    container.addEventListener("click", onClick);
 
     // ── 7. Animation Loop ──
     let animationFrameId;
@@ -440,78 +514,64 @@ export default function TechGalaxy3D() {
 
       const delta = clock.getDelta();
       const elapsed = clock.getElapsedTime();
+      const state = runtimeRef.current;
 
-      // Smooth camera / scene tilt interpolation
-      currentRotation.x += (targetRotation.x - currentRotation.x) * 0.06;
-      currentRotation.y += (targetRotation.y - currentRotation.y) * 0.06;
+      // Smooth rotation interpolation
+      state.currentRot.x += (state.targetRot.x - state.currentRot.x) * 0.06;
+      state.currentRot.y += (state.targetRot.y - state.currentRot.y) * 0.06;
 
-      scene.rotation.x = currentRotation.x;
-      scene.rotation.y = currentRotation.y + (isRotating ? elapsed * 0.08 : 0);
+      // Auto rotation when not dragging
+      const autoSpinAngle = isRotating ? elapsed * 0.12 : 0;
 
-      // Core pulsing & astrolabe rotations
+      nodesGroup.rotation.x = state.currentRot.x;
+      nodesGroup.rotation.y = state.currentRot.y + autoSpinAngle;
+
+      // Central core pulse & spin
       coreMesh.rotation.y += delta * 0.6;
       coreMesh.rotation.x += delta * 0.4;
-      const pulse = 1 + Math.sin(elapsed * 2.5) * 0.06;
-      coreMesh.scale.set(pulse, pulse, pulse);
+      const corePulse = 1 + Math.sin(elapsed * 2.8) * 0.05;
+      coreMesh.scale.set(corePulse, corePulse, corePulse);
 
       ring1.rotation.x += delta * 0.8;
-      ring1.rotation.y += delta * 0.5;
       ring2.rotation.y += delta * 0.7;
-      ring2.rotation.z += delta * 0.4;
       ring3.rotation.z += delta * 0.6;
-      ring3.rotation.x += delta * 0.3;
 
-      // Particle rotation
-      particles.rotation.y = elapsed * 0.02;
-
-      // Update Tech Orbitals
-      nodeObjects.forEach((node) => {
-        const t = node.data;
-        node.angle += t.speed * delta * 0.8;
-
-        const x = Math.cos(node.angle) * t.radius;
-        const z = Math.sin(node.angle) * t.radius;
-        const y = Math.sin(node.angle * 2 + t.phase) * (t.radius * t.inclination);
-
-        node.group.position.set(x, y, z);
-        node.halo.rotation.z += delta * 1.5;
-
-        // Update tether laser lines to connect to core center
-        const linePositions = node.tether.geometry.attributes.position.array;
-        // Start: core (0,0,0)
-        linePositions[0] = 0;
-        linePositions[1] = 0;
-        linePositions[2] = 0;
-        // End: node position transformed to world
-        const worldPos = new THREE.Vector3();
-        node.group.getWorldPosition(worldPos);
-        linePositions[3] = worldPos.x;
-        linePositions[4] = worldPos.y;
-        linePositions[5] = worldPos.z;
-        node.tether.geometry.attributes.position.needsUpdate = true;
-      });
+      // Rotate stardust
+      sparkles.rotation.y = elapsed * 0.03;
 
       // Raycast hover detection
       raycaster.setFromCamera(mouse, camera);
-      const meshesToTest = nodeObjects.map((n) => n.sphere);
-      const intersects = raycaster.intersectObjects(meshesToTest);
+      const hitSpheres = raycaster.intersectObjects(nodeObjects.map((n) => n.sphere));
 
-      if (intersects.length > 0) {
-        const hitSphere = intersects[0].object;
+      if (hitSpheres.length > 0) {
+        const hitSphere = hitSpheres[0].object;
         const hitNode = nodeObjects.find((n) => n.sphere === hitSphere);
         if (hitNode) {
           container.style.cursor = "pointer";
           setActiveNode(hitNode.data);
-          hitNode.sphere.scale.set(1.45, 1.45, 1.45);
-          hitNode.halo.scale.set(1.3, 1.3, 1.3);
-          hitNode.tether.material.opacity = 0.9;
+          hitNode.sphere.scale.set(1.5, 1.5, 1.5);
+          hitNode.sprite.scale.set(2.2, 0.65, 1);
+          hitNode.tether.material.opacity = 0.95;
         }
       } else {
-        container.style.cursor = isDragging ? "grabbing" : "grab";
+        container.style.cursor = state.isDragging ? "grabbing" : "grab";
         nodeObjects.forEach((n) => {
           n.sphere.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
-          n.halo.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
-          n.tether.material.opacity = isDark ? 0.28 : 0.18;
+          n.sprite.scale.lerp(new THREE.Vector3(1.85, 0.55, 1), 0.1);
+
+          // If category filter is active, highlight matching and dim non-matching
+          const isMatch = activeFilter === "all" || n.data.category === activeFilter;
+          const targetOpacity = isMatch ? (isDark ? 0.35 : 0.22) : 0.06;
+          n.tether.material.opacity = THREE.MathUtils.lerp(
+            n.tether.material.opacity,
+            targetOpacity,
+            0.1
+          );
+          n.sprite.material.opacity = THREE.MathUtils.lerp(
+            n.sprite.material.opacity,
+            isMatch ? 1 : 0.25,
+            0.1
+          );
         });
       }
 
@@ -523,8 +583,8 @@ export default function TechGalaxy3D() {
     // ── 8. Resize Handler ──
     const handleResize = () => {
       if (!container) return;
-      width = container.clientWidth || 600;
-      height = container.clientHeight || 500;
+      width = container.clientWidth || 700;
+      height = container.clientHeight || 460;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
@@ -536,18 +596,18 @@ export default function TechGalaxy3D() {
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
-      container.removeEventListener("pointerdown", handlePointerDown);
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
+      container.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("click", onClick);
 
-      // Dispose Three.js objects
       renderer.dispose();
       coreGeo.dispose();
       coreMat.dispose();
       plasmaGeo.dispose();
       plasmaMat.dispose();
-      particleGeo.dispose();
-      particleMat.dispose();
+      sparkGeo.dispose();
+      sparkMat.dispose();
       nodeObjects.forEach((n) => {
         n.sphere.geometry.dispose();
         n.sphere.material.dispose();
@@ -562,41 +622,35 @@ export default function TechGalaxy3D() {
         container.removeChild(renderer.domElement);
       }
     };
-  }, [isDark, isRotating]);
+  }, [isDark, activeFilter, isRotating, onSelectTech]);
 
   return (
     <div
-      className="relative w-full h-[420px] sm:h-[500px] lg:h-[580px] rounded-3xl overflow-hidden border backdrop-blur-2xl transition-all duration-300 shadow-[0_0_50px_rgba(255,140,0,0.18)]"
+      className="relative w-full h-[400px] sm:h-[460px] lg:h-[500px] rounded-3xl overflow-hidden border backdrop-blur-2xl transition-all duration-300 shadow-[0_0_60px_rgba(255,140,0,0.18)] flex flex-col justify-between"
       style={{
-        backgroundColor: isDark ? "rgba(6, 8, 20, 0.75)" : "rgba(255, 255, 255, 0.75)",
-        borderColor: isDark ? "rgba(255, 153, 0, 0.35)" : "rgba(255, 153, 0, 0.45)",
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setActiveNode(null);
+        background: isDark
+          ? "radial-gradient(ellipse at center, rgba(16, 22, 42, 0.9) 0%, rgba(6, 8, 20, 0.95) 75%)"
+          : "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.95) 0%, rgba(246, 248, 252, 0.92) 75%)",
+        borderColor: isDark ? "rgba(255, 153, 0, 0.4)" : "rgba(255, 153, 0, 0.55)",
       }}
     >
-      {/* 3D WebGL Canvas Container */}
-      <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
-
-      {/* Top Overlay Badge / Controls */}
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/70 border border-[#ff9900]/40 backdrop-blur-md shadow-lg pointer-events-auto">
+      {/* ── Top Floating Overlay HUD ── */}
+      <div className="relative z-20 flex items-center justify-between p-4 pointer-events-none">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/75 border border-[#ff9900]/40 backdrop-blur-md shadow-lg pointer-events-auto">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff9900] opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff9900]" />
           </span>
           <span className="text-[11px] font-black uppercase tracking-wider text-white">
-            INTERACTIVE 3D TECH GALAXY
+            3D HOLOGRAPHIC CONSTELLATION
           </span>
         </div>
 
         <button
           onClick={() => setIsRotating((prev) => !prev)}
-          className="pointer-events-auto px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider border backdrop-blur-md transition-all duration-200 hover:scale-105 hover:border-[#ff9900]"
+          className="pointer-events-auto px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider border backdrop-blur-md transition-all duration-200 hover:scale-105"
           style={{
-            backgroundColor: isDark ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.85)",
+            backgroundColor: isDark ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.9)",
             borderColor: isRotating ? "#ff9900" : "rgba(255,255,255,0.2)",
             color: isRotating ? "#ff9900" : isDark ? "#fff" : "#111",
           }}
@@ -605,44 +659,48 @@ export default function TechGalaxy3D() {
         </button>
       </div>
 
-      {/* Floating HUD Tooltip when hovering over a tech node */}
-      {activeNode ? (
-        <div
-          className="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:max-w-md p-4 rounded-2xl border backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.5)] z-20 transition-all duration-300 animate-fadeIn"
-          style={{
-            backgroundColor: isDark ? "rgba(10, 14, 28, 0.92)" : "rgba(255, 255, 255, 0.95)",
-            borderColor: activeNode.color,
-          }}
-        >
-          <div className="flex items-center justify-between mb-1.5">
-            <div className="flex items-center gap-2">
-              <span
-                className="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor]"
-                style={{ backgroundColor: activeNode.color, color: activeNode.color }}
-              />
-              <h4 className="text-base font-black uppercase tracking-tight" style={{ color: activeNode.color }}>
-                {activeNode.name}
-              </h4>
+      {/* ── 3D WebGL Canvas ── */}
+      <div
+        ref={containerRef}
+        className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+      />
+
+      {/* ── Bottom HUD Tooltip or Instruction ── */}
+      <div className="relative z-20 p-4 pointer-events-none">
+        {activeNode ? (
+          <div
+            className="pointer-events-auto max-w-md mx-auto p-3.5 rounded-2xl border backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.6)] animate-fadeIn transition-all duration-300"
+            style={{
+              backgroundColor: isDark ? "rgba(10, 14, 28, 0.95)" : "rgba(255, 255, 255, 0.96)",
+              borderColor: activeNode.color,
+            }}
+          >
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                <span className="text-base">{activeNode.symbol}</span>
+                <h4
+                  className="text-sm font-black uppercase tracking-tight"
+                  style={{ color: activeNode.color }}
+                >
+                  {activeNode.name}
+                </h4>
+              </div>
+              <span className="text-[11px] font-black px-2 py-0.5 rounded-full bg-white/10 text-[#ffaa00]">
+                {activeNode.level}
+              </span>
             </div>
-            <span className="text-xs font-black px-2 py-0.5 rounded-full bg-white/10 text-[#ffaa00]">
-              {activeNode.level} Mastery
+            <p className={`text-xs leading-relaxed ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+              {activeNode.desc}
+            </p>
+          </div>
+        ) : (
+          <div className="text-center">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-black/60 border border-white/10 text-[11px] font-bold uppercase tracking-widest text-gray-300 backdrop-blur-md">
+              ✦ Click & Drag to explore in 360° • Hover or Click node to inspect
             </span>
           </div>
-
-          <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">
-            {activeNode.category}
-          </p>
-          <p className={`text-xs leading-relaxed ${isDark ? "text-gray-300" : "text-gray-700"}`}>
-            {activeNode.desc}
-          </p>
-        </div>
-      ) : (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none px-4 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
-          <p className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-300">
-            ✦ Drag to rotate 3D view • Hover any node to inspect tech
-          </p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
