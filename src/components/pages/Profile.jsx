@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import dynamic from "next/dynamic";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
 import MilestoneCard3D from "@/components/3d/MilestoneCard3D";
 import {
@@ -11,6 +11,7 @@ import {
   FaCode,
   FaLaptop,
   FaBook,
+  FaChevronDown,
 } from "react-icons/fa";
 
 // Dynamically import the 3D spline canvas for background
@@ -29,7 +30,7 @@ const TIMELINE_DATA = [
     location: "Pune / Solapur",
     period: "Nov 2024 – Present",
     accentColor: "#ff9900",
-    badge: "Current Role",
+    badge: "Current Production Role",
     points: [
       "Building and scaling enterprise multi-vendor marketplace (EWShopping) supporting 3,000+ active sellers and 80k+ monthly traffic.",
       "Engineered AI-powered search, faceted filtering system, and lightning-fast checkout architecture.",
@@ -48,7 +49,7 @@ const TIMELINE_DATA = [
     location: "Bhubaneswar",
     period: "Jul 2024 – Oct 2024",
     accentColor: "#38bdf8",
-    badge: "Internship",
+    badge: "Frontend Internship",
     points: [
       "Developed responsive, high-performance UI components with React.js and modern Tailwind CSS.",
       "Coordinated Git team workflows, feature branches, and code reviews across distributed developers.",
@@ -85,7 +86,7 @@ const TIMELINE_DATA = [
     location: "Solapur, Maharashtra",
     period: "Oct 2020 – Nov 2022",
     accentColor: "#10b981",
-    badge: "Freelance",
+    badge: "Freelance Engineering",
     points: [
       "Delivered end-to-end technical diagnostics and hardware troubleshooting for high-end workstations and PCs.",
       "Configured secure local networking, OS installations, system migrations, and disaster recovery.",
@@ -122,12 +123,33 @@ const METRICS = [
 export default function Profile() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const [filter, setFilter] = useState("all"); // "all" | "work" | "education"
+  const [filter, setFilter] = useState("all");
+
+  const timelineContainerRef = useRef(null);
+
+  // Scroll Progress along the Timeline Spine
+  const { scrollYProgress } = useScroll({
+    target: timelineContainerRef,
+    offset: ["start 65%", "end 85%"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 300,
+    damping: 35,
+    restDelta: 0.001,
+  });
+
+  const beamHeight = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  const photonOpacity = useTransform(smoothProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
 
   const filteredData =
     filter === "all"
       ? TIMELINE_DATA
       : TIMELINE_DATA.filter((item) => item.type === filter);
+
+  const scrollToTimeline = () => {
+    timelineContainerRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div
@@ -137,7 +159,7 @@ export default function Profile() {
         color: isDark ? "#ffffff" : "#0f172a",
       }}
     >
-      {/* ── Ambient 3D Traveling Energy Spline (Three.js) ── */}
+      {/* ── Ambient 3D Traveling Energy Spline (Three.js with Scroll Flight) ── */}
       <JourneyCanvas3D />
 
       {/* ── Ambient Radial Glows ── */}
@@ -145,13 +167,13 @@ export default function Profile() {
       <div className="fixed -bottom-40 -right-40 w-[35rem] h-[35rem] rounded-full bg-[#8b5cf6]/10 blur-3xl pointer-events-none -z-0" />
 
       {/* ── Main Container (Cleared for Right Sidebar) ── */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 pt-8 pb-24 lg:pr-24">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 pt-8 pb-28 lg:pr-24">
 
         {/* ── Section Header ── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10 sm:mb-14"
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#ff9900]/60 bg-[#ff9900]/12 text-[#ff9900] text-xs font-bold uppercase tracking-[0.25em] shadow-[0_0_20px_rgba(255,153,0,0.3)] mb-3">
@@ -166,10 +188,21 @@ export default function Profile() {
             </span>
           </h1>
           <p className={`mt-3 text-xs sm:text-sm max-w-xl mx-auto ${isDark ? "text-gray-300" : "text-gray-600"}`}>
-            A chronological timeline of my professional experience, production milestones, and academic foundation in software engineering.
+            A chronological timeline of my professional experience, production milestones, and academic foundation in software engineering. Scroll down to travel through each phase.
           </p>
 
           <div className="mt-3.5 mx-auto w-24 h-1.5 rounded-full bg-gradient-to-r from-[#ff9900] via-[#ff7700] to-[#ff4500] shadow-[0_0_15px_#ff9900]" />
+
+          {/* Quick Scroll Indicator Button */}
+          <div className="mt-5 flex justify-center">
+            <button
+              onClick={scrollToTimeline}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 hover:border-[#ff9900] hover:text-[#ff9900] transition-all duration-300 animate-bounce"
+            >
+              <span>Explore Timeline</span>
+              <FaChevronDown className="w-3 h-3 text-[#ff9900]" />
+            </button>
+          </div>
         </motion.div>
 
         {/* ── Career Highlights Metrics Row ── */}
@@ -177,12 +210,12 @@ export default function Profile() {
           {METRICS.map((m, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.88, y: 25 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              whileHover={{ scale: 1.04, y: -3 }}
-              className="rounded-2xl p-4 sm:p-5 text-center border backdrop-blur-xl transition-all duration-300 shadow-md hover:border-[#ff9900]"
+              transition={{ delay: i * 0.08, duration: 0.6 }}
+              whileHover={{ scale: 1.05, y: -4 }}
+              className="rounded-2xl p-4 sm:p-5 text-center border backdrop-blur-xl transition-all duration-300 shadow-md hover:border-[#ff9900] hover:shadow-[0_0_25px_rgba(255,153,0,0.25)]"
               style={{
                 backgroundColor: isDark ? "rgba(12, 16, 29, 0.78)" : "rgba(255, 255, 255, 0.88)",
                 borderColor: isDark ? "rgba(255, 153, 0, 0.28)" : "rgba(255, 153, 0, 0.38)",
@@ -200,7 +233,7 @@ export default function Profile() {
         </div>
 
         {/* ── Interactive Filter Switcher ── */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-12">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-14">
           {[
             { id: "all", label: "Full Journey", icon: "🌌" },
             { id: "work", label: "Work & Experience", icon: "💼" },
@@ -235,12 +268,25 @@ export default function Profile() {
           })}
         </div>
 
-        {/* ── 3D Timeline Tree with Laser Energy Spine ── */}
-        <div className="relative">
-          {/* Central Pulsing Energy Spine */}
-          <div className="absolute top-4 bottom-4 left-6 md:left-1/2 md:-translate-x-1/2 w-1 rounded-full bg-gradient-to-b from-[#ff9900] via-[#8b5cf6] to-[#ff9900] shadow-[0_0_15px_#ff9900]" />
+        {/* ── 3D Timeline Tree with Scroll-Linked Laser Beam ── */}
+        <div ref={timelineContainerRef} className="relative">
 
-          <div className="space-y-10 sm:space-y-12">
+          {/* Static Track Guide */}
+          <div className="absolute top-4 bottom-4 left-6 md:left-1/2 md:-translate-x-1/2 w-1 rounded-full bg-white/10 pointer-events-none" />
+
+          {/* Dynamic Scroll-Linked Glowing Laser Beam */}
+          <motion.div
+            style={{ height: beamHeight }}
+            className="absolute top-4 left-6 md:left-1/2 md:-translate-x-1/2 w-1.5 rounded-full bg-gradient-to-b from-[#ff9900] via-[#ff5500] to-[#8b5cf6] shadow-[0_0_18px_#ff9900] pointer-events-none z-10 origin-top"
+          >
+            {/* Glowing Traveling Photon Head at the Beam Tip */}
+            <motion.div
+              style={{ opacity: photonOpacity }}
+              className="absolute -bottom-2 -left-1.5 w-4 h-4 rounded-full bg-white border-2 border-[#ff9900] shadow-[0_0_15px_#ffffff,0_0_30px_#ff9900] animate-pulse"
+            />
+          </motion.div>
+
+          <div className="space-y-12 sm:space-y-16">
             <AnimatePresence>
               {filteredData.map((item, index) => {
                 const IconComponent = item.icon;
@@ -250,32 +296,54 @@ export default function Profile() {
                   <motion.div
                     key={item.id}
                     layout
-                    initial={{ opacity: 0, y: 35 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.08 }}
-                    className={`relative flex items-start gap-6 md:gap-8 ${
+                    initial={{
+                      opacity: 0,
+                      x: isEven ? -75 : 75,
+                      rotateY: isEven ? -14 : 14,
+                      scale: 0.92,
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      x: 0,
+                      rotateY: 0,
+                      scale: 1,
+                    }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{
+                      duration: 0.85,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className={`relative flex items-start gap-6 md:gap-8 [perspective:1000px] ${
                       isEven ? "md:flex-row" : "md:flex-row-reverse"
                     }`}
                   >
-                    {/* Central Glowing Icon Node */}
+                    {/* Central Interactive Glowing Icon Node */}
                     <div className="shrink-0 relative z-20 md:absolute md:left-1/2 md:-translate-x-1/2">
-                      <div
-                        className="w-12 h-12 rounded-2xl flex items-center justify-center border-2 transition-all duration-300 shadow-[0_0_20px_rgba(255,153,0,0.5)] hover:scale-115"
+                      <motion.div
+                        whileInView={{
+                          scale: [1, 1.25, 1],
+                          boxShadow: [
+                            `0 0 10px ${item.accentColor}44`,
+                            `0 0 30px ${item.accentColor}`,
+                            `0 0 15px ${item.accentColor}88`,
+                          ],
+                        }}
+                        viewport={{ once: false, amount: 0.5 }}
+                        transition={{ duration: 0.8 }}
+                        className="w-12 h-12 rounded-2xl flex items-center justify-center border-2 transition-transform duration-300 hover:scale-115"
                         style={{
                           backgroundColor: isDark ? "#0c101d" : "#ffffff",
                           borderColor: item.accentColor,
-                          boxShadow: `0 0 22px ${item.accentColor}66`,
                         }}
                       >
                         <IconComponent
                           className="w-5 h-5 transition-transform duration-300"
                           style={{ color: item.accentColor }}
                         />
-                      </div>
+                      </motion.div>
                     </div>
 
-                    {/* Left or Right Spacing on Desktop */}
+                    {/* Desktop Split Spacing */}
                     <div className="hidden md:block md:w-1/2" />
 
                     {/* 3D Milestone Card */}
